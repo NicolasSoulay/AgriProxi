@@ -25,6 +25,10 @@ class Entreprise
     #[ORM\OneToMany(mappedBy: 'entreprise', targetEntity: Adresse::class, orphanRemoval: true)]
     private Collection $adresses;
 
+    #[ORM\ManyToOne(inversedBy: 'entreprises')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?TypeEntreprise $typeEntreprise = null;
+
     public function __construct()
     {
         $this->adresses = new ArrayCollection();
@@ -85,6 +89,18 @@ class Entreprise
                 $adress->setEntreprise(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getTypeEntreprise(): ?TypeEntreprise
+    {
+        return $this->typeEntreprise;
+    }
+
+    public function setTypeEntreprise(?TypeEntreprise $typeEntreprise): self
+    {
+        $this->typeEntreprise = $typeEntreprise;
 
         return $this;
     }
