@@ -29,9 +29,13 @@ class Entreprise
     #[ORM\JoinColumn(nullable: false)]
     private ?TypeEntreprise $typeEntreprise = null;
 
+    #[ORM\OneToMany(mappedBy: 'entreprise', targetEntity: Produit::class, orphanRemoval: true)]
+    private Collection $produits;
+
     public function __construct()
     {
         $this->adresses = new ArrayCollection();
+        $this->produits = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -101,6 +105,36 @@ class Entreprise
     public function setTypeEntreprise(?TypeEntreprise $typeEntreprise): self
     {
         $this->typeEntreprise = $typeEntreprise;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Produit>
+     */
+    public function getProduits(): Collection
+    {
+        return $this->produits;
+    }
+
+    public function addProduit(Produit $produit): self
+    {
+        if (!$this->produits->contains($produit)) {
+            $this->produits->add($produit);
+            $produit->setEntreprise($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProduit(Produit $produit): self
+    {
+        if ($this->produits->removeElement($produit)) {
+            // set the owning side to null (unless already changed)
+            if ($produit->getEntreprise() === $this) {
+                $produit->setEntreprise(null);
+            }
+        }
 
         return $this;
     }

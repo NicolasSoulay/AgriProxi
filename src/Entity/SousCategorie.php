@@ -2,13 +2,13 @@
 
 namespace App\Entity;
 
-use App\Repository\AppellationRepository;
+use App\Repository\SousCategorieRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: AppellationRepository::class)]
-class Appellation
+#[ORM\Entity(repositoryClass: SousCategorieRepository::class)]
+class SousCategorie
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -18,8 +18,12 @@ class Appellation
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
-    #[ORM\ManyToMany(targetEntity: Produit::class, mappedBy: 'hasAppellation')]
+    #[ORM\OneToMany(mappedBy: 'subCategories', targetEntity: Produit::class, orphanRemoval: true)]
     private Collection $produits;
+
+    #[ORM\ManyToOne(inversedBy: 'subCategories')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Categorie $categorie = null;
 
     public function __construct()
     {
@@ -55,7 +59,7 @@ class Appellation
     {
         if (!$this->produits->contains($produit)) {
             $this->produits->add($produit);
-            $produit->addHasAppellation($this);
+            $produit->setSubCategories($this);
         }
 
         return $this;
@@ -64,8 +68,23 @@ class Appellation
     public function removeProduit(Produit $produit): self
     {
         if ($this->produits->removeElement($produit)) {
-            $produit->removeHasAppellation($this);
+            // set the owning side to null (unless already changed)
+            if ($produit->getSubCategories() === $this) {
+                $produit->setSubCategories(null);
+            }
         }
+
+        return $this;
+    }
+
+    public function getCategorie(): ?Categorie
+    {
+        return $this->categorie;
+    }
+
+    public function setCategorie(?Categorie $categorie): self
+    {
+        $this->categorie = $categorie;
 
         return $this;
     }
