@@ -1,12 +1,25 @@
 <?php 
+
+//Configuration de la connexion à la BDD
 $AgriProxiPDO = new PDO( 'mysql:dbname=agriproxi;host=localhost', 'root');
+
+//Requêtes sur les différentes tables pour gérer les clés étrangères par la suite
 $villes = $AgriProxiPDO->query('SELECT * FROM ville')->fetchAll(PDO::FETCH_ASSOC);
 $entreprises = $AgriProxiPDO->query('SELECT * FROM entreprise')->fetchAll(PDO::FETCH_ASSOC);
 $categories = $AgriProxiPDO->query('SELECT * FROM categorie')->fetchAll(PDO::FETCH_ASSOC);
 $subCategories = $AgriProxiPDO->query('SELECT * FROM sous_categorie')->fetchAll(PDO::FETCH_ASSOC);
+$produits = $AgriProxiPDO->query('SELECT * FROM produit')->fetchAll(PDO::FETCH_ASSOC);
+$appellations = $AgriProxiPDO->query('SELECT * FROM appellation')->fetchAll(PDO::FETCH_ASSOC);
 
+//Définition du fichier source pour remplir la base de donnée
 $csv = '..\agriproxiRessources\produits-sud-de-france5.csv';
 
+/**
+ * Fonction permettant de parcourir le fichier .csv et mettre les valeurs dans un tableau pour traitement par la suite
+ *
+ * @param [type] $csv
+ * @return array
+ */
 function read($csv) {
     $file = fopen($csv,'r');
     //for ($i = 0; $i < 1000 ; $i ++) {
@@ -18,8 +31,16 @@ function read($csv) {
     }
 // }
 
+//Assignation de la fonction
 $csv = read($csv);
 
+/**
+ * Injection des entreprises
+ *
+ * @param [type] $csv
+ * @param [type] $PDO
+ * @return void
+ */
 function injectEntreprise($csv, $PDO)  {
     $tab = [];
     foreach ($csv as $line) {
@@ -34,6 +55,16 @@ function injectEntreprise($csv, $PDO)  {
 }
 // injectEntreprise($csv, $AgriProxiPDO);
 
+
+/**
+ * injection des adresses
+ *
+ * @param [type] $csv
+ * @param [type] $PDO
+ * @param [type] $villes
+ * @param [type] $entreprises
+ * @return void
+ */
 function injectAdresse($csv, $PDO, $villes, $entreprises)  {
     $tab = [];
     foreach ($csv as $line) {
@@ -75,9 +106,16 @@ function injectAdresse($csv, $PDO, $villes, $entreprises)  {
         }
     }
 }
-
 //injectAdresse($csv, $AgriProxiPDO, $villes, $entreprises);
 
+
+/**
+ * Injection des Catégories
+ *
+ * @param [type] $csv
+ * @param [type] $PDO
+ * @return void
+ */
 function injectCategorie($csv, $PDO){
     $tab = [];
     foreach ($csv as $line) {
@@ -90,9 +128,17 @@ function injectCategorie($csv, $PDO){
         }
     }
 }
-
 //injectCategorie($csv,$AgriProxiPDO);
 
+
+/**
+ * Injection des Sous Catégories
+ *
+ * @param [type] $csv
+ * @param [type] $PDO
+ * @param [type] $categories
+ * @return void
+ */
 function injectSousCategorie($csv, $PDO, $categories){
     $tab = [];
     foreach ($csv as $line) {
@@ -111,11 +157,21 @@ function injectSousCategorie($csv, $PDO, $categories){
         }
     }
 }
-
 //injectSousCategorie($csv, $AgriProxiPDO, $categories);
 
+
+/**
+ * Injection des produits
+ *
+ * @param [type] $csv
+ * @param [type] $PDO
+ * @param [type] $entreprises
+ * @param [type] $subCategories
+ * @return void
+ */
 function injectProduit($csv, $PDO, $entreprises, $subCategories){
     $tab = [];
+        $compteur = '1';//
     foreach ($csv as $line) {
         $productName = $line[0];
         if (!in_array($productName, $tab)) {
@@ -135,13 +191,49 @@ function injectProduit($csv, $PDO, $entreprises, $subCategories){
                 }
             }
             $productName = str_replace('"', '', $productName);
-            //$productName = str_replace(`\`, '', $productName);
+            $productName = str_replace("\\", '', $productName);
             $description = str_replace('"', '', $description);
+            $description = str_replace("\\", '', $description);
             $sql = 'INSERT INTO produit (entreprise_id, name, in_stock, description, image_url, sub_categorie_id) VALUES ('.$entrepriseId.',"'.$productName.'","'.$inStock.'","'.$description.'","'.$urlImage.'",'.$subCategorieId.')';
+                echo $compteur.' '.$sql;//
             $PDO->prepare($sql)->execute();
             $tab[] = $productName;
+                $compteur++;//
         }
     }
 }
+//injectProduit($csv, $AgriProxiPDO, $entreprises, $subCategories);
 
-injectProduit($csv, $AgriProxiPDO, $entreprises, $subCategories);
+
+/**
+ * Injection des Appellations
+ *
+ * @param [type] $csv
+ * @param [type] $PDO
+ * @return void
+ */
+function injectAppellation($csv, $PDO){
+    $tab = [];
+    foreach ($csv as $line) {
+        $appellation = $line[7];
+        if (!in_array($appellation, $tab)) {
+            $sql = 'INSERT INTO appellation (name) VALUES ("'.$appellation.'")';
+            $PDO->prepare($sql)->execute();
+            //var_dump ($appellation);
+            $tab[] = $appellation;
+        }
+    }
+}
+//injectAppellation($csv, $AgriProxiPDO);
+
+/**
+ * Alimentation de la table d'association entre produit et appellation
+ *
+ * @param [type] $produits
+ * @param [type] $appellations
+ * @return void
+ */
+function injectProduitAppellation($csv, $produits, $appellations){
+
+}
+//injectProduitAppellation($csv, $produits, $appellations);
