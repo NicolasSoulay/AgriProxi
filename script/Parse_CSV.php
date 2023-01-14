@@ -235,7 +235,22 @@ function injectAppellation($csv, $PDO){
  * @param [type] $appellations
  * @return void
  */
-function injectProduitAppellation($csv, $produits, $appellations){
-
-}
-//injectProduitAppellation($csv, $produits, $appellations);
+// function injectProduitAppellation($csv, $PDO, $produits, $appellations){
+//     foreach($csv as $line){
+//         $produitId = '';
+//         $appellationId = '';
+//         foreach($produits as $produit){
+//             if($line[0] === $produit['name']){
+//                 $produitId = $produit['id'];
+//             }
+//         }
+//         foreach($appellations as $appellation){
+//             if($line[7] === $appellation['name']){
+//                 $appellationId = $appellation['id'];
+//             }
+//         }
+//         $sql = 'INSERT INTO produit_appellation (produit_id, appellation_id) VALUES ('.$produitId.','.$appellationId.')';
+//         $PDO->prepare($sql)->execute();
+//     }
+// }
+// injectProduitAppellation($csv, $AgriProxiPDO, $produits, $appellations);
