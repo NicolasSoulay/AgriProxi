@@ -80,6 +80,8 @@ function injectAdresse($csv, $PDO, $villes, $entreprises)  {
             $villeFormate = strtoupper(
                 str_replace(' ', '-', $line[11])
             );
+            $villeFormate = str_replace('"', '', $villeFormate);
+            $villeFormate = str_replace("\\", '', $villeFormate);
             $villeFormate = explode("-", $villeFormate);
             foreach ($villeFormate as $key => $value) {
                 if ($value === 'ST') {
