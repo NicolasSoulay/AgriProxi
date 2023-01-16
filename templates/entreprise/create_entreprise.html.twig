@@ -9,15 +9,15 @@
 </style>
 
 <div class="example-wrapper">
-    <h1>Création de compte</h1>
+    <h1>Création d'entreprise</h1>
 
-    {{ form(form_user) }}
+    {{ form(form_entreprise) }}
     
     {% if message %}
         <div>{{ message }}</div>
     {% endif %}
     
-    <a href="{{path('app_user')}}">Retour</a>
+    <a href="{{path('app_entreprise')}}">Retour</a>
 
 </div>
 {% endblock %}
