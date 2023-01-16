@@ -56,8 +56,20 @@ p {
     color: black;
 }
 
-li, a, button, label {
+li, a, label {
     font-family: exo;
     font-size: 16px;
     color: black;
+}
+
+.btn_link {
+    font-family: exo;
+    font-size: 20px;
+    color: white;
+    background-color: $red;
+    border-style: none;
+    border-radius: 10px ;
+    padding: 10px;
+    padding-left: 30px;
+    padding-right: 30px;
 }

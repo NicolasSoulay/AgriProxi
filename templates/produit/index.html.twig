@@ -15,18 +15,31 @@
 {% block title %}Salut bande de tocards!{% endblock %}
 
 {% block body %}
+<div id='products'>
+    <div id="map"></div>
 
-<div id="map"></div>
+    <div id="product_search">
+        <form id="search_filter">
+            <label for="categorie">Catégorie:</label>
+            <select name ="categorie" id="categorie">
+                <option value="">Choisissez une catégorie:</option>
+            </select>
+            <label for="subCategorie">Sous-catégorie:</label>
+            <select name ="subCategorie" id="subCategorie">
+                <option value="">Choisissez une sous-catégorie:</option>
+                {% for subCategorie in subCategories %}
+                    <option value=' {{subCategorie.id}} '> {{subCategorie.name}} </option>
+                {% endfor %}
+            </select>
+            <button class="btn_link" type="submit">Rechercher</button>
+        </form>
 
-<div>
-    <div id="search_filter">
-        <label for="categories">Catégorie:</label>
-        <select name ="categories" id="categories">
-            <option value="">Choisissez une catégorie:</option>
-        </select>
-    </div>
-
-    <div id="search_result">
+        <div id="search_result">
+            {% for produit in produits %}
+                <h3> {{produit.name}} </h3>
+                <p> {{produit.description}} </p>
+            {% endfor %}
+        </div>
     </div>
 </div>
 
