@@ -12,6 +12,12 @@
     <h1>Création de compte</h1>
 
     {{ form(form_user) }}
+    
+    {% if message %}
+        <div>{{ message }}</div>
+    {% endif %}
+    
+    <a href="{{path('app_user')}}" class="btn btn-success">Retour</a>
 
 </div>
 {% endblock %}

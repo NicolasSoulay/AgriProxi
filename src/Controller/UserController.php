@@ -23,15 +23,21 @@ class UserController extends AbstractController
     #[Route('/create_user', name: 'createUser')]
     public function createUser(UserRepository $userRepo, Request $request): Response
     {   
+        $message = '';
         $user = new User();
         $form = $this->createForm(UserCreationFormType::class, $user);
         $form->handleRequest($request);
-        if($form->isSubmitted()){
+        if($form->isSubmitted() && $form->isValid()){
             $user->setRoles(["ROLE_USER"]);
             $userRepo->save($user, true);
+            $message = 'L\'utilisateur a bien été créé';
+        }
+        elseif($form->isSubmitted()){
+            $message = 'Les informations ne sont pas valides, ou ce compte existe déjà';
         }
         return $this->render('user/create_user.html.twig', [
             'form_user' => $form->createView(),
+            'message' => $message
         ]);
     }
 }

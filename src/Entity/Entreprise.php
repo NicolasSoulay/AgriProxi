@@ -32,10 +32,14 @@ class Entreprise
     #[ORM\OneToMany(mappedBy: 'entreprise', targetEntity: Produit::class, orphanRemoval: true)]
     private Collection $produits;
 
+    #[ORM\OneToMany(mappedBy: 'entreprise', targetEntity: User::class)]
+    private Collection $users;
+
     public function __construct()
     {
         $this->adresses = new ArrayCollection();
         $this->produits = new ArrayCollection();
+        $this->users = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -133,6 +137,36 @@ class Entreprise
             // set the owning side to null (unless already changed)
             if ($produit->getEntreprise() === $this) {
                 $produit->setEntreprise(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, User>
+     */
+    public function getUsers(): Collection
+    {
+        return $this->users;
+    }
+
+    public function addUser(User $user): self
+    {
+        if (!$this->users->contains($user)) {
+            $this->users->add($user);
+            $user->setEntreprise($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUser(User $user): self
+    {
+        if ($this->users->removeElement($user)) {
+            // set the owning side to null (unless already changed)
+            if ($user->getEntreprise() === $this) {
+                $user->setEntreprise(null);
             }
         }
 
