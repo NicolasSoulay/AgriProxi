@@ -37,6 +37,8 @@ security:
 when@test:
     security:
         password_hashers:
+            # auto hasher with default options for the User class (and children)
+            App\Entity\User: 'auto'
             # By default, password hashers are resource intensive and take time. This is
             # important to generate secure password hashes. In tests however, secure hashes
             # are not important, waste resources and increase test times. The following
