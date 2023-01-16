@@ -33,7 +33,11 @@
         "symfony/property-access": "6.2.*",
         "symfony/property-info": "6.2.*",
         "symfony/runtime": "6.2.*",
+<<<<<<< HEAD
         "symfony/security-bundle": "6.1.*",
+=======
+        "symfony/security-bundle": "6.2.*",
+>>>>>>> origin/Nico
         "symfony/serializer": "6.2.*",
         "symfony/string": "6.2.*",
         "symfony/translation": "6.2.*",
