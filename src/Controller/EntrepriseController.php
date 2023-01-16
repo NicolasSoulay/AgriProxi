@@ -24,10 +24,9 @@ class EntrepriseController extends AbstractController
     #[Route('/create_entreprise', name: 'createEntreprise')]
     public function createEntreprise(EntrepriseRepository $entrepriseRepo, TypeEntrepriseRepository $typeEntrepRepo, Request $request): Response
     {   
-        $typeEntreprise = $typeEntrepRepo->findAll();
         $message = '';
         $entreprise = new Entreprise();
-        $form = $this->createForm(EntrepriseCreationFormType::class, $entreprise);//, ['typeEntreprise' => $typeEntreprise]
+        $form = $this->createForm(EntrepriseCreationFormType::class);
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()){
             $entrepriseRepo->save($entreprise, true);
@@ -40,7 +39,6 @@ class EntrepriseController extends AbstractController
         return $this->render('entreprise/create_entreprise.html.twig', [
             'form_entreprise' => $form->createView(),
             'message' => $message,
-            'var' => var_dump($typeEntreprise)
         ]);
     }
 }

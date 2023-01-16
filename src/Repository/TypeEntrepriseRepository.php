@@ -39,6 +39,15 @@ class TypeEntrepriseRepository extends ServiceEntityRepository
         }
     }
 
+    public function findAllName(){
+        $types = $this->findAll();
+        $typeNames = [];
+        foreach($types as $type){
+            $typeNames[$type->getName()] = $type->getId();
+        }
+        return $typeNames;
+    }
+
 //    /**
 //     * @return TypeEntreprise[] Returns an array of TypeEntreprise objects
 //     */

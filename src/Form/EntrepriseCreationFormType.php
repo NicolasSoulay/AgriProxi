@@ -3,11 +3,11 @@
 namespace App\Form;
 
 use App\Entity\Entreprise;
-use App\Repository\EntrepriseRepository;
-use App\Repository\TypeEntrepriseRepository;
+use App\Entity\TypeEntreprise;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -20,14 +20,15 @@ class EntrepriseCreationFormType extends AbstractType
             ->add('name', TextType::class, [
                 'label' => 'Nom'
             ])
-            ->add('description', TextType::class, [
+            ->add('description', TextareaType::class, [
                 'label' => 'Description'
             ])
-            ->add('typeEntreprise', ChoiceType::class, [
-                'label' => 'Type d\'entreprise',
-                // 'choices' => [
-                //     $options['typeEntreprise']
-                // ]
+            ->add('typeEntreprise', EntityType::class, [
+                'class' => TypeEntreprise::class,
+                'choice_label' => 'name',
+                'choice_value' => function(TypeEntreprise $typeEntreprise){
+                    return $typeEntreprise ? $typeEntreprise->getId() : '';
+                },
             ])
             ->add('Enregistrer', SubmitType::class)
         ;
@@ -37,7 +38,6 @@ class EntrepriseCreationFormType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Entreprise::class,
-            'typeEntreprise' => [],
         ]);
     }
 }
