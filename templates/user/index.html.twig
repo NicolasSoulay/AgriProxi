@@ -32,7 +32,7 @@
                     <li><span class="bold">Nom:</span> {{ entreprise.name }}</li>
                     <li><span class="bold">Descritpion:</span> {{ entreprise.description }}</li>
                 </ul>
-                <a class="link-update" href="#"><button class="btn-link-update"><ion-icon name="settings-sharp"></ion-icon>Modifier</button></a>
+                <a class="link-update" href="{{path('updateEntreprise',{ id: entreprise.id })}}"><button class="btn-link-update"><ion-icon name="settings-sharp"></ion-icon>Modifier</button></a>
             </div>
             <div id="card-adress">
                 <h3>{{ (adresses|length == 1) ? 'Mon adresse' : 'Mes Adresses' }}</h3>
@@ -44,7 +44,7 @@
                         <li><span class="bold">Code Postal:</span> {{ adresse.zipCode }}</li>
                         <li><span class="bold">Ville:</span> {{ adresse.ville }}</li>
                     </ul>
-                    <a class="link-update" href="#"><button class="btn-link-update"><ion-icon name="settings-sharp"></ion-icon>Modifier</button></a>
+                    <a class="link-update" href="{{path('updateAdresse',{ id: adresse.id })}}"><button class="btn-link-update"><ion-icon name="settings-sharp"></ion-icon>Modifier</button></a>
                 </div>
                 {% endfor %}
             </div>
