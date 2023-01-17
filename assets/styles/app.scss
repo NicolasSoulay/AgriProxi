@@ -1,35 +1,4 @@
-@font-face {
-    font-family: poppins;
-    src: url(../fonts/Poppins/Poppins-Regular.ttf);
-}
-
-@font-face {
-    font-family: poppins-b;
-    src: url(../fonts/Poppins/Poppins-Bold.ttf);
-}
-
-@font-face {
-    font-family: poppins-l;
-    src: url(../fonts/Poppins/Poppins-Light.ttf);
-}
-
-@font-face {
-    font-family: sansita;
-    src: url(../fonts/Sansita/Sansita-Regular.ttf);
-}
-
-@font-face {
-    font-family: exo;
-    src: url(../fonts/Exo/static/Exo-Medium.ttf);
-}
-
-$green : #31B86B;
-$light-green : #DFFFB6;
-$red : #FE6C6C;
-$nude : #FFF3B6;
-$yellow : #FFE975;
-$blue : #84C3DB; 
-
+@import './utility.scss';
 
 
 h1 {
@@ -67,6 +36,18 @@ li, a, label {
     font-size: 20px;
     color: white;
     background-color: $red;
+    border-style: none;
+    border-radius: 10px ;
+    padding: 10px;
+    padding-left: 30px;
+    padding-right: 30px;
+}
+
+.btn_link_green {
+    font-family: exo;
+    font-size: 20px;
+    color: white;
+    background-color: $green;
     border-style: none;
     border-radius: 10px ;
     padding: 10px;
