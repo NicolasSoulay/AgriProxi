@@ -1,13 +1,13 @@
 @import './utility.scss';
 
 body {
-    height: 100vh;
+    height: 90vh;
     overflow-y: hidden;
     #products{
         display: flex;
         height: inherit;
         #map { 
-            height: 98%; 
+            height: 100%; 
             width: 1200px;
             border-radius: 20px;
             border: solid 2px;
@@ -26,7 +26,8 @@ body {
 
 #search_result {
     overflow: scroll;
-    height: 85vh;
+    height: 90%;
+    overflow-x: hidden;
 }
 
 .product_card{
