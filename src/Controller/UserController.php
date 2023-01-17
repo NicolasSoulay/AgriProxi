@@ -20,6 +20,9 @@ class UserController extends AbstractController
         ]);
     }
 
+    
+
+    // Page de création de User
     #[Route('/create_user', name: 'createUser')]
     public function createUser(UserRepository $userRepo, Request $request): Response
     {   

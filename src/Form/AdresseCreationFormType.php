@@ -2,29 +2,33 @@
 
 namespace App\Form;
 
-use App\Entity\Entreprise;
-use App\Entity\TypeEntreprise;
+use App\Entity\Adresse;
+use App\Entity\Ville;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class EntrepriseCreationFormType extends AbstractType
+class AdresseCreationFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
-    {   
+    {
         $builder
-            ->add('name', TextType::class, [
-                'label' => 'Nom'
+            ->add('label', TextType::class, [
+                'label' => 'Adresse'
             ])
-            ->add('description', TextareaType::class, [
-                'label' => 'Description'
+            ->add('complement', TextType::class, [
+                'label' => 'Complément',
+                'required' => false
             ])
-            ->add('typeEntreprise', EntityType::class, [
-                'class' => TypeEntreprise::class,
+            ->add('zip_code', TextType::class, [
+                'label' => 'Code postal'
+            ])
+            ->add('ville', EntityType::class, [
+                'class' => Ville::class,
                 'choice_label' => 'name',
             ])
             ->add('Enregistrer', SubmitType::class)
@@ -34,7 +38,7 @@ class EntrepriseCreationFormType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => Entreprise::class,
+            'data_class' => Adresse::class,
         ]);
     }
 }
