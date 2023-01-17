@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Adresse;
 use App\Entity\User;
 use App\Form\UserCreationFormType;
 use App\Repository\UserRepository;
@@ -12,17 +13,17 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class UserController extends AbstractController
 {
+    // Page d'affichage dans Mon compte/ Mes informations
     #[Route('/user', name: 'app_user')]
     public function index(): Response
     {   
         $user = $this->getUser();
         $entreprise = $user->getEntreprise();
         $adresses = $entreprise->getAdresses();
-        //var_dump($entreprise);
         return $this->render('user/index.html.twig', [
             'user' => $user,
             'entreprise' => $entreprise,
-            'adresses' => $adresses
+            'adresses' => $adresses,
         ]);
     }
 

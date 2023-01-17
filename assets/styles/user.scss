@@ -1,0 +1,39 @@
+@import './utility.scss';
+
+#container-profil{
+    margin: 50px 50px;
+    #cards-profil{
+        display: flex;
+        max-width: 80%;
+        .btn-link-update {
+            font-family: exo;
+            font-size: 15px;
+            color: white;
+            background-color: $red;
+            border-style: none;
+            border-radius: 10px ;
+            padding: 10px;
+            padding-left: 30px;
+            padding-right: 30px;
+        }
+        .link-update{
+
+        }
+        #card-user{
+            background-color: $nude;
+            min-width: 20%;
+            padding: 10px;
+            margin: 10px;
+        }
+        #card-entreprise{
+            background-color: $light-green;
+            padding: 10px;
+            margin: 10px;
+        }
+        #card-adress{
+            background-color: $blue;
+            padding: 10px;
+            margin: 10px;
+        }
+    }
+}

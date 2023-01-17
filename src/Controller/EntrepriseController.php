@@ -40,6 +40,7 @@ class EntrepriseController extends AbstractController
             $user->setEntreprise($entreprise);
             $userRepo->save($user, true);
             $message = 'L\'entreprise a bien été créée';
+            //return  $this->redirectToRoute('app_entreprise');
         }
         elseif($form->isSubmitted()){
             $message = 'Les informations ne sont pas valides, ou cette entreprise existe déjà';
@@ -63,6 +64,7 @@ class EntrepriseController extends AbstractController
             $adresse->setEntreprise($entreprise);
             $adresseRepo->save($adresse, true);
             $message = 'L\'adresse a bien été créée';
+            //return  $this->redirectToRoute('app_entreprise');
         }
         elseif($form->isSubmitted()){
             $message = 'Les informations ne sont pas valides';

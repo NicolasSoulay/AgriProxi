@@ -44,7 +44,6 @@
             {# </div> #}
         </nav>
         <div id="slider">
-        <h1 id="banner_title">AgriProxi, la livraison de produits frais & engagés!</h1>
         <img src="{{ asset('build/images/legumes.jpg') }}" alt="" id="slide" class="img_slide"/>
             <div id="precedent" onclick= "ChangeSlide(-1)">
                 <ion-icon name="chevron-back-outline"></ion-icon>
@@ -69,7 +68,7 @@
     }
     document.getElementById("slide").src = "build/images/" + slide[numero];
     }
-    setInterval("ChangeSlide(1)", 4000);
+    setInterval("ChangeSlide(1)", 40000);
 
     </script>
 </html>
