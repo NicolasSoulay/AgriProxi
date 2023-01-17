@@ -11,26 +11,33 @@ import "./styles/app.scss";
 // start the Stimulus application
 import "./bootstrap";
 
-const slide = ["Slide1.jpg", "Slide2.jpg", "Slide1.jpg", "Slide2.jpg"];
-let numero = 0;
+//-------------- BURGER MENU --------------
 
-function ChangeSlide(sens) {
-  alert("pouet");
-  document.getElementById("slide").src = "images/Slide2.jpg";
-}
-/* <script>
-const slide = [{{ asset('images/Slide1.jpg') }}, {{ asset('images/Slide2.jpg') }}];
-let numero = 0;
-{# function ChangeSlide(sens) {
-  numero = numero + sens;
-  if (numero < 0) numero = slide.length - 1;
-  if (numero > slide.length - 1) numero = 0;
-  setInterval("ChangeSlide(1)", 4000);
-  document.getElementById("slide").src = slide[numero];
-} #}
-{# 'images/Slide2.jpg' #}
-function ChangeSlide(sens) {
-    
-    document.getElementById("slide").src = {{ asset('images/Slide2.jpg') }}
-} */
-// </script>
+// On déclare une variable correspondant à l'élément du DOM du bouton burger
+const burgerBouton = document.querySelector(".navburger");
+
+// On déclare une variable correspondant à l'élément du DOM du menu burger
+// const burgerMenu = document.getElementsByClassName("navbar_dekstop");
+const burgerMenu = document.querySelector(".navlist");
+
+//On déclare des variables pointant sur le main et le footer
+const main = document.querySelector("main");
+const footer = document.querySelector("footer");
+
+//On crée un évènement sur le clic du bouton burger pour afficher le menu
+burgerBouton.addEventListener("click", () => {
+  if (burgerMenu.classList.contains("transition_nav")) {
+    burgerMenu.classList.remove("transition_nav");
+  } else {
+    burgerMenu.classList.add("transition_nav");
+  }
+});
+
+//On crée un évènement pour pouvoir fermer le menu en cliquant n'importe où sur l'écran
+main.addEventListener("click", () => {
+  burgerMenu.classList.remove("transition_nav");
+});
+
+footer.addEventListener("click", () => {
+  burgerMenu.classList.remove("transition_nav");
+});
