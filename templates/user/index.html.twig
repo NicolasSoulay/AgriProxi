@@ -14,39 +14,41 @@
 
 {% block body %}
 <div id="container-profil">
-    <h2>Mon profil</h2>
-    <div id="cards-profil">
-        <div id="card-user">
-            <h3>Mon utilisateur</h3>
-            <ul>
-                <li>Nom: {{ user.lastName }}</li>
-                <li>Prénom: {{ user.firstName }}</li>
-                <li>Email: {{ user.email }}</li>
-            </ul>
-            <a class="link-update" href="#"><button class="btn-link-update"><ion-icon name="settings-sharp"></ion-icon>Modifier</button></a>
-        </div>
-        <div id="card-entreprise">
-            <h3>Mon entreprise</h3>
-            <ul>
-                <li>Nom: {{ entreprise.name }}</li>
-                <li>Descritpion: {{ entreprise.description }}</li>
-            </ul>
-            <a class="link-update" href="#"><button class="btn-link-update"><ion-icon name="settings-sharp"></ion-icon>Modifier</button></a>
-        </div>
-        <div id="card-adress">
-            <h3>{{ (adresses|length == 1) ? 'Mon adresse' : 'Mes Adresses' }}</h3>
-            {% for adresse in adresses %}
-            <div>
+    <div>
+        <h2>Mon profil</h2>
+        <div id="cards-profil">
+            <div id="card-user">
+                <h3>Mon utilisateur</h3>
                 <ul>
-                    <li>Label: {{ adresse.label }}</li>
-                    <li>Complément: {{ adresse.complement }}</li>
-                    <li>Code Postal: {{ adresse.zipCode }}</li>
-                    <li>Ville: {{ adresse.ville }}</li>
+                    <li>Nom: {{ user.lastName }}</li>
+                    <li>Prénom: {{ user.firstName }}</li>
+                    <li>Email: {{ user.email }}</li>
                 </ul>
                 <a class="link-update" href="#"><button class="btn-link-update"><ion-icon name="settings-sharp"></ion-icon>Modifier</button></a>
             </div>
-            {% endfor %}
-        </div>
-    <div>
+            <div id="card-entreprise">
+                <h3>Mon entreprise</h3>
+                <ul>
+                    <li>Nom: {{ entreprise.name }}</li>
+                    <li>Descritpion: {{ entreprise.description }}</li>
+                </ul>
+                <a class="link-update" href="#"><button class="btn-link-update"><ion-icon name="settings-sharp"></ion-icon>Modifier</button></a>
+            </div>
+            <div id="card-adress">
+                <h3>{{ (adresses|length == 1) ? 'Mon adresse' : 'Mes Adresses' }}</h3>
+                {% for adresse in adresses %}
+                <div>
+                    <ul>
+                        <li>Label: {{ adresse.label }}</li>
+                        <li>Complément: {{ adresse.complement }}</li>
+                        <li>Code Postal: {{ adresse.zipCode }}</li>
+                        <li>Ville: {{ adresse.ville }}</li>
+                    </ul>
+                    <a class="link-update" href="#"><button class="btn-link-update"><ion-icon name="settings-sharp"></ion-icon>Modifier</button></a>
+                </div>
+                {% endfor %}
+            </div>
+        <div>
+    </div>
 </div>
 {% endblock %}

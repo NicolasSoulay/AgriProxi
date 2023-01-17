@@ -1,10 +1,12 @@
 @import './utility.scss';
 
 #container-profil{
-    margin: 50px 50px;
+    margin: 50px 0px;
+    display: flex;
+    justify-content: center;
     #cards-profil{
         display: flex;
-        max-width: 80%;
+        width: 100%;
         .btn-link-update {
             font-family: exo;
             font-size: 15px;
@@ -21,7 +23,6 @@
         }
         #card-user{
             background-color: $nude;
-            min-width: 20%;
             padding: 10px;
             margin: 10px;
         }
