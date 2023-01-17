@@ -14,23 +14,23 @@
 
 {% block body %}
 <div id="container-profil">
-    <div>
-        <h2>Mon profil</h2>
+    <div id="align">
+        <h1 id="titre-page-user">Mon profil</h1>
         <div id="cards-profil">
             <div id="card-user">
                 <h3>Mon utilisateur</h3>
                 <ul>
-                    <li>Nom: {{ user.lastName }}</li>
-                    <li>Prénom: {{ user.firstName }}</li>
-                    <li>Email: {{ user.email }}</li>
+                    <li><span class="bold">Nom:</span> {{ user.lastName }}</li>
+                    <li><span class="bold">Prénom:</span> {{ user.firstName }}</li>
+                    <li><span class="bold">Email:</span> {{ user.email }}</li>
                 </ul>
-                <a class="link-update" href="#"><button class="btn-link-update"><ion-icon name="settings-sharp"></ion-icon>Modifier</button></a>
+                <a class="link-update" href="{{path('updateUser',{ id: user.id })}}"><button class="btn-link-update"><ion-icon name="settings-sharp"></ion-icon>Modifier</button></a>
             </div>
             <div id="card-entreprise">
                 <h3>Mon entreprise</h3>
                 <ul>
-                    <li>Nom: {{ entreprise.name }}</li>
-                    <li>Descritpion: {{ entreprise.description }}</li>
+                    <li><span class="bold">Nom:</span> {{ entreprise.name }}</li>
+                    <li><span class="bold">Descritpion:</span> {{ entreprise.description }}</li>
                 </ul>
                 <a class="link-update" href="#"><button class="btn-link-update"><ion-icon name="settings-sharp"></ion-icon>Modifier</button></a>
             </div>
@@ -39,10 +39,10 @@
                 {% for adresse in adresses %}
                 <div>
                     <ul>
-                        <li>Label: {{ adresse.label }}</li>
-                        <li>Complément: {{ adresse.complement }}</li>
-                        <li>Code Postal: {{ adresse.zipCode }}</li>
-                        <li>Ville: {{ adresse.ville }}</li>
+                        <li><span class="bold">Label:</span> {{ adresse.label }}</li>
+                        <li><span class="bold">Complément:</span> {{ adresse.complement }}</li>
+                        <li><span class="bold">Code Postal:</span> {{ adresse.zipCode }}</li>
+                        <li><span class="bold">Ville:</span> {{ adresse.ville }}</li>
                     </ul>
                     <a class="link-update" href="#"><button class="btn-link-update"><ion-icon name="settings-sharp"></ion-icon>Modifier</button></a>
                 </div>
