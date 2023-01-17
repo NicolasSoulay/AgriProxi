@@ -158,6 +158,7 @@ nav > ul li:hover .sub-menu {
 
 #slider {
     width: 100%;
+    height: 220px;
     margin: auto;
     display: flex;
     align-items: center;
@@ -165,7 +166,7 @@ nav > ul li:hover .sub-menu {
 
 .img_slide {
     width: 100%;
-    height: 275px;
+    height: 100%;
     object-fit: cover;
 }
 

@@ -15,6 +15,7 @@ const slide = ["Slide1.jpg", "Slide2.jpg", "Slide1.jpg", "Slide2.jpg"];
 let numero = 0;
 
 function ChangeSlide(sens) {
+  alert("pouet");
   document.getElementById("slide").src = "images/Slide2.jpg";
 }
 /* <script>
