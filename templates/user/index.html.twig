@@ -24,7 +24,7 @@
                     <li><span class="bold">Prénom:</span> {{ user.firstName }}</li>
                     <li><span class="bold">Email:</span> {{ user.email }}</li>
                 </ul>
-                <a class="link-update" href="{{path('updateUser',{ id: user.id })}}"><button class="btn-link-update"><ion-icon name="settings-sharp"></ion-icon>Modifier</button></a>
+                <a class="link" href="{{path('updateUser',{ id: user.id })}}"><button class="btn-link-update"><ion-icon name="settings-sharp"></ion-icon>Modifier</button></a>
             </div>
             <div id="card-entreprise">
                 <h3>Mon entreprise</h3>
@@ -32,10 +32,13 @@
                     <li><span class="bold">Nom:</span> {{ entreprise.name }}</li>
                     <li><span class="bold">Descritpion:</span> {{ entreprise.description }}</li>
                 </ul>
-                <a class="link-update" href="{{path('updateEntreprise',{ id: entreprise.id })}}"><button class="btn-link-update"><ion-icon name="settings-sharp"></ion-icon>Modifier</button></a>
+                <a class="link" href="{{path('updateEntreprise',{ id: entreprise.id })}}"><button class="btn-link-update"><ion-icon name="settings-sharp"></ion-icon>Modifier</button></a>
             </div>
             <div id="card-adress">
-                <h3>{{ (adresses|length == 1) ? 'Mon adresse' : 'Mes Adresses' }}</h3>
+                <div >
+                    <h3>{{ (adresses|length == 1) ? 'Mon adresse' : 'Mes Adresses' }}</h3>
+                    <a class="link" href="{{path('createAdresse')}}"><button class="btn-link-create"><ion-icon name="add-circle-sharp"></ion-icon>Ajouter</button></a>
+                </div>
                 {% for adresse in adresses %}
                 <div>
                     <ul>
