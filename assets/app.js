@@ -15,14 +15,9 @@ const slide = ["Slide1.jpg", "Slide2.jpg", "Slide1.jpg", "Slide2.jpg"];
 let numero = 0;
 
 function ChangeSlide(sens) {
-  numero = numero + sens;
-  if (numero < 0) numero = slide.length - 1;
-  if (numero > slide.length - 1) numero = 0;
-  setInterval("ChangeSlide(1)", 4000);
-  document.getElementById("slide").src = slide[numero];
+  document.getElementById("slide").src = "images/Slide2.jpg";
 }
-{
-  /* <script>
+/* <script>
 const slide = [{{ asset('images/Slide1.jpg') }}, {{ asset('images/Slide2.jpg') }}];
 let numero = 0;
 {# function ChangeSlide(sens) {
@@ -37,5 +32,4 @@ function ChangeSlide(sens) {
     
     document.getElementById("slide").src = {{ asset('images/Slide2.jpg') }}
 } */
-}
 // </script>
