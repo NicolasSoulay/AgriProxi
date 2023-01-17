@@ -20,24 +20,43 @@
 
     <div id="product_search">
         <form id="search_filter">
-            <label for="categorie">Catégorie:</label>
+            <label for="categorie"></label>
             <select name ="categorie" id="categorie">
-                <option value="">Choisissez une catégorie:</option>
+                <option value="">Catégorie:</option>
+                {% for categorie in categories %}
+                    <option value=' {{categorie.id}} '> {{categorie.name}} </option>
+                {% endfor %}
             </select>
-            <label for="subCategorie">Sous-catégorie:</label>
+            <label for="subCategorie"></label>
             <select name ="subCategorie" id="subCategorie">
-                <option value="">Choisissez une sous-catégorie:</option>
+                <option value="">Sous-catégorie:</option>
                 {% for subCategorie in subCategories %}
                     <option value=' {{subCategorie.id}} '> {{subCategorie.name}} </option>
                 {% endfor %}
             </select>
-            <button class="btn_link" type="submit">Rechercher</button>
+            <label for="adresse"></label>
+            <select name="adresse" id="adresse">
+                <option value ="">Adresse</option>
+            </select>
+            <input class="btn_link" type="submit" value="Rechercher"></select>
         </form>
 
         <div id="search_result">
             {% for produit in produits %}
-                <h3> {{produit.name}} </h3>
-                <p> {{produit.description}} </p>
+            <div class="product_card">
+                <div class="product_desc">
+                    <div class="card_image">
+                        <img src="{{ asset('build/images/placeholder_612x612.jpg') }}" alt="product_image" width="100" height="100">
+                    </div>
+                    <div class="card_text">
+                        <h3> {{produit.name}}  producteurplaceholder</h3>
+                        <p> {{produit.description}} </p>
+                    </div>
+                </div>
+                <div class="card_btn">
+                    <button class="btn_link_green">Ajouter à votre liste de commande</button>
+                </div>
+            </div>
             {% endfor %}
         </div>
     </div>

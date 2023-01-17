@@ -1,41 +1,10 @@
-@font-face {
-    font-family: poppins;
-    src: url(../fonts/Poppins/Poppins-Regular.ttf);
-}
-
-@font-face {
-    font-family: poppins-b;
-    src: url(../fonts/Poppins/Poppins-Bold.ttf);
-}
-
-@font-face {
-    font-family: poppins-l;
-    src: url(../fonts/Poppins/Poppins-Light.ttf);
-}
-
-@font-face {
-    font-family: sansita;
-    src: url(../fonts/Sansita/Sansita-Regular.ttf);
-}
-
-@font-face {
-    font-family: exo;
-    src: url(../fonts/Exo/static/Exo-Medium.ttf);
-}
-
-$green : #31B86B;
-$light-green : #DFFFB6;
-$red : #FE6C6C;
-$nude : #FFF3B6;
-$yellow : #FFE975;
-$blue : #84C3DB; 
-
+@import './utility.scss';
 
 
 h1 {
     font-family: poppins-b;
-    font-size: 32px;
-    color: black;
+    font-size: 36px;
+    color: fffff;
 }
 
 h2{
@@ -75,8 +44,20 @@ ul, li, a, label {
     padding-right: 30px;
 }
 
+.btn_link_green {
+    font-family: exo;
+    font-size: 20px;
+    color: white;
+    background-color: $green;
+    border-style: none;
+    border-radius: 10px ;
+    padding: 10px;
+    padding-left: 30px;
+    padding-right: 30px;
+}
 nav {
     width: 100%;
+    height: 70px;
     margin: 0 auto;
     background-color: white;
     position: sticky;
@@ -89,6 +70,17 @@ nav {
     position: absolute;
     top: 15px;
     left: 19px;
+}
+
+//ICON BURGER MENU
+.navburger{
+    display: none;
+}
+
+.navburger_icon{
+    color: $blue;
+    font-size: 35px;
+    pointer-events: none;
 }
 
 //LIST ITEM
@@ -134,7 +126,6 @@ nav a{
     right: 20px;
     width: 11%;
     z-index: 1000;
-    
 }
 
 //ITEM MENU DEROULANT
@@ -158,16 +149,27 @@ nav > ul li:hover .sub-menu {
 
 #slider {
     width: 100%;
-    height: 220px;
+    height: 300px;
     margin: auto;
     display: flex;
     align-items: center;
+
 }
 
 .img_slide {
     width: 100%;
     height: 100%;
     object-fit: cover;
+
+}
+
+#banner_title{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    white-space: nowrap;
+    color: white
 }
 
 #precedent,
@@ -176,10 +178,10 @@ nav > ul li:hover .sub-menu {
     transition: opacity 0.3s ease;
     opacity: 0;
     position: absolute;
-    font-size: 100px;
-    color: rgba(220, 220, 220, 0.8);
-    background-color: rgba(0, 0, 0, 0.8);
-    padding: 10px;
+    font-size: 50px;
+    color: #ffffff;
+    background-color: rgba(248, 249, 250, 0.368627451);
+    padding: 110px 0 110px 0;
 }
 
 #precedent {
@@ -193,4 +195,42 @@ nav > ul li:hover .sub-menu {
 #slider:hover #precedent,
 #slider:hover #suivant {
     opacity: 1;
+}
+
+@media (max-width: 650px){
+
+
+//ICON BURGER MENU
+.navburger{
+    display: block;
+    cursor: pointer;
+    border: none;
+    background-color: transparent;
+    position: absolute;
+    top: 15px;
+    right: 19px;
+}
+
+.navlist {
+    visibility: hidden;
+    display: flex;
+    flex-direction: column;
+    position:absolute;
+    right: 0;
+    border: none;
+    padding: 0;
+    top: 70px;
+    background-color: white;
+}
+
+.transition_nav{
+    transition: all 0.3s ease-in-out;
+    visibility: visible;
+}
+
+//MENU DEROULANT
+.sub-menu {
+    visibility: hidden;
+}
+
 }
