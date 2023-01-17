@@ -32,6 +32,10 @@ ul, li, a, label {
     list-style-type:none
 }
 
+a:hover {
+    color: $red;
+}
+
 .btn_link {
     font-family: exo;
     font-size: 20px;
@@ -78,7 +82,7 @@ nav {
 }
 
 .navburger_icon{
-    color: $blue;
+    color: $red;
     font-size: 35px;
     pointer-events: none;
 }
@@ -107,7 +111,7 @@ nav a{
 }
 .nav_item a:hover{
     color: black;
-    border-bottom: 2px solid #FE6C6C;
+    border-bottom: 2px solid $red;
 }
 
 //ITEM MENU DEROULANT
@@ -123,8 +127,8 @@ nav a{
     background-color: white;
     padding: 0 9px;
     position: absolute;
-    right: 20px;
-    width: 11%;
+    right: 10px;
+    width: 140px;
     z-index: 1000;
 }
 
@@ -136,8 +140,8 @@ nav a{
 }
 
 .sub_item a:hover{
-    color: #FE6C6C;
-    border-bottom: 2px solid #FE6C6C;
+    color: $red;
+    border-bottom: 2px solid $red;
     background-color: RGBa(200,200,200,0.1);
 }
 
@@ -153,23 +157,12 @@ nav > ul li:hover .sub-menu {
     margin: auto;
     display: flex;
     align-items: center;
-
 }
 
 .img_slide {
     width: 100%;
     height: 100%;
-    object-fit: cover;
-
-}
-
-#banner_title{
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    white-space: nowrap;
-    color: white
+    object-fit: contain;
 }
 
 #precedent,
@@ -198,39 +191,125 @@ nav > ul li:hover .sub-menu {
 }
 
 @media (max-width: 650px){
+    //ICON BURGER MENU
+    .navburger{
+        display: block;
+        cursor: pointer;
+        border: none;
+        background-color: transparent;
+        position: absolute;
+        top: 8px;
+        right: 19px;
+    }
 
+    //BURGER LIST
+    .navlist {
+        visibility: hidden;
+        display: flex;
+        flex-direction: column;
+        position:absolute;
+        right: 0;
+        border: none;
+        padding: 0;
+        top: 70px;
+        background-color: white;
+    }
 
-//ICON BURGER MENU
-.navburger{
-    display: block;
-    cursor: pointer;
-    border: none;
-    background-color: transparent;
+    //TRANSITION OPEN/CLOSE
+    .transition_nav{
+        transition: all 0.3s ease-in-out;
+        visibility: visible;
+    }
+
+    .sub-menu {
+        visibility: hidden;
+    }
+
+}
+
+//FOOTER
+footer{
+    background-image: url('../images/footer.png');
+    object-fit: cover;
+    color: #FFFFFF;
+    width: 100%;
+    height: 225px;
     position: absolute;
-    top: 15px;
-    right: 19px;
+    bottom: 0;
+    left: 0;
 }
 
-.navlist {
-    visibility: hidden;
+.footer_block{
+    margin: 15px;
+    text-align: center;
+    
+}
+
+.footer_p {
+    font-size: 11px;
+    color: #FFFFFF;
+}
+
+/* BLOC GAUCHE "CONTACT" */
+#footer_subtitle {
+    font-weight: bold;
+}
+
+/* BLOC CENTRAL : RESEAUX SOCIAUX */
+#footer_title{
+    font-size: 14px;
+    color: #FFFFFF;
+}
+
+.footer_icon{
     display: flex;
-    flex-direction: column;
-    position:absolute;
-    right: 0;
-    border: none;
-    padding: 0;
-    top: 70px;
-    background-color: white;
+    justify-content: center;
+    margin: 10px;
+}
+  
+/* FORMATAGE CERCLE/ICON */
+.icon {
+    margin: 0 10px;
+    padding: 0 8px;
+    background-color: #ffffff;
+    border-radius: 50%;
+    font-size: 18px;
+    transition: ease-in-out 0.5s;
 }
 
-.transition_nav{
-    transition: all 0.3s ease-in-out;
-    visibility: visible;
+.icon:hover{
+    transform: rotate(180deg);
 }
 
-//MENU DEROULANT
-.sub-menu {
-    visibility: hidden;
+/* BLOC DROIT : MENTIONS LEGALES */
+#footer_link{
+    font-weight: bold;
+    text-decoration: underline;
+    text-transform: capitalize;
 }
 
+
+/* ------------------RESPONSIVE------------------ */
+@media (min-width: 650px) {
+    footer {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+    }
+
+    footer > * {
+        width : 25%;
+    }
+
+    #footer_title {
+        font-size: 15px;
+    }
+
+    .footer_block--secondary {
+        padding: 0 50px;
+        border-left: solid 1px;
+        border-right: solid 1px;
+        border-color: #000000 ;
+        width: 50%;
+    }
 }
