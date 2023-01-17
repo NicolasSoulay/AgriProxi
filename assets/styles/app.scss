@@ -1,3 +1,196 @@
-body {
-    background-color: lightgray;
+@font-face {
+    font-family: poppins;
+    src: url(../fonts/Poppins/Poppins-Regular.ttf);
+}
+
+@font-face {
+    font-family: poppins-b;
+    src: url(../fonts/Poppins/Poppins-Bold.ttf);
+}
+
+@font-face {
+    font-family: poppins-l;
+    src: url(../fonts/Poppins/Poppins-Light.ttf);
+}
+
+@font-face {
+    font-family: sansita;
+    src: url(../fonts/Sansita/Sansita-Regular.ttf);
+}
+
+@font-face {
+    font-family: exo;
+    src: url(../fonts/Exo/static/Exo-Medium.ttf);
+}
+
+$green : #31B86B;
+$light-green : #DFFFB6;
+$red : #FE6C6C;
+$nude : #FFF3B6;
+$yellow : #FFE975;
+$blue : #84C3DB; 
+
+
+
+h1 {
+    font-family: poppins-b;
+    font-size: 32px;
+    color: black;
+}
+
+h2{
+    font-family: poppins-b;
+    font-size: 24px;
+    color: $green;
+}
+
+h3 {
+    font-family: sansita;
+    font-size: 18px;
+    color: black;
+}
+
+p {
+    font-family: poppins-l;
+    font-size: 13px;
+    color: black;
+}
+
+ul, li, a, label {
+    font-family: exo;
+    font-size: 13px;
+    color: black;
+    list-style-type:none
+}
+
+.btn_link {
+    font-family: exo;
+    font-size: 20px;
+    color: white;
+    background-color: $red;
+    border-style: none;
+    border-radius: 10px ;
+    padding: 10px;
+    padding-left: 30px;
+    padding-right: 30px;
+}
+
+nav {
+    width: 100%;
+    margin: 0 auto;
+    background-color: white;
+    position: sticky;
+    top: 0px;
+}
+
+//LOGO
+.logo{
+    width:150px;
+    position: absolute;
+    top: 15px;
+    left: 19px;
+}
+
+//LIST ITEM
+.navlist {
+    display: flex;
+    justify-content: flex-end;
+    text-transform: uppercase;
+    padding: 15px 35px 0 35px;
+    font-size: 14px;
+}
+
+//ITEM
+nav a{
+    display: block;
+    border-bottom: 2px solid transparent;
+    padding: 10px 0px;
+    text-decoration: none;
+}
+
+.nav_item {
+    padding: 0 20px 0 20px;
+    border-right: solid 1px;
+
+}
+.nav_item a:hover{
+    color: black;
+    border-bottom: 2px solid #FE6C6C;
+}
+
+//ITEM MENU DEROULANT
+.nav_item--Secondary{
+    cursor: pointer;
+    border-right: 0;
+}
+
+//MENU DEROULANT
+.sub-menu {
+    display: none;
+    box-shadow: 0px 1px 2px #CCC;
+    background-color: white;
+    padding: 0 9px;
+    position: absolute;
+    right: 20px;
+    width: 11%;
+    z-index: 1000;
+    
+}
+
+//ITEM MENU DEROULANT
+.sub_item {
+    width: 100%;
+    float: none;
+    text-align: left;
+}
+
+.sub_item a:hover{
+    color: #FE6C6C;
+    border-bottom: 2px solid #FE6C6C;
+    background-color: RGBa(200,200,200,0.1);
+}
+
+
+//SUB-MENU :: BLOCK
+nav > ul li:hover .sub-menu {
+    display: block;
+}
+
+#slider {
+    width: 100%;
+    height: 220px;
+    margin: auto;
+    display: flex;
+    align-items: center;
+}
+
+.img_slide {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+#precedent,
+#suivant {
+    cursor: pointer;
+    transition: opacity 0.3s ease;
+    opacity: 0;
+    position: absolute;
+    font-size: 100px;
+    color: rgba(220, 220, 220, 0.8);
+    background-color: rgba(0, 0, 0, 0.8);
+    padding: 10px;
+}
+
+#precedent {
+    left: 0;
+}
+
+#suivant {
+    right: 0;
+}
+
+#slider:hover #precedent,
+#slider:hover #suivant {
+    opacity: 1;
 }

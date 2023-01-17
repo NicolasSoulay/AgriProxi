@@ -1,0 +1,18 @@
+
+body {
+    height: 100vh;
+    
+    #products{
+        display: flex;
+        height: inherit;
+        #map { 
+            height: 98%; 
+            width: 1200px;
+            position: fixed;
+        }
+        #product_search {
+            width: 30%;
+            padding-left: 65%;
+        }
+    }
+}
