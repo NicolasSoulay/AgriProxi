@@ -9,14 +9,34 @@
 </style>
 
 <div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/wamp64/www/AgriProxi/src/Controller/UserController.php'|file_link(0) }}">src/Controller/UserController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/wamp64/www/AgriProxi/templates/user/index.html.twig'|file_link(0) }}">templates/user/index.html.twig</a></code></li>
-    </ul>
-
-    <a href="{{path('createUser')}}">Création de compte</a>
+    <h1>Mon profil</h1>
+    <div>
+        <div>
+            <h2>Mes utilisateur</h2>
+            <ul>
+                <li>Nom: {{ user.lastName }}</li>
+                <li>Prénom: {{ user.firstName }}</li>
+                <li>Email: {{ user.email }}</li>
+            </ul>
+        </div>
+        <div>
+            <h2>Mon entreprise</h2>
+            <ul>
+                <li>Nom: {{ entreprise.name }}</li>
+                <li>Descritpion: {{ entreprise.description }}</li>
+            </ul>
+        </div>
+        <div>
+            <h2>Mon adresse</h2>
+            {# {% for adresses as adresse %}
+            <ul>
+                <li>Label: {{ adresse.label }}</li>
+                <li>Code Postal: {{ adresse.zipCode }}</li>
+                <li>Ville: {{ adresse.ville }}</li>
+                <li>Email: {{ adresse.departement }}</li>
+            </ul>
+            {% endfor %} #}
+        </div>
+    <div>
 </div>
 {% endblock %}

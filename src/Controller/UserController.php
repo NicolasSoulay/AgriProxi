@@ -14,13 +14,17 @@ class UserController extends AbstractController
 {
     #[Route('/user', name: 'app_user')]
     public function index(): Response
-    {
+    {   
+        $user = $this->getUser();
+        $entreprise = $user->getEntreprise();
+        $adresses = $entreprise->getAdresses();
+        //var_dump($entreprise);
         return $this->render('user/index.html.twig', [
-            'controller_name' => 'UserController',
+            'user' => $user,
+            'entreprise' => $entreprise,
+            'adresses' => $adresses
         ]);
     }
-
-    
 
     // Page de création de User
     #[Route('/create_user', name: 'createUser')]
