@@ -7,7 +7,6 @@
 
     #titre-page-user{
         text-align: center;
-        color: $green;
     }
 
     #align{
@@ -28,12 +27,24 @@
                 margin-right: 5px;
             }
 
-            .link-update{
+            .link{
                 margin-left: 20px;
                 width: 100%;
             }
     
             .btn-link-update {
+                font-family: exo;
+                font-size: 15px;
+                color: white;
+                background-color: $green;
+                border-style: none;
+                border-radius: 10px ;
+                padding: 10px;
+                padding-left: 30px;
+                padding-right: 30px;
+            }
+
+            .btn-link-delete{
                 font-family: exo;
                 font-size: 15px;
                 color: white;

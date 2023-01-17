@@ -106,4 +106,11 @@ class EntrepriseController extends AbstractController
     {
         return $this->formAdresse($adresse, $adresseRepo, $request);
     }
+
+    #[Route('/entreprise/delete_adresse/{id}', name: 'deleteAdresse')]
+    public function deleteAdresse(Adresse $adresse, AdresseRepository $adresseRepo):Response
+    {
+        $adresseRepo->remove($adresse, true);
+        return $this->redirectToRoute('app_user');
+    }
 }
