@@ -2,20 +2,23 @@
 
 body {
     height: 90vh;
-    overflow-y: hidden;
-    #products{
-        display: flex;
+    main{
+        overflow-y: hidden;
         height: inherit;
-        #map { 
-            height: 100%; 
-            width: 1200px;
-            border-radius: 20px;
-            border: solid 2px;
-            border-color: $blue;
-        }
-        #product_search {
-            width: 35%;
-            margin-left: 20px;
+        #products{
+            display: flex;
+            height: inherit;
+            #map { 
+                height: 100%; 
+                width: 1200px;
+                border-radius: 20px;
+                border: solid 2px;
+                border-color: $blue;
+            }
+            #product_search {
+                width: 35%;
+                margin-left: 20px;
+            }
         }
     }
 }
