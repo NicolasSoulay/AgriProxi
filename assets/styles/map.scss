@@ -1,15 +1,11 @@
 @import './utility.scss';
 
 body {
-    height: 90vh;
     main{
         overflow-y: hidden;
-        height: inherit;
         #products{
             display: flex;
-            height: inherit;
-            #map { 
-                height: 100%; 
+            #map {  
                 width: 1200px;
                 border-radius: 20px;
                 border: solid 2px;
