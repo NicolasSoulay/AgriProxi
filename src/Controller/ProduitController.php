@@ -20,15 +20,17 @@ class ProduitController extends AbstractController
         $userAdresses = $this->getUser()->getEntreprise()->getAdresses();
         $latitude = $this->getLatitudeFromUrlOrUser($userAdresses);
         $longitude = $this->getLongitudeFromUrlOrUser($userAdresses);
+        $zoomLevel = $this->getRadius($request->get("rayon", ''));
 
         return $this->render('produit/index.html.twig', [
             'controller_name' => 'ProduitController',
-            'produits' => $produitRepo->findBySubCategorie($subCategorie),
+            'produits' => $this->searchByCategorieOrSubCategorie($subCategorie, $categorie, $produitRepo),
             'subCategories' => $subCategorieRepo->findAll(),
             'categories' => $categorieRepo->findAll(),
             'adresses' => $userAdresses,
             'latitude' => $latitude,
             'longitude' => $longitude,
+            'zoomLevel' => $zoomLevel,
         ]);
     }
 
@@ -54,5 +56,33 @@ class ProduitController extends AbstractController
                 return $adresse->getLongitude();
             }
         }
+    }
+
+    public function getRadius($rayon)
+    {
+        switch ($rayon) {
+            case '10':
+                return 12;
+                break;
+            case '25':
+                return 11;
+                break;
+            case '50':
+                return 10;
+                break;
+            case '100':
+                return 9;
+                break;
+            default:
+                return 10;
+        }
+    }
+
+    public function searchByCategorieOrSubCategorie($subCat, $cat, $produitRepo)
+    {
+        if (!isset($_GET['subCategorie']) || $_GET['subCategorie'] === '') {
+            return $produitRepo->findByCategorie($cat);
+        }
+        return $produitRepo->findBySubCategorie($subCat);
     }
 }
