@@ -1,5 +1,9 @@
 @import './utility.scss';
 
+body { 
+    width: 100%;
+    height: 100%;
+}
 
 h1 {
     font-family: poppins-b;
@@ -34,6 +38,10 @@ ul, li, a, label {
 
 a:hover {
     color: $red;
+}
+
+main {
+    min-height: 100vh;
 }
 
 .btn_link {
@@ -234,9 +242,6 @@ footer{
     color: #FFFFFF;
     width: 100%;
     height: 225px;
-    position: relative;
-    bottom: 0;
-    left: 0;
 }
 
 .footer_block{

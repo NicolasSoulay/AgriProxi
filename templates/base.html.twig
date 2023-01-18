@@ -41,7 +41,7 @@
                 </li>
             </ul> 
         </nav>
-        {# <div id="slider">
+        <div id="slider">
             <img src="{{ asset('build/images/s11.png') }}" alt="" id="slide" class="img_slide"/>
             <div id="precedent">
                 <ion-icon name="chevron-back-outline"></ion-icon>
@@ -49,8 +49,10 @@
             <div id="suivant">
                 <ion-icon name="chevron-forward-outline"></ion-icon></div>
             </div>
-        </div>   #}
+        </div>  
+        <main>
         {% block body %}{% endblock %}
+        </main>
         <footer>
             <!-- BLOC GAUCHE -->
             <div class="footer_block">
