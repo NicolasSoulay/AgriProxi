@@ -1,24 +1,20 @@
 @import './utility.scss';
 
 body {
-    height: 90vh;
-    main{
-        overflow-y: hidden;
+    height: 100vh;
+    #products{
+        display: flex;
         height: inherit;
-        #products{
-            display: flex;
-            height: inherit;
-            #map { 
-                height: 100%; 
-                width: 1200px;
-                border-radius: 20px;
-                border: solid 2px;
-                border-color: $blue;
-            }
-            #product_search {
-                width: 35%;
-                margin-left: 20px;
-            }
+        #map { 
+            height: 98%; 
+            width: 1200px;
+            border-radius: 20px;
+            border: solid 2px;
+            border-color: $blue;
+        }
+        #product_search {
+            width: 35%;
+            margin-left: 20px;
         }
     }
 }
