@@ -2,35 +2,60 @@
 
 #container-boutique{
     margin: 20px 0 30px 20px;
-
-    .link{
-        margin-left: 20px;
-        width: 100%;
-    }
-
-    .btn-link-create {
-        font-family: exo;
-        font-size: 15px;
-        color: white;
-        background-color: $green;
-        border-style: none;
-        border-radius: 10px ;
-        padding: 10px;
-        padding-left: 30px;
-        padding-right: 30px;
-        margin: 5px 5px;
-    }
-    .container-produit{
-        margin: 10px 0;
-        .flex-produit{
-            display: flex;
-            align-items: center;
-
-            .image-produit{
-                width: 200px;
-                height: 200px;
-                object-fit: cover;
-            }
-        }
-    }
 }
+
+.link{
+    margin-left: 20px;
+    width: 100%;
+}
+
+.btn-link-create {
+    font-family: exo;
+    font-size: 15px;
+    color: white;
+    background-color: $green;
+    border-style: none;
+    border-radius: 10px ;
+    padding: 10px;
+    padding-left: 30px;
+    padding-right: 30px;
+    margin: 5px 5px;
+}
+
+.container_adress{
+    display: flex;
+    background-color: $nude;
+    width : 40%;
+    margin: 20px auto;
+    padding: 10px;
+}
+
+#adress_icon{
+    font-size: 35px;
+}
+
+.container_produit{
+    display: flex;
+    margin: 20px auto;
+    width: 70%;
+    border: solid 1px;
+    padding: 10px;
+}
+
+.stock {
+    color: $green;
+}
+
+.indispo {
+    color:$red;
+}
+
+.img_produit{
+    width: 15%;
+    object-fit: cover;
+}
+
+.desc_produit {
+    padding: 0 10px;
+}
+
