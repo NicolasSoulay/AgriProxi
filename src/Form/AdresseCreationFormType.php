@@ -25,7 +25,11 @@ class AdresseCreationFormType extends AbstractType
                 'required' => false
             ])
             ->add('zip_code', TextType::class, [
-                'label' => 'Code postal'
+                'label' => 'Code postal',
+                'attr' => [
+                    'minlength' => 5,
+                    'maxlength' => 5
+                ]
             ])
             ->add('ville', EntityType::class, [
                 'class' => Ville::class,

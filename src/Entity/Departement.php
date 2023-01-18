@@ -29,6 +29,11 @@ class Departement
         $this->villes = new ArrayCollection();
     }
 
+    public function __tooString()
+    {
+        return $this->code.' '.$this->name;
+    }
+
     public function getId(): ?int
     {
         return $this->id;

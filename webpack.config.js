@@ -33,6 +33,7 @@ Encore
    */
   .addEntry("app", "./assets/app.js")
   .addEntry("map", "./assets/map.js")
+  .addEntry("user", "./assets/user.js")
   .copyFiles({
     from: "./assets/images",
 

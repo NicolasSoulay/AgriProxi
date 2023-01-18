@@ -35,7 +35,7 @@
                 <li class="nav_item"><a aria-current="page" href="#">Nos producteurs</a></li>
                 <li class="nav_item nav_item--Secondary"><a aria-current="page" href="#">Mon compte</a>
                     <ul class="sub-menu">
-                        <li class="sub_item"><a aria-current="page" href="#">Mes informations</a></li>
+                        <li class="sub_item"><a aria-current="page" href="{{path('app_user')}}">Mes informations</a></li>
                         <li class="sub_item"><a aria-current="page" href="#">Ma boutique</a></li>
                         <li class="sub_item"><a  aria-current="page" href="#">Appel d'offre</a></li>
                     </ul> 
@@ -43,9 +43,14 @@
             </ul> 
             {# </div> #}
         </nav>
+<<<<<<< HEAD
         {# <div id="slider">
             <h1 id="banner_title">AgriProxi, la livraison de produits frais & engagés!</h1>
             <img src="{{ asset('build/images/legumes.jpg') }}" alt="" id="slide" class="img_slide"/>
+=======
+        <div id="slider">
+        <img src="{{ asset('build/images/legumes.jpg') }}" alt="" id="slide" class="img_slide"/>
+>>>>>>> dev
             <div id="precedent" onclick= "ChangeSlide(-1)">
                 <ion-icon name="chevron-back-outline"></ion-icon>
             </div>
@@ -70,7 +75,7 @@
     }
     document.getElementById("slide").src = "build/images/" + slide[numero];
     }
-    setInterval("ChangeSlide(1)", 4000);
+    setInterval("ChangeSlide(1)", 40000);
 
     </script>
 </html>
