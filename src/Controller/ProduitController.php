@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Produit;
+use App\Entity\Adresse;
 use App\Form\ProduitCreationFormType;
 use App\Repository\AdresseRepository;
 use App\Repository\CategorieRepository;
@@ -23,7 +24,7 @@ class ProduitController extends AbstractController
      *  retourne la vue de la page de recherche de produits avec la carte
      */
     #[Route('/produit', name: 'app_produit')]
-    public function index(EntrepriseRepository $entrepriseRepo, ProduitRepository $produitRepo, SousCategorieRepository $subCategorieRepo, CategorieRepository $categorieRepo, Request $request): Response
+    public function index(ProduitRepository $produitRepo, SousCategorieRepository $subCategorieRepo, CategorieRepository $categorieRepo, Request $request): Response
     {
         $subCategorie = $request->get("subCategorie", '');
         $categorie = $request->get("categorie", '');
@@ -32,7 +33,7 @@ class ProduitController extends AbstractController
         $longitude = $this->getLongitudeFromUrlOrUser($userAdresses);
         $zoomLevel = $this->getRadius($request->get("rayon", ''));
         $produits = $this->searchByCategorieOrSubCategorie($subCategorie, $categorie, $produitRepo);
-        $entreprisesAdresses = $this->getEntreprisesAdressesFromProduits($produits);
+        $coordinatesProduits = $this->getCoordinatesProduits($produits);
 
         return $this->render('produit/index.html.twig', [
             'controller_name' => 'ProduitController',
@@ -40,7 +41,7 @@ class ProduitController extends AbstractController
             'subCategories' => $subCategorieRepo->findAll(),
             'categories' => $categorieRepo->findAll(),
             'adresses' => $userAdresses,
-            'entreprisesAdresses' => $entreprisesAdresses,
+            'coordinatesProduits' => $coordinatesProduits,
             'latitude' => $latitude,
             'longitude' => $longitude,
             'zoomLevel' => $zoomLevel,
@@ -49,19 +50,22 @@ class ProduitController extends AbstractController
 
 
     /**
-     * @return Adresse[] Retourne un tableau d'adresses, filtrés par produits
+     * @return array[] Retourne un tableau de coordonnées, filtrés par produits
      */
-    public function getEntreprisesAdressesFromProduits($produits)
+    public function getCoordinatesProduits($produits)
     {
-        $adresses = [];
+        $coordinates = [];
         foreach ($produits as $produit) {
             $entreprise = $produit->getEntreprise();
-            $adressesDUneEntreprise = $entreprise->getAdresses();
-            foreach ($adressesDUneEntreprise as $adresseDUneEntreprise) {
-                $adresses[] = $adresseDUneEntreprise;
+            $adresses = $entreprise->getAdresses();
+            foreach ($adresses as $adresse) {
+                $concat = $adresse->getLatitude() . "," . $adresse->getLongitude();
+                if (!in_array($concat, $coordinates) && $concat != "0,0") {
+                    $coordinates[] = $concat;
+                }
             }
         }
-        return $adresses;
+        return $coordinates;
     }
 
     /**
