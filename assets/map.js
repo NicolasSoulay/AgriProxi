@@ -6,6 +6,7 @@ const longitude = document.getElementById('longitude').value;
 
 const zoomLevel = document.getElementById('zoomLevel').value;
 
+
 let map = L.map('map').setView([latitude, longitude], zoomLevel); 
 //zoom level: 
 //12 = 30km -> r = 10km 
@@ -18,3 +19,9 @@ L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
 }).addTo(map);
 
+
+function addProductMarker() {
+
+    let marker = L.marker([lat, long]).addTo(map);
+    
+}
