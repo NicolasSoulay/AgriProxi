@@ -25,12 +25,9 @@ class EntrepriseController extends AbstractController
         ]);
     }
 
-    //Page de création d'entreprise
-    #[Route('/create_entreprise', name: 'createEntreprise')]
-    public function createEntreprise(EntrepriseRepository $entrepriseRepo, UserRepository $userRepo, Request $request): Response
-    {   
+    //Affichage Formulaire pour l'entité Entreprise
+    private function formEntreprise(Entreprise $entreprise, EntrepriseRepository $entrepriseRepo, UserRepository $userRepo, Request $request){
         $message = '';
-        $entreprise = new Entreprise();
         $form = $this->createForm(EntrepriseCreationFormType::class, $entreprise);
         $form->handleRequest($request);
         $userId = $this->getUser()->getId();
@@ -39,7 +36,11 @@ class EntrepriseController extends AbstractController
             $entrepriseRepo->save($entreprise, true);
             $user->setEntreprise($entreprise);
             $userRepo->save($user, true);
-            $message = 'L\'entreprise a bien été créée';
+            if($request->get('id')){
+                $message = 'L\'entreprise a bien été modifiée';
+            }else{
+                $message = 'L\'entreprise a bien été créée';
+            }
         }
         elseif($form->isSubmitted()){
             $message = 'Les informations ne sont pas valides, ou cette entreprise existe déjà';
@@ -51,18 +52,36 @@ class EntrepriseController extends AbstractController
         ]);
     }
 
-    #[Route('/entreprise/createAdresse', name: 'createAdresse')]
-    public function createAdresse(Request $request, AdresseRepository $adresseRepo): Response
-    {
+    //Page de création d'entreprise
+    #[Route('/create_entreprise', name: 'createEntreprise')]
+    public function createEntreprise(EntrepriseRepository $entrepriseRepo, UserRepository $userRepo, Request $request): Response
+    {   
+        $entreprise = new Entreprise();
+        return $this->formEntreprise($entreprise, $entrepriseRepo, $userRepo, $request);
+    }
+
+    //Page de modification de l'entreprise
+    #[Route('/update_entreprise/{id}', name: 'updateEntreprise')]
+    public function updateEntreprise(Entreprise $entreprise, EntrepriseRepository $entrepriseRepo, UserRepository $userRepo, Request $request): Response
+    {   
+        return $this->formEntreprise($entreprise, $entrepriseRepo, $userRepo, $request);
+    }
+
+
+    //Affichage Formulaire pour l'entité Adresse
+    private function formAdresse(Adresse $adresse, AdresseRepository $adresseRepo, Request $request){
         $message = '';
-        $adresse = new Adresse();
         $form = $this->createForm(AdresseCreationFormType::class, $adresse);
         $form->handleRequest($request);
         $entreprise = $this->getUser()->getEntreprise();
         if($form->isSubmitted() && $form->isValid()){
             $adresse->setEntreprise($entreprise);
             $adresseRepo->save($adresse, true);
-            $message = 'L\'adresse a bien été créée';
+            if($request->get('id')){
+                $message = 'L\'adresse a bien été modifiée';
+            }else{
+                $message = 'L\'adresse a bien été créée';
+            }
         }
         elseif($form->isSubmitted()){
             $message = 'Les informations ne sont pas valides';
@@ -71,5 +90,27 @@ class EntrepriseController extends AbstractController
             'form_adresse' => $form->createView(),
             'message' => $message
         ]);
+    }
+
+    //Page de création d'adresse
+    #[Route('/entreprise/create_adresse', name: 'createAdresse')]
+    public function createAdresse(AdresseRepository $adresseRepo, Request $request): Response
+    {
+        $adresse = new Adresse();
+        return $this->formAdresse($adresse, $adresseRepo, $request);
+    }
+
+    //Page de modification d'adresse
+    #[Route('/entreprise/update_adresse/{id}', name: 'updateAdresse')]
+    public function updateAdresse(Adresse $adresse, AdresseRepository $adresseRepo, Request $request): Response
+    {
+        return $this->formAdresse($adresse, $adresseRepo, $request);
+    }
+
+    #[Route('/entreprise/delete_adresse/{id}', name: 'deleteAdresse')]
+    public function deleteAdresse(Adresse $adresse, AdresseRepository $adresseRepo):Response
+    {
+        $adresseRepo->remove($adresse, true);
+        return $this->redirectToRoute('app_user');
     }
 }

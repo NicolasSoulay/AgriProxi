@@ -1,22 +1,60 @@
 {% extends 'base.html.twig' %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('user') }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('user') }}
+{% endblock %}
+
 {% block title %}Hello UserController!{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
-
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/wamp64/www/AgriProxi/src/Controller/UserController.php'|file_link(0) }}">src/Controller/UserController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/wamp64/www/AgriProxi/templates/user/index.html.twig'|file_link(0) }}">templates/user/index.html.twig</a></code></li>
-    </ul>
-
-    <a href="{{path('createUser')}}">Création de compte</a>
+<div id="container-profil">
+    <div id="align">
+        <h1 id="titre-page-user">Mon profil</h1>
+        <div id="cards-profil">
+            <div id="card-user">
+                <h3>Mon utilisateur</h3>
+                <ul>
+                    <li><span class="bold">Nom:</span> {{ user.lastName }}</li>
+                    <li><span class="bold">Prénom:</span> {{ user.firstName }}</li>
+                    <li><span class="bold">Email:</span> {{ user.email }}</li>
+                </ul>
+                <a class="link" href="{{path('updateUser',{ id: user.id })}}"><button class="btn-link-update"><ion-icon name="settings-sharp"></ion-icon>Modifier</button></a>
+            </div>
+            <div id="card-entreprise">
+                <h3>Mon entreprise</h3>
+                <ul>
+                    <li><span class="bold">Nom:</span> {{ entreprise.name }}</li>
+                    <li><span class="bold">Descritpion:</span> {{ entreprise.description }}</li>
+                </ul>
+                <a class="link" href="{{path('updateEntreprise',{ id: entreprise.id })}}"><button class="btn-link-update"><ion-icon name="settings-sharp"></ion-icon>Modifier</button></a>
+            </div>
+            <div id="card-adress">
+                <div id="flex-title-adress">
+                    <h3>{{ (adresses|length == 1) ? 'Mon adresse' : 'Mes Adresses' }}</h3>
+                    <a class="link" href="{{path('createAdresse')}}"><button class="btn-link-create"><ion-icon name="add-circle-sharp"></ion-icon>Ajouter</button></a>
+                </div>
+                {% for adresse in adresses %}
+                <div>
+                    <ul>
+                        <li><span class="bold">Label:</span> {{ adresse.label }}</li>
+                        <li><span class="bold">Complément:</span> {{ adresse.complement }}</li>
+                        <li><span class="bold">Code Postal:</span> {{ adresse.zipCode }}</li>
+                        <li><span class="bold">Ville:</span> {{ adresse.ville }}</li>
+                    </ul>
+                    <div>
+                        <a class="link" href="{{path('updateAdresse',{ id: adresse.id })}}"><button class="btn-link-update"><ion-icon name="settings-sharp"></ion-icon>Modifier</button></a>
+                        <a class="link" href="{{path('deleteAdresse',{ id: adresse.id })}}"><button class="btn-link-delete"><ion-icon name="trash-sharp"></ion-icon>Supprimer</button></a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        <div>
+    </div>
 </div>
 {% endblock %}
