@@ -15,51 +15,66 @@
 {% block title %}Salut bande de tocards!{% endblock %}
 
 {% block body %}
-<div id='products'>
-    <div id="map"></div>
-
-    <div id="product_search">
-        <form id="search_filter">
-            <label for="categorie"></label>
-            <select name ="categorie" id="categorie">
-                <option value="">Catégorie:</option>
-                {% for categorie in categories %}
-                    <option value=' {{categorie.id}} '> {{categorie.name}} </option>
-                {% endfor %}
-            </select>
-            <label for="subCategorie"></label>
-            <select name ="subCategorie" id="subCategorie">
-                <option value="">Sous-catégorie:</option>
-                {% for subCategorie in subCategories %}
-                    <option value=' {{subCategorie.id}} '> {{subCategorie.name}} </option>
-                {% endfor %}
-            </select>
-            <label for="adresse"></label>
-            <select name="adresse" id="adresse">
-                <option value ="">Adresse</option>
-            </select>
-            <input class="btn_link" type="submit" value="Rechercher"></select>
-        </form>
-
-        <div id="search_result">
-            {% for produit in produits %}
-            <div class="product_card">
-                <div class="product_desc">
-                    <div class="card_image">
-                        <img src="{{ asset('build/images/placeholder_612x612.jpg') }}" alt="product_image" width="100" height="100">
+<main>
+    <input type="hidden" id="latitude" value = "{{latitude}}"/>
+    <input type="hidden" id="longitude" value = "{{longitude}}"/>
+    <div id='products'>
+        <div id="map"></div>
+        <div id="product_search">
+            <form id="search_filter">
+                <label for="categorie"></label>
+                <div>
+                    <select name ="categorie" id="categorie">
+                        <option value="">Catégorie:</option>
+                        {% for categorie in categories %}
+                            <option value=' {{categorie.id}} '> {{categorie.name}} </option>
+                        {% endfor %}
+                    </select>
+                    <label for="subCategorie"></label>
+                    <select name ="subCategorie" id="subCategorie">
+                        <option value="">Sous-catégorie:</option>
+                        {% for subCategorie in subCategories %}
+                            <option value=' {{subCategorie.id}} '> {{subCategorie.name}} </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div>
+                    <label for="adresse"></label>
+                    <select name="adresse" id="adresse">
+                        {% for adresse in adresses %}
+                            <option value=' {{adresse.id}} '> {{adresse.label}} </option>
+                        {% endfor %}
+                    </select>
+                    <label for="rayon">Rayon:</label>
+                    <select name="rayon" id="rayon">
+                        <option value="10"> 10km </option>
+                        <option value="25"> 25km </option>
+                        <option value="50"> 50km </option>
+                        <option value="100"> 100km </option>
+                    </select>
+                </div>
+                <input class="btn_link" type="submit" value="Rechercher"></select>
+            </form>
+            <div id="search_result">
+                {% for produit in produits %}
+                <div class="product_card">
+                    <div class="product_desc">
+                        <div class="card_image">
+                            <img src="{{ asset('build/images/placeholder_612x612.jpg') }}" alt="product_image" width="100" height="100">
+                        </div>
+                        <div class="card_text">
+                            <h3> {{produit.name}}  producteurplaceholder</h3>
+                            <p> {{produit.description}} </p>
+                        </div>
                     </div>
-                    <div class="card_text">
-                        <h3> {{produit.name}}  producteurplaceholder</h3>
-                        <p> {{produit.description}} </p>
+                    <div class="card_btn">
+                        <button class="btn_link_green">Ajouter à votre liste de commande</button>
                     </div>
                 </div>
-                <div class="card_btn">
-                    <button class="btn_link_green">Ajouter à votre liste de commande</button>
-                </div>
+                {% endfor %}
             </div>
-            {% endfor %}
         </div>
     </div>
-</div>
+</main>
 
 {% endblock %}
