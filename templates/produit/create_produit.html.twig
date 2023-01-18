@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+{% endblock %}
+
+{% block title %}Produit{% endblock %}
+
+{% block body %}
+
+    {{form(form_produit)}}
+
+    {% if message %}
+        <div>{{ message }}</div>
+    {% endif %}
+    
+{% endblock %}

@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('boutique') }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('boutique') }}
+{% endblock %}
+
+{% block title %}Ma boutique{% endblock %}
+
+{% block body %}
+<div id="container-boutique">
+    <h1>Mon catalogue</h1>
+    <a class="link" href="{{path('createProduit',{ id: entreprise.id })}}"><button class="btn-link-create">Ajouter un produit</button></a>
+    {% for produit in produits %}
+    <div class="container-produit">
+        <div class="flex-produit">
+            <img class="image-produit" src={{produit.imageURL}}>
+            <ul>
+                <li>{{produit.inStock ? "En Stock" : "Rupture"}}</li>
+                <li>{{produit.name|upper}}</li>
+                <li>{{produit.description}}</li>
+            </ul>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

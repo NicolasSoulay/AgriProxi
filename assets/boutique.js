@@ -1,0 +1,1 @@
+import "./styles/boutique.scss";
