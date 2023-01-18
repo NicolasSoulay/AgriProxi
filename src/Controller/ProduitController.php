@@ -6,6 +6,7 @@ use App\Entity\Produit;
 use App\Form\ProduitCreationFormType;
 use App\Repository\AdresseRepository;
 use App\Repository\CategorieRepository;
+use App\Repository\EntrepriseRepository;
 use App\Repository\ProduitRepository;
 use App\Repository\SousCategorieRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -22,7 +23,7 @@ class ProduitController extends AbstractController
      *  retourne la vue de la page de recherche de produits avec la carte
      */
     #[Route('/produit', name: 'app_produit')]
-    public function index(ProduitRepository $produitRepo, SousCategorieRepository $subCategorieRepo, CategorieRepository $categorieRepo, Request $request): Response
+    public function index(EntrepriseRepository $entrepriseRepo, ProduitRepository $produitRepo, SousCategorieRepository $subCategorieRepo, CategorieRepository $categorieRepo, Request $request): Response
     {
         $subCategorie = $request->get("subCategorie", '');
         $categorie = $request->get("categorie", '');
@@ -30,13 +31,16 @@ class ProduitController extends AbstractController
         $latitude = $this->getLatitudeFromUrlOrUser($userAdresses);
         $longitude = $this->getLongitudeFromUrlOrUser($userAdresses);
         $zoomLevel = $this->getRadius($request->get("rayon", ''));
+        $produits = $this->searchByCategorieOrSubCategorie($subCategorie, $categorie, $produitRepo);
+        $entreprisesAdresses = $this->getEntreprisesAdressesFromProduits($produits);
 
         return $this->render('produit/index.html.twig', [
             'controller_name' => 'ProduitController',
-            'produits' => $this->searchByCategorieOrSubCategorie($subCategorie, $categorie, $produitRepo),
+            'produits' => $produits,
             'subCategories' => $subCategorieRepo->findAll(),
             'categories' => $categorieRepo->findAll(),
             'adresses' => $userAdresses,
+            'entreprisesAdresses' => $entreprisesAdresses,
             'latitude' => $latitude,
             'longitude' => $longitude,
             'zoomLevel' => $zoomLevel,
@@ -44,6 +48,21 @@ class ProduitController extends AbstractController
     }
 
 
+    /**
+     * @return Adresse[] Retourne un tableau d'adresses, filtrés par produits
+     */
+    public function getEntreprisesAdressesFromProduits($produits)
+    {
+        $adresses = [];
+        foreach ($produits as $produit) {
+            $entreprise = $produit->getEntreprise();
+            $adressesDUneEntreprise = $entreprise->getAdresses();
+            foreach ($adressesDUneEntreprise as $adresseDUneEntreprise) {
+                $adresses[] = $adresseDUneEntreprise;
+            }
+        }
+        return $adresses;
+    }
 
     /**
      * @return int retourne la latitude en décimal à partir d'une entité "Adresse"

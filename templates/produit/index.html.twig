@@ -15,6 +15,7 @@
 {% block title %}Salut bande de tocards!{% endblock %}
 
 {% block body %}
+{{ dump(entreprisesAdresses) }}
 <main>
     <input type="hidden" id="latitude" value = "{{latitude}}"/>
     <input type="hidden" id="longitude" value = "{{longitude}}"/>
@@ -65,9 +66,9 @@
                             <img class="product_img" src="{{ produit.imageUrl }}" alt="product_image" width="200" height="200">
                         </div>
                         <div class="card_text">
-                            <h3> {{produit.name}} </h3>
-                            <a href="">{{produit.entreprise.name}}</a>
-                            <p> {{produit.description}} </p>
+                            <h3> {{ produit.name }} </h3>
+                            <a href="{{ path('viewEntreprise', { id: produit.entreprise.id }) }}">{{ produit.entreprise.name }}</a>
+                            <p> {{ produit.description }} </p>
                         </div>
                     </div>
                     <div class="card_btn">
