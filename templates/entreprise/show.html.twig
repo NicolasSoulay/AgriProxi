@@ -37,9 +37,9 @@
 			<img class="img_produit" src={{produit.imageURL}}>
 			<div class="desc_produit">
 				{% if produit.inStock == 1 %}
-					<p class='stock'>En stock</p>
+					<p class='green'>En stock</p>
 					{%else%}
-					<p class='indispo'>Indisponible</p>
+					<p class='red'>Indisponible</p>
 				{% endif %}
 				<h3>{{produit.name|upper}}</h3>
 				<p>{{produit.description}}</p>

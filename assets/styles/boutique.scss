@@ -1,56 +1,39 @@
 @import './utility.scss';
 
-#container-boutique{
-    margin: 20px 0 30px 20px;
-}
 
-.link{
-    margin-left: 20px;
-    width: 100%;
-}
 
-.btn-link-create {
-    font-family: exo;
-    font-size: 15px;
-    color: white;
-    background-color: $green;
-    border-style: none;
-    border-radius: 10px ;
-    padding: 10px;
-    padding-left: 30px;
-    padding-right: 30px;
-    margin: 5px 5px;
-}
-
-.container_adress{
+// PAGE ENTREPRISE : BLOC ADRESSE
+.container_adress {
     display: flex;
     background-color: $nude;
-    width : 40%;
+    width: 40%;
     margin: 20px auto;
     padding: 10px;
 }
 
-#adress_icon{
+#adress_icon {
     font-size: 35px;
 }
 
-.container_produit{
+// PAGE PRODUIT / CATALOGUE
+
+.catalogue_produit {
+    width: 70%;
+    margin: auto;
+}
+
+.container_produit {
     display: flex;
     margin: 20px auto;
-    width: 70%;
-    border: solid 1px;
+    border: solid 1px #cccccc;
     padding: 10px;
 }
 
-.stock {
-    color: $green;
+.btn_produit {
+    margin-top: 20px;
 }
 
-.indispo {
-    color:$red;
-}
-
-.img_produit{
+.img_produit {
     width: 200px;
     height: 150px;
     object-fit: cover;
@@ -58,5 +41,85 @@
 
 .desc_produit {
     padding: 0 10px;
+    width: 70%;
 }
 
+.update_produit {
+    width: 25%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.bloc_icon {
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+    background-color: white;
+    border: 0;
+}
+
+.produit_icon {
+    font-size: 45px;
+}
+
+@media (max-width: 1250px) {
+    .update_produit {
+        width: 25%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+/* The Modal (background) */
+.myModal {
+    display: none;
+    /* Hidden by default */
+    position: fixed;
+    /* Stay in place */
+    z-index: 1;
+    /* Sit on top */
+    padding-top: 100px;
+    /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%;
+    /* Full width */
+    height: 100%;
+    /* Full height */
+    overflow: auto;
+    /* Enable scroll if needed */
+    background-color: rgb(0, 0, 0);
+    /* Fallback color */
+    background-color: rgba(0, 0, 0, 0.4);
+    /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+    background-color: #fefefe;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+}
+
+.block {
+    display: block;
+}
+
+/* The Close Button */
+.close {
+    color: #aaaaaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
