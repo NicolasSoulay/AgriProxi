@@ -1,24 +1,25 @@
 @import './utility.scss';
 
-body {
-    main{
-        overflow-y: hidden;
-        #products{
-            display: flex;
-            #map {  
-                width: 1200px;
-                border-radius: 20px;
-                border: solid 2px;
-                border-color: $blue;
-            }
-            #product_search {
-                width: 35%;
-                margin-left: 20px;
-            }
-        }
+
+#products{
+    display: flex;
+    #map {  
+        width: 1200px;
+        height: 90vh;
+        border-radius: 20px;
+        border: solid 2px;
+        border-color: $blue;
+    }
+    #product_search {
+        width: 35%;
+        margin-left: 20px;
     }
 }
 
+.product_img {
+    object-fit: cover;
+    margin: 10px;
+}
 #search_filter {
     margin-bottom: 10px;
 }
