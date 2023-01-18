@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Produit;
 use App\Form\ProduitCreationFormType;
 use App\Repository\CategorieRepository;
+use App\Repository\EntrepriseRepository;
 use App\Repository\ProduitRepository;
 use App\Repository\SousCategorieRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -21,7 +22,7 @@ class ProduitController extends AbstractController
      *  retourne la vue de la page de recherche de produits avec la carte
      */
     #[Route('/produit', name: 'app_produit')]
-    public function index(ProduitRepository $produitRepo, SousCategorieRepository $subCategorieRepo, CategorieRepository $categorieRepo, Request $request): Response
+    public function index(EntrepriseRepository $entrepriseRepo, ProduitRepository $produitRepo, SousCategorieRepository $subCategorieRepo, CategorieRepository $categorieRepo, Request $request): Response
     {
         $subCategorie = $request->get("subCategorie", '');
         $categorie = $request->get("categorie", '');
