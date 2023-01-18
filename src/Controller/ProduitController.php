@@ -9,6 +9,8 @@ use App\Repository\CategorieRepository;
 use App\Repository\ProduitRepository;
 use App\Repository\SousCategorieRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -43,7 +45,7 @@ class ProduitController extends AbstractController
 
     //Page de création de produit
     #[Route('/create_produit', name: 'createProduit')]
-    public function createProduit(ProduitRepository $produitRepo, Request $request): Response
+    public function createProduit(ProduitRepository $produitRepo, Request $request, #[Autowire('%photo_dir%')] string $photoDir): Response
     {   
         $produit = new Produit();
         $message = '';
@@ -52,6 +54,16 @@ class ProduitController extends AbstractController
         $user = $this->getUser();
         $entreprise = $user->getEntreprise();
         if($form->isSubmitted() && $form->isValid()){
+            var_dump($form['photo']);
+            if ($photo = $form['photo']->getData()) {
+                $filename = bin2hex(random_bytes(6)).'.'.$photo->guessExtension();
+                try {
+                    $photo->move($photoDir, $filename);
+                } catch (FileException $e) {
+                    // unable to upload the photo, give up
+                }
+                $produit->setImageURL($filename);
+                }
             $produit->setEntreprise($entreprise);
             $produitRepo->save($produit, true);
             if($request->get('id')){

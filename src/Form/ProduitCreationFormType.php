@@ -32,6 +32,7 @@ class ProduitCreationFormType extends AbstractType
             ->add('imageURL', FileType::class, [
                 'label' => 'Choisir une image',
                 'required' => false,
+                'mapped' => false,
                 'constraints' => [
                     new Image(['maxSize' => '1024k'])
                 ]
