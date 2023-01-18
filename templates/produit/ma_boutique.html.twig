@@ -15,7 +15,7 @@
 {% block body %}
 <div id="container-boutique">
     <h1>Mon catalogue</h1>
-    <a class="link" href="{{path('createProduit',{ id: entreprise.id })}}"><button class="btn-link-create">Ajouter un produit</button></a>
+    <a class="link" href="{{path('createProduit')}}"><button class="btn-link-create">Ajouter un produit</button></a>
     {% for produit in produits %}
     <div class="container-produit">
         <div class="flex-produit">
@@ -25,6 +25,8 @@
                 <li>{{produit.name|upper}}</li>
                 <li>{{produit.description}}</li>
             </ul>
+            <a class="link" href="{{path('updateProduit',{id: produit.id})}}"><button class="btn-link-update">Modifier</button></a>
+            <a class="link" href="{{path('deleteProduit',{id: produit.id})}}"><button class="btn-link-delete">Supprimer</button></a>
         </div>
     </div>
     {% endfor %}
