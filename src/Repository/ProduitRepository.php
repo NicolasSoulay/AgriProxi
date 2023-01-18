@@ -42,9 +42,9 @@ class ProduitRepository extends ServiceEntityRepository
     }
 
 
-    //    /**
-    //     * @return Produit[] Returns an array of Produit objects
-    //     */
+    /**
+     * @return Produit[] Returns an array of Produit objects
+     */
     public function findBySubCategorie($subCategorie): array
     {
         return $this->createQueryBuilder('p')
@@ -55,9 +55,9 @@ class ProduitRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    //    /**
-    //     * @return Produit[] Returns an array of Produit objects
-    //     */
+    /**
+     * @return Produit[] Returns an array of Produit objects
+     */
     public function findByCategorie($categorie): array
     {
         return $this->createQueryBuilder('p')

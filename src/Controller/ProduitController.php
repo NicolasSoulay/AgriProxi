@@ -115,10 +115,6 @@ class ProduitController extends AbstractController
         return $produitRepo->findBySubCategorie($subCat);
     }
 
-
-
-
-
     //Affiche la page de ma boutique
     #[Route('/ma_boutique', name: 'maBoutique')]
     public function maBoutique(): Response
