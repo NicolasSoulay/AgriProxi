@@ -18,7 +18,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class EntrepriseController extends AbstractController
 {
     #[Route('/entreprise/{id}', name: 'viewEntreprise')]
-    public function show(string $id, EntrepriseRepository $entrepriseRepo, Request $request): Response
+    public function show(string $id, EntrepriseRepository $entrepriseRepo): Response
     {
         $entreprise = $entrepriseRepo->find($id);
         $adresses = $entreprise->getAdresses();
@@ -107,13 +107,13 @@ class EntrepriseController extends AbstractController
     }
 
     //Page de modification d'adresse
-    #[Route('/entreprise/update_adresse/{id}', name: 'updateAdresse')]
+    #[Route('/update_adresse/{id}', name: 'updateAdresse')]
     public function updateAdresse(Adresse $adresse, AdresseRepository $adresseRepo, Request $request): Response
     {
         return $this->formAdresse($adresse, $adresseRepo, $request);
     }
 
-    #[Route('/entreprise/delete_adresse/{id}', name: 'deleteAdresse')]
+    #[Route('/delete_adresse/{id}', name: 'deleteAdresse')]
     public function deleteAdresse(Adresse $adresse, AdresseRepository $adresseRepo): Response
     {
         $adresseRepo->remove($adresse, true);
