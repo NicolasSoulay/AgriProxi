@@ -24,7 +24,8 @@ class ProduitCreationFormType extends AbstractType
                 'label' => 'Nom du produit'
             ])
             ->add('inStock', CheckboxType::class, [
-                'label' => 'En Stock'
+                'label' => 'En Stock',
+                'required' => false
             ])
             ->add('description', TextareaType::class, [
                 'label' => 'Description'

@@ -1,103 +1,41 @@
 @import './utility.scss';
 
-#container-profil{
-    margin: 50px 0px;
+#card-adress {
+    background-color: $blue;
+    padding: 10px;
+    margin: 10px;
+}
+
+.bold {
+    font-weight: bold;
+    font-size: 15px;
+    margin-right: 5px;
+}
+
+.link {
+    font-size: 20px;
+}
+
+.head_card {
     display: flex;
-    justify-content: center;
+    width: 100%;
+    justify-content: space-between;
+}
 
-    #titre-page-user{
-        text-align: center;
-    }
+.btn_icon {
+    padding: 0 5px;
+    font-size: 35px;
+}
 
-    #align{
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        min-width: 100%;
+.adress {
+    display: flex;
+    border: solid 1px #ffffff8c;
+    width: fit-content;
+    padding: 20px;
+    margin: 0 20px;
+}
 
-        #cards-profil{
-            width: 80%;
-            min-width: 80%;
-
-            li{
-                margin: 8px 0px;
-            }
-
-            .bold{
-                font-weight: bold;
-                font-size: 15px;
-                margin-right: 5px;
-            }
-
-            .link{
-                margin-left: 20px;
-                width: 100%;
-            }
-    
-            .btn-link-update {
-                font-family: exo;
-                font-size: 15px;
-                color: white;
-                background-color: $green;
-                border-style: none;
-                border-radius: 10px ;
-                padding: 10px;
-                padding-left: 30px;
-                padding-right: 30px;
-                margin: 5px 5px;
-            }
-
-            .btn-link-create{
-                font-family: exo;
-                font-size: 15px;
-                color: white;
-                background-color: $orangeSand;
-                border-style: none;
-                border-radius: 10px ;
-                padding: 10px;
-                padding-left: 30px;
-                padding-right: 30px;
-            }
-
-            .btn-link-delete{
-                font-family: exo;
-                font-size: 15px;
-                color: white;
-                background-color: $red;
-                border-style: none;
-                border-radius: 10px ;
-                padding: 10px;
-                padding-left: 30px;
-                padding-right: 30px;
-            }
-    
-            #card-user{
-                background-color: $nude;
-                padding: 10px;
-                margin: 10px;
-            }
-    
-            #card-entreprise{
-                background-color: $light-green;
-                padding: 10px;
-                margin: 10px;
-            }
-            
-            #flex-title-adress{
-                display: flex;
-                justify-content: flex-end;
-                align-items: center;
-            }
-
-            #card-adress{
-                background-color: $blue;
-                padding: 10px;
-                margin: 10px;
-
-                h3{
-                    width: 270px;
-                }
-            }
-        }
-    }  
+.adress_icon {
+    display: flex;
+    flex-direction: column;
 }

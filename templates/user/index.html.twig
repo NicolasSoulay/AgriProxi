@@ -10,51 +10,60 @@
     {{ encore_entry_script_tags('user') }}
 {% endblock %}
 
-{% block title %}Hello UserController!{% endblock %}
+{% block title %}Espace personnel{% endblock %}
 
 {% block body %}
-<div id="container-profil">
-    <div id="align">
-        <h1 id="titre-page-user">Mon profil</h1>
-        <div id="cards-profil">
-            <div id="card-user">
-                <h3>Mon utilisateur</h3>
-                <ul>
-                    <li><span class="bold">Nom:</span> {{ user.lastName }}</li>
-                    <li><span class="bold">Prénom:</span> {{ user.firstName }}</li>
-                    <li><span class="bold">Email:</span> {{ user.email }}</li>
-                </ul>
-                <a class="link" href="{{path('updateUser',{ id: user.id })}}"><button class="btn-link-update"><ion-icon name="settings-sharp"></ion-icon>Modifier</button></a>
-            </div>
-            <div id="card-entreprise">
-                <h3>Mon entreprise</h3>
-                <ul>
-                    <li><span class="bold">Nom:</span> {{ entreprise.name }}</li>
-                    <li><span class="bold">Descritpion:</span> {{ entreprise.description }}</li>
-                </ul>
-                <a class="link" href="{{path('updateEntreprise',{ id: entreprise.id })}}"><button class="btn-link-update"><ion-icon name="settings-sharp"></ion-icon>Modifier</button></a>
-            </div>
-            <div id="card-adress">
-                <div id="flex-title-adress">
-                    <h3>{{ (adresses|length == 1) ? 'Mon adresse' : 'Mes Adresses' }}</h3>
-                    <a class="link" href="{{path('createAdresse')}}"><button class="btn-link-create"><ion-icon name="add-circle-sharp"></ion-icon>Ajouter</button></a>
+    <div id="user_container">
+        <h1>Votre espace personnel</h1>
+        <div class="cards">
+            <div class="card_contain">
+                <div class="head_card"> 
+                    <h2>Espace utilisateur</h2>
+                    <a href="{{path('updateUser',{ id: user.id })}}"><ion-icon name="settings-sharp" class='btn_icon'></ion-icon></a>
                 </div>
-                {% for adresse in adresses %}
-                <div>
+                <div class="card_content">
                     <ul>
-                        <li><span class="bold">Label:</span> {{ adresse.label }}</li>
-                        <li><span class="bold">Complément:</span> {{ adresse.complement }}</li>
-                        <li><span class="bold">Code Postal:</span> {{ adresse.zipCode }}</li>
-                        <li><span class="bold">Ville:</span> {{ adresse.ville }}</li>
+                        <li><span class="bold">Nom:</span> {{ user.lastName }}</li>
+                        <li><span class="bold">Prénom:</span> {{ user.firstName }}</li>
+                        <li><span class="bold">Email:</span> {{ user.email }}</li>
                     </ul>
-                    <div>
-                        <a class="link" href="{{path('updateAdresse',{ id: adresse.id })}}"><button class="btn-link-update"><ion-icon name="settings-sharp"></ion-icon>Modifier</button></a>
-                        <a class="link" href="{{path('deleteAdresse',{ id: adresse.id })}}"><button class="btn-link-delete"><ion-icon name="trash-sharp"></ion-icon>Supprimer</button></a>
-                    </div>
                 </div>
+            </div>
+            <div class="card_contain card_contain--Secondary">
+                <div class="head_card">
+                    <h2>Espace entreprise</h2>
+                    <a class="" href="{{path('updateEntreprise',{ id: entreprise.id })}}"><ion-icon name="settings-sharp" class='btn_icon'></ion-icon></a>
+                </div>
+                <div class="card_content card_content_user">
+                    <ul>
+                        <li><span class="bold">Nom:</span> {{ entreprise.name }}</li>
+                        <li><span class="bold">Descritpion:</span> {{ entreprise.description }}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="card_contain card_contain_adress">
+            <div class="head_card">
+                <h2>{{ (adresses|length == 1) ? 'Mon adresse' : "Mon carnet d'adresse" }}</h2>
+                
+                <a href="{{path('createAdresse')}}"><ion-icon name="add-circle-sharp" class='btn_icon'></ion-icon></a>
+            </div>
+            <div class="card_content card_content_user">
+                {% for adresse in adresses %}
+                    <div class='adress'>
+                        <div class="adress_icon">
+                            <a class="link" href="{{path('updateAdresse',{ id: adresse.id })}}"><ion-icon name="settings-sharp"></ion-icon></a>
+                            <a class="link" href="{{path('deleteAdresse',{ id: adresse.id })}}"><ion-icon name="trash-sharp"></ion-icon></a>
+                        </div>
+                        <ul>
+                            <li><span class="bold">Label:</span> {{ adresse.label }}</li>
+                            <li><span class="bold">Complément:</span> {{ adresse.complement }}</li>
+                            <li><span class="bold">Code Postal:</span> {{ adresse.zipCode }}</li>
+                            <li><span class="bold">Ville:</span> {{ adresse.ville }}</li>
+                        </ul>
+                    </div>
                 {% endfor %}
             </div>
-        <div>
+        </div>
     </div>
-</div>
 {% endblock %}
