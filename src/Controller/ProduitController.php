@@ -110,7 +110,7 @@ class ProduitController extends AbstractController
     {
         switch ($rayon) {
             case '0':
-                return 6;
+                return 7;
                 break;
             case '10':
                 return 12;
@@ -125,7 +125,7 @@ class ProduitController extends AbstractController
                 return 9;
                 break;
             default:
-                return 10;
+                return 7;
         }
     }
 
