@@ -66,6 +66,7 @@
             </form>
             <div id="search_result">
                 {% for produit in produits %}
+                <input type="hidden" class="nomEntreprise" value = "{{produit.entreprise.name}}"/>
                 <div class="product_card">
                     <div class="product_desc">
                         <div class="card_image">
