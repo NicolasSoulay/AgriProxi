@@ -3,10 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\Produit;
-use App\Entity\Adresse;
 use App\Form\ProduitCreationFormType;
 use App\Repository\CategorieRepository;
-use App\Repository\EntrepriseRepository;
 use App\Repository\ProduitRepository;
 use App\Repository\SousCategorieRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -57,8 +55,10 @@ class ProduitController extends AbstractController
         foreach ($produits as $produit) {
             $entreprise = $produit->getEntreprise();
             $adresses = $entreprise->getAdresses();
+            $entrepriseName = $entreprise->getName();
+            $entrepriseId = $entreprise->getId();
             foreach ($adresses as $adresse) {
-                $concat = $adresse->getLatitude() . "," . $adresse->getLongitude();
+                $concat = $adresse->getLatitude() . "," . $adresse->getLongitude() . "," . $entrepriseName . "," . $entrepriseId;
                 if (!in_array($concat, $coordinates) && $concat != "0,0") {
                     $coordinates[] = $concat;
                 }

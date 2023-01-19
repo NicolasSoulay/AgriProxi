@@ -25,7 +25,7 @@ const redIcon = new L.Icon({
 });
 
 
-//console.log(coordinatesProduits)
+console.log(coordinatesProduits)
 
 let map = L.map('map').setView([latitude, longitude], zoomLevel); 
 //zoom level: 
@@ -50,7 +50,7 @@ function addProductMarker(coordinates) {
             
             let lat= coordinates[i][0];
             let long= coordinates[i][1];
-            L.marker([lat, long]).addTo(map).bindPopup("<b>Ici il y aura de belles choses un jour</b>");
+            L.marker([lat, long]).addTo(map).bindPopup("<a href='/entreprise/"+coordinates[i][3]+"'>"+coordinates[i][2]+"</a>");
         }
     };
 }
