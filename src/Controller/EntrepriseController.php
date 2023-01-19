@@ -32,13 +32,13 @@ class EntrepriseController extends AbstractController
 
 
     //Affichage Formulaire pour l'entité Entreprise
-    private function formEntreprise(Entreprise $entreprise, EntrepriseRepository $entrepriseRepo, UserRepository $userRepo, Request $request)
+    private function formEntreprise(Entreprise $entreprise, EntrepriseRepository $entrepriseRepo, UserRepository $userRepo, Request $request, User $user)
     {
         $message = '';
         $form = $this->createForm(EntrepriseCreationFormType::class, $entreprise);
         $form->handleRequest($request);
-        $userId = $this->getUser()->getId();
-        $user = $userRepo->find($userId);
+        // $userId = $this->getUser()->getId();
+        // $user = $userRepo->find($userId);
         if ($form->isSubmitted() && $form->isValid()) {
             $entrepriseRepo->save($entreprise, true);
             $user->setEntreprise($entreprise);
@@ -61,16 +61,19 @@ class EntrepriseController extends AbstractController
     //Page de création d'entreprise
     #[Route('/create_entreprise', name: 'createEntreprise')]
     public function createEntreprise(EntrepriseRepository $entrepriseRepo, UserRepository $userRepo, Request $request): Response
-    {
+    {   
+        $userId = $userRepo->getLastId();
+        $user = $userRepo->find($userId);
         $entreprise = new Entreprise();
-        return $this->formEntreprise($entreprise, $entrepriseRepo, $userRepo, $request);
+        return $this->formEntreprise($entreprise, $entrepriseRepo, $userRepo, $request, $user);
     }
 
     //Page de modification de l'entreprise
     #[Route('/update_entreprise/{id}', name: 'updateEntreprise')]
     public function updateEntreprise(Entreprise $entreprise, EntrepriseRepository $entrepriseRepo, UserRepository $userRepo, Request $request): Response
     {
-        return $this->formEntreprise($entreprise, $entrepriseRepo, $userRepo, $request);
+        $user = $this->getUser();
+        return $this->formEntreprise($entreprise, $entrepriseRepo, $userRepo, $request, $user);
     }
 
 

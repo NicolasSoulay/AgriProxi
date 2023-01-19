@@ -40,6 +40,7 @@ class UserController extends AbstractController
                 $message = 'L\'utilisateur a bien été modifié';
             } else {
                 $message = 'L\'utilisateur a bien été créé';
+                return $this->redirectToRoute('createEntreprise');
             }
         } elseif ($form->isSubmitted()) {
             $message = 'Les informations ne sont pas valides, ou ce compte existe déjà';
@@ -61,7 +62,7 @@ class UserController extends AbstractController
     //Page de modification du User
     #[Route('/update_user/{id}', name: 'updateUser')]
     public function updateUser(User $user, UserRepository $userRepo, Request $request)
-    {
+    {   
         return $this->formUser($userRepo, $request, $user);
     }
 }
