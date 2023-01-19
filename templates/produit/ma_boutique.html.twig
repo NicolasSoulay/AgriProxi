@@ -14,43 +14,39 @@
 {% endblock %}
 
 {% block body %}
-<h1>Mon catalogue</h1>
-<a class="btn_link btn_produit" href="{{path('createProduit')}}">Ajouter un produit</a>
-{# BLOC : PRODUIT ENTREPRISE  #}
-{% for produit in produits %}
-	<div class="container_produit">
-		<img class="img_produit" src={{produit.imageURL}}>
-		<div class="desc_produit">
-			{% if produit.inStock == 1 %}
-				<p class='green'>En stock</p>
-				{%else%}
-				<p class='red'>Indisponible</p>
-			{% endif %}
-			<h3>{{produit.name|upper}}</h3>
-			<p>{{produit.description}}</p>
+	<h1>Mon catalogue</h1>
+	<a class="btn_link btn_produit" href="{{path('createProduit')}}">Ajouter un produit</a>
+	
+	{# BLOC : PRODUIT ENTREPRISE  #}
+	{% for produit in produits %}
+		<div class="container_produit">
+			<img class="img_produit" src={{produit.imageURL}}>
+			<div class="desc_produit">
+				{% if produit.inStock == 1 %}
+					<p class='green'>En stock</p>
+					{%else%}
+					<p class='red'>Indisponible</p>
+				{% endif %}
+				<h3>{{produit.name|upper}}</h3>
+				<p>{{produit.description}}</p>
+			</div>
+			<div class="update_produit">
+				<a class="green bloc_icon" href="{{path('updateProduit',{id: produit.id})}}">Modifier
+					<ion-icon name="refresh-circle-sharp" class="produit_icon"></ion-icon>
+				</a>
+				<button class="myBtn red bloc_icon" data-href="{{path('deleteProduit',{id: produit.id})}}" href="">Supprimer
+					<ion-icon name="close-circle-sharp" class="produit_icon"></ion-icon>
+				</button>
+			</div>
 		</div>
-		<div class="update_produit">
-			<a class="green bloc_icon" href="{{path('updateProduit',{id: produit.id})}}">Modifier
-				<ion-icon name="refresh-circle-sharp" class="produit_icon"></ion-icon>
-			</a>
-			<button class="myBtn red bloc_icon" data-href="{{path('deleteProduit',{id: produit.id})}}" href="">Supprimer
-				<ion-icon name="close-circle-sharp" class="produit_icon"></ion-icon>
-			</button>
+	{% endfor %}
 
+	{# MODAL DELETE #}
+	<div class="myModal">
+		<div class="modal-content">
+			<span class="close">&times;</span>
+			<h3>Etes vous sur de vouloir supprimer ce produit ?</h3>
+			<a class="red bloc_icon" id="my-link" href="#">Supprimer<ion-icon name="close-circle-sharp" class="produit_icon"></ion-icon></a>
 		</div>
 	</div>
-
-</div>
-{% endfor %}
-<!-- The Modal -->
-<div class="myModal">
-	<!-- Modal content -->
-	<div class="modal-content">
-		<span class="close">&times;</span>
-		<a id="my-link" href="#">Delete Produit</a>
-		{# <a class="red bloc_icon" href="{{path('deleteProduit',{id: produit.id})}}">Supprimer
-			<ion-icon name="close-circle-sharp" class="produit_icon"></ion-icon>
-		</a> #}
-	</div>
-</div>
 {% endblock %}

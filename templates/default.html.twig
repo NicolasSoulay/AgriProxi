@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+    {% block stylesheets %}
+        {{ encore_entry_link_tags('app') }}
+    {% endblock %}
+
+    {% block javascripts %}
+        {{ encore_entry_script_tags('app') }}
+    {% endblock %}
+
+{% block title %}Bienvenue!
+{% endblock %}
+
+{% block body %}
+<h1>Notre concept</h1>
+<div class="cards">
+    <div class="card_contain">
+        <h2>On vous aide,</h2>
+        <div class="card_content">
+            <p>à trouver les producteurs les plus proche de vos points de vente, tout en respectant vos contraintes économiques, technique ect..</p>
+            <img src="{{ asset('build/images/handshake.png') }}" class="def_icon" alt="">
+        </div>
+    </div>
+
+    <div class="card_contain card_contain--Secondary">
+        <h2>On s’entraide,</h2>
+        <div class="card_content">
+            <p>et on préserve au mieux notre planète, en priorisant le commerce de proximité et en disminuant notre impact carbonne.</p>
+            <img src="{{ asset('build/images/map.png') }}" class="def_icon" alt="">
+        </div>
+    </div>
+</div>
+{% endblock %}

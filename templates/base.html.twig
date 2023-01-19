@@ -25,8 +25,7 @@
 	<body>
 		<nav>
 			<!-- LOGO -->
-			<img
-			src="{{ asset('build/images/logo.png') }}" alt="logo de l'entreprise" class="logo"/>
+			<img src="{{ asset('build/images/logo.png') }}" alt="logo de l'entreprise" class="logo"/>
 
 			<!-- ICONE MENU BURGER -->
 			<a class="navburger" aria-label="Menu">
@@ -66,51 +65,55 @@
 				<ion-icon name="chevron-forward-outline"></ion-icon>
 			</div>
 		</div>
+		<main>
+			{% block body %}{% endblock %}
+		</main>
+		<footer>
+			<!-- BLOC GAUCHE -->
+			<div class="footer_block">
+				<span id="footer_subtitle" class="footer_p">Contact</span>
+				<p class="footer_p">
+					40 Rue Louis Lépine</p>
+				<p class="footer_p">34470 Pérols</p>
+				<a href="tel:04.67.00.00.00" class="footer_p">04.67.00.00.00</a>
+				<a href="mailto:contact@sunpower.com" class="footer_p">contact@agriproxi.com</a>
+			</div>
+
+			<!-- BLOC CENTRAL -->
+			<div class="footer_block footer_block--secondary">
+				<p id="footer_title">Retrouvez-nous sur les réseaux sociaux :</p>
+				<ul class="footer_icon">
+					<li class="icon">
+						<a href="https://www.facebook.com/" target="_blank" aria-label="Lien vers Facebook">
+							<ion-icon name="logo-facebook"></ion-icon>
+						</a>
+					</li>
+
+					<li class="icon">
+						<a href="https://www.linkedin.com/" target="_blank" aria-label="Lien vers Linkedin">
+							<ion-icon name="logo-linkedin"></ion-icon>
+						</a>
+					</li>
+
+					<li class="icon">
+						<a href="https://www.youtube.com/" target="_blank" aria-label="Lien vers Youtube">
+							<ion-icon name="logo-youtube"></ion-icon>
+						</a>
+					</li>
+
+					<li class="icon">
+						<a href="https://twitter.com/" target="_blank" aria-label="Lien vers Twitter">
+							<ion-icon name="logo-twitter"></ion-icon>
+						</a>
+					</li>
+				</ul>
+			</div>
+
+			<!-- BLOC DROIT -->
+			<div class="footer_block">
+				<p class="footer_p">ⓒagriproxi 2022.</p>
+				<a href="./mention legale.html" id="footer_link" class="footer_p">mentions légales</a>
+			</div>
+		</footer>
 	</body>
-</html></div><main>
-{% block body %}{% endblock %}</main><footer>
-<!-- BLOC GAUCHE -->
-<div class="footer_block">
-	<span id="footer_subtitle" class="footer_p">Contact</span>
-	<p class="footer_p">
-		40 Rue Louis Lépine</p>
-	<p class="footer_p">34470 Pérols</p>
-	<a href="tel:04.67.00.00.00" class="footer_p">04.67.00.00.00</a>
-	<a href="mailto:contact@sunpower.com" class="footer_p">contact@agriproxi.com</a>
-</div>
-
-<!-- BLOC CENTRAL -->
-<div class="footer_block footer_block--secondary">
-	<p id="footer_title">Retrouvez-nous sur les réseaux sociaux :</p>
-	<ul class="footer_icon">
-		<li class="icon">
-			<a href="https://www.facebook.com/" target="_blank" aria-label="Lien vers Facebook">
-				<ion-icon name="logo-facebook"></ion-icon>
-			</a>
-		</li>
-
-		<li class="icon">
-			<a href="https://www.linkedin.com/" target="_blank" aria-label="Lien vers Linkedin">
-				<ion-icon name="logo-linkedin"></ion-icon>
-			</a>
-		</li>
-
-		<li class="icon">
-			<a href="https://www.youtube.com/" target="_blank" aria-label="Lien vers Youtube">
-				<ion-icon name="logo-youtube"></ion-icon>
-			</a>
-		</li>
-
-		<li class="icon">
-			<a href="https://twitter.com/" target="_blank" aria-label="Lien vers Twitter">
-				<ion-icon name="logo-twitter"></ion-icon>
-			</a>
-		</li>
-	</ul>
-</div>
-
-<!-- BLOC DROIT -->
-<div class="footer_block">
-	<p class="footer_p">ⓒagriproxi 2022.</p>
-	<a href="./mention legale.html" id="footer_link" class="footer_p">mentions légales</a>
-</div></footer></body></html>
+</html>
