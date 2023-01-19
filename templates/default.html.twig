@@ -12,22 +12,44 @@
 {% endblock %}
 
 {% block body %}
-<h1>Notre concept</h1>
-<div class="cards">
-    <div class="card_contain">
-        <h2>On vous aide,</h2>
-        <div class="card_content">
-            <p>à trouver les producteurs les plus proche de vos points de vente, tout en respectant vos contraintes économiques, technique ect..</p>
-            <img src="{{ asset('build/images/handshake.png') }}" class="def_icon" alt="">
+    <div class="cards">
+        <div class="card_contain">
+            <h2>On vous aide,</h2>
+            <div class="card_content">
+                <p>à trouver les producteurs les plus proche de vos points de vente, tout en respectant vos contraintes économiques, technique ect..</p>
+                <img src="{{ asset('build/images/handshake.png') }}" class="def_icon" alt="">
+            </div>
         </div>
+
+        <div class="card_contain card_contain--Secondary">
+            <h2>On s’entraide,</h2>
+            <div class="card_content">
+                <p>et on préserve au mieux notre planète, en priorisant le commerce de proximité et en disminuant notre impact carbonne.</p>
+                <img src="{{ asset('build/images/map.png') }}" class="def_icon" alt="">
+            </div>
+        </div>
+    </div>
+    <div class="desc">
+        <h1>En 2022, 0000 producteurs nous on fait confiance !</h2>
+        <p>En moyenne, nos producteurs partenaires ont divisé par 2 leurs empreinte carbonne. Ils ont aussi aidé les producteurs.  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. En moyenne, nos producteurs partenaires ont divisé par 2 leurs empreinte carbonne. Ils ont aussi aidé les producteurs.  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus.</p>
+    </div>
+    <div class="banner_sec">
+        <img src="{{ asset('build/images/vegetable.jpg') }}" class="img_banner_sec" alt="">
+        <div class="black_banner_sec">
+            <p class="text_bbs">Consultez la liste des producteurs,<br>les plus proche de chez vous !</p>
+            <button class="btn_link_green">PAR ICI !</button>
+        </div>
+    </div>
+    <div class="cards_sec">
+        <img src="{{ asset('build/images/coursier.jpg') }}" class="card_img" alt="">   
+        <div class="card_present">
+            <h2>Qui sommes-nous ?</h2>
+            <p>« Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor. Cras elementum ultrices diam. Maecenas ligula massa, varius a, semper congue, euismod non, mi. Proin porttitor, orci nec nonummy molestie, enim est eleifend mi, non fermentum diam nisl sit amet erat. Duis semper. Duis arcu massa, scelerisque vitae, consequat in, pretium a, enim. Pellentesque congue. Ut in risus volutpat libero pharetra tempor. Proin feugiat, augue non elementum posuere, metus purus iaculis lectus, et tristique ligula justo vitae magna.»</p>
+        </div>
+    </div>
+    <div class="desc">
+        <h1>Le circuit court, comment ça marche ?</h2>
+        <img src="{{ asset('build/images/prod_connect.png') }}" class="img" alt="">   
     </div>
 
-    <div class="card_contain card_contain--Secondary">
-        <h2>On s’entraide,</h2>
-        <div class="card_content">
-            <p>et on préserve au mieux notre planète, en priorisant le commerce de proximité et en disminuant notre impact carbonne.</p>
-            <img src="{{ asset('build/images/map.png') }}" class="def_icon" alt="">
-        </div>
-    </div>
-</div>
 {% endblock %}
