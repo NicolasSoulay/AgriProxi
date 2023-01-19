@@ -21,7 +21,8 @@ class EntrepriseCreationFormType extends AbstractType
                 'label' => 'Nom'
             ])
             ->add('description', TextareaType::class, [
-                'label' => 'Description'
+                'label' => 'Description',
+                'required' => false
             ])
             ->add('typeEntreprise', EntityType::class, [
                 'class' => TypeEntreprise::class,
