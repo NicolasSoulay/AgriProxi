@@ -40,20 +40,30 @@
 				<li class="nav_item">
 					<a aria-current="page" href="{{path('app_produit')}}">Nos producteurs</a>
 				</li>
-				<li class="nav_item nav_item--Secondary">
-					<a aria-current="page" href="#">Mon compte</a>
-					<ul class="sub-menu">
-						<li class="sub_item">
-							<a aria-current="page" href="{{path('app_user')}}">Mes informations</a>
-						</li>
-						<li class="sub_item">
-							<a aria-current="page" href="{{path('maBoutique')}}">Ma boutique</a>
-						</li>
-						<li class="sub_item">
-							<a aria-current="page" href="#">Appel d'offre</a>
-						</li>
-					</ul>
-				</li>
+				{# CONNEXION / DECONNEXION ACCEES ESPACE PERSO #}
+				{% if app.user %}
+					<li class="nav_item nav_item--Secondary">
+						<a aria-current="page" href="#">Mon compte</a>
+						<ul class="sub-menu">
+							<li class="sub_item">
+								<a aria-current="page" href="{{path('app_user')}}">Mes informations</a>
+							</li>
+							<li class="sub_item">
+								<a aria-current="page" href="{{path('maBoutique')}}">Ma boutique</a>
+							</li>
+							<li class="sub_item">
+								<a aria-current="page" href="#">Appel d'offre</a>
+							</li>
+							<li class="sub_item">
+								<a aria-current="page" href="{{path('app_logout')}}">Déconnexion</a>
+							</li>
+						</ul>
+					</li>
+					{% else %}
+					<li class="nav_item nav_item--Secondary">
+						<a aria-current="page" href="{{path('app_login')}}">Connexion</a>
+					</li>
+				{% endif %}
 			</ul>
 		</nav>
 		<div id="slider">
