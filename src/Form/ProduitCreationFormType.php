@@ -37,12 +37,10 @@ class ProduitCreationFormType extends AbstractType
                     new Image(['maxSize' => '1024k'])
                 ]
             ])
-            //->add('entreprise')
             ->add('subCategorie', EntityType::class, [
                 'class' => SousCategorie::class,
                 'choice_label' => 'name',
             ])
-            //->add('hasAppellation')
             ->add('Enregistrer', SubmitType::class)
         ;
     }
