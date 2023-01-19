@@ -25,7 +25,7 @@ const redIcon = new L.Icon({
 });
 
 
-console.log(coordinatesProduits)
+//console.log(coordinatesProduits)
 
 let map = L.map('map').setView([latitude, longitude], zoomLevel); 
 //zoom level: 
@@ -43,17 +43,44 @@ L.marker([latitude, longitude], {icon: redIcon, title: "you"}).addTo(map)
 
 addProductMarker(coordinatesProduits);
 
+//Affiche la sélection de sous-categories correspondant si une categorie à été choisie
+document.getElementById("categorie").addEventListener("click", function(){ 
+    categorie = document.getElementById("categorie")
+    subCategorie = document.getElementById("subCategorie")
+
+    if (categorie.value != "") {
+        subCategorie.style.visibility = "visible";
+        for (let i=0; i<subCategorie.length; i++) {
+            if (subCategorie.options[i].className != categorie){
+                const classname = subCategorie.options[i].className;
+                console.log(classname)
+                //faut que je trouve comment le cacher.......
+                //subCategorie.options[i].;
+            }
+        }
+    }
+})
+
+
+
+
 
 function addProductMarker(coordinates) {
     {
         for (let i=0; i < coordinates.length; i++){
             coordinates[i] = coordinates[i].split(",");
             
-            let lat= coordinates[i][0];
-            let long= coordinates[i][1];
+            const lat = coordinates[i][0];
+            const long = coordinates[i][1];
+            const nomEntreprise = coordinates[i][2]
+            const idEntreprise = coordinates[i][3]
+
             let distance= map.distance([latitude, longitude],[lat, long])
-            distance = distance
-            L.marker([lat, long], {title:coordinates[i][3]+","+distance}).addTo(map).bindPopup("<a href='/entreprise/"+coordinates[i][3]+"'>"+coordinates[i][2]+"</a>");
+            distance = Math.ceil(distance/1000)
+
+            L.marker([lat, long], {title:idEntreprise+"|"+distance}).addTo(map).bindPopup("<a href='/entreprise/"+idEntreprise+"'>"+nomEntreprise+"</a><p>Distance: "+distance+"km</p>");
+            document.getElementsByClassName(idEntreprise+nomEntreprise)[0].innerText = "Distance: "+distance+"km";
+            
         }
     };
 }

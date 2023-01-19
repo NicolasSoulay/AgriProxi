@@ -10,7 +10,6 @@
     {{ parent() }}
     <script>
         const coordinatesProduits = {{ coordinatesProduits|json_encode|raw }};
-        const produits = {{ produits|json_encode|raw }};
     </script>
     {{ encore_entry_script_tags('map') }}
     <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js" integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM=" crossorigin=""></script>
@@ -29,8 +28,14 @@
     <div id="map"></div>
     <div id="product_search">
         <form id="search_filter">
-            <label for="categorie"></label>
+                <label for="adresse"></label>
+                <select name="adresse" id="adresse">
+                    {% for adresse in adresses %}
+                        <option value=' {{adresse.id}} '> {{adresse.label}} </option>
+                    {% endfor %}
+                </select>
             <div>
+                <label for="categorie"></label>
                 <select name ="categorie" id="categorie">
                     <option value="">Catégorie:</option>
                     {% for categorie in categories %}
@@ -41,18 +46,12 @@
                 <select name ="subCategorie" id="subCategorie">
                     <option value="">Sous-catégorie:</option>
                     {% for subCategorie in subCategories %}
-                        <option value=' {{subCategorie.id}} '> {{subCategorie.name}} </option>
+                        <option class="{{subCategorie.categorie.id}}" value=' {{subCategorie.id}} '> {{subCategorie.name}} </option>
                     {% endfor %}
                 </select>
             </div>
             <div>
-                <label for="adresse"></label>
-                <select name="adresse" id="adresse">
-                    {% for adresse in adresses %}
-                        <option value=' {{adresse.id}} '> {{adresse.label}} </option>
-                    {% endfor %}
-                </select>
-                <label for="rayon">Rayon:</label>
+                <label for="rayon">Distance:</label>
                 <select name="rayon" id="rayon">
                     <option value="0"> Toute la région </option>
                     <option value="10"> 10km </option>
@@ -76,6 +75,7 @@
                         <h3> {{ produit.name }} </h3>
                         <a href="{{ path('viewEntreprise', { id: produit.entreprise.id }) }}">{{ produit.entreprise.name }}</a>
                         <p> {{ produit.description }} </p>
+                        <h3 class= "{{ produit.entreprise.id }}{{ produit.entreprise.name }}">  <h3>
                     </div>
                 </div>
                 <div class="card_btn">
