@@ -38,9 +38,13 @@ class Produit
     #[ORM\ManyToMany(targetEntity: Appellation::class, inversedBy: 'produits')]
     private Collection $hasAppellation;
 
+    #[ORM\OneToMany(mappedBy: 'produit', targetEntity: LigneDevis::class, orphanRemoval: true)]
+    private Collection $ligneDevis;
+
     public function __construct()
     {
         $this->hasAppellation = new ArrayCollection();
+        $this->ligneDevis = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -140,6 +144,36 @@ class Produit
     public function removeHasAppellation(Appellation $hasAppellation): self
     {
         $this->hasAppellation->removeElement($hasAppellation);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, LigneDevis>
+     */
+    public function getLigneDevis(): Collection
+    {
+        return $this->ligneDevis;
+    }
+
+    public function addLigneDevi(LigneDevis $ligneDevi): self
+    {
+        if (!$this->ligneDevis->contains($ligneDevi)) {
+            $this->ligneDevis->add($ligneDevi);
+            $ligneDevi->setProduit($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLigneDevi(LigneDevis $ligneDevi): self
+    {
+        if ($this->ligneDevis->removeElement($ligneDevi)) {
+            // set the owning side to null (unless already changed)
+            if ($ligneDevi->getProduit() === $this) {
+                $ligneDevi->setProduit(null);
+            }
+        }
 
         return $this;
     }
