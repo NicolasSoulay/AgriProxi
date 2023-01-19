@@ -34,7 +34,7 @@ burgerBouton.addEventListener("click", () => {
 // });
 
 //---- SLIDER ----
-const slide = ["s11.png", "s22.png", "s3.png", "s4.png"];
+const slide = ["s1.png", "s2.png", "s3.png", "s4.png"];
 let numero = 0;
 
 function ChangeSlide(sens) {

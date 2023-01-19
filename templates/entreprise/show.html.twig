@@ -1,38 +1,49 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello EntrepriseController!{% endblock %}
+{% block stylesheets %}
+	{{ parent() }}
+	{{ encore_entry_link_tags('boutique') }}
+{% endblock %}
+
+{% block javascripts %}
+	{{ parent() }}
+	{{ encore_entry_script_tags('boutique') }}
+{% endblock %}
+
+{% block title %}
+	{{entreprise.name}}
+{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+	<h1>{{entreprise.name}}</h1>
+	<h2>{{entreprise.description}}</h2>
 
-<div class="example-wrapper">
-<h2>Entreprise : {{entreprise.name}}</h2>
-<h3>{{entreprise.description}}</h3>
-{% for adresse in adresses %}
-    <ul>
-        <li>{{ adresse.label }}</li>
-        <li>{{ adresse.complement }}</li>
-        <li>{{ adresse.zipCode }}</li>
-        <li>{{ adresse.ville }}</li>
-    </ul>
-{% endfor %}
-{% for produit in produits %}
-    <ul>
-        <li>{{ produit.name }}</li>
-        <li>{{ produit.inStock }}</li>
-        <li>{{ produit.description }}</li>
-        <li>{{ produit.imageURL }}</li>
-    </ul>
-<img src="{{ produit.imageURL }}">
+	{# BLOC : ADRESSE ENTREPRISE #}
+	{% for adresse in adresses %}
+		<div class="container_adress">
+			<ion-icon name="location-outline" id="adress_icon"></ion-icon>
+			<ul>
+				<li>{{ adresse.label|upper }}</li>
+				<li>{{ adresse.complement|upper }}</li>
+				<li>{{ adresse.zipCode }}
+					{{ adresse.ville }}</li>
+			</ul>
+		</div>
+	{% endfor %}
 
-{% endfor %}
-
-{# <h3>{{entreprise}}</h3> #}
-
-{{dump(entreprise)}}
-
-</div>
+	{# BLOC : PRODUIT ENTREPRISE  #}
+	{% for produit in produits %}
+		<div class="container_produit">
+			<img class="img_produit" src={{produit.imageURL}}>
+			<div class="desc_produit">
+				{% if produit.inStock == 1 %}
+					<p class='green'>En stock</p>
+					{%else%}
+					<p class='red'>Indisponible</p>
+				{% endif %}
+				<h3>{{produit.name|upper}}</h3>
+				<p>{{produit.description}}</p>
+			</div>
+		</div>
+	{% endfor %}
 {% endblock %}

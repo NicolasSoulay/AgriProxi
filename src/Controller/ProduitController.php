@@ -150,20 +150,17 @@ class ProduitController extends AbstractController
         ]);
     }
 
-    //Page de création de produit
-    #[Route('/create_produit', name: 'createProduit')]
-    public function createProduit(ProduitRepository $produitRepo, Request $request, #[Autowire('%photo_dir%')] string $photoDir): Response
+    // Affichage Formulaire pour l'entité Produit 
+    public function formProduit(Produit $produit, ProduitRepository $produitRepo, Request $request, #[Autowire('%photo_dir%')] string $photoDir)
     {
-        $produit = new Produit();
         $message = '';
         $form = $this->createForm(ProduitCreationFormType::class, $produit);
         $form->handleRequest($request);
         $user = $this->getUser();
         $entreprise = $user->getEntreprise();
         if ($form->isSubmitted() && $form->isValid()) {
-            var_dump($form['photo']);
-            if ($photo = $form['photo']->getData()) {
-                $filename = bin2hex(random_bytes(6)) . '.' . $photo->guessExtension();
+            if ($photo = $form['imageURL']->getData()) {
+                $filename = '/uploads/photos/' . bin2hex(random_bytes(6)) . '.' . $photo->guessExtension();
                 try {
                     $photo->move($photoDir, $filename);
                 } catch (FileException $e) {
@@ -185,5 +182,28 @@ class ProduitController extends AbstractController
             'form_produit' => $form->createView(),
             'message' => $message
         ]);
+    }
+
+    //Page de création de produit
+    #[Route('/create_produit', name: 'createProduit')]
+    public function createProduit(ProduitRepository $produitRepo, Request $request, #[Autowire('%photo_dir%')] string $photoDir): Response
+    {
+        $produit = new Produit();
+        return $this->formProduit($produit, $produitRepo, $request, $photoDir);
+    }
+
+    //Page de mise à jour de produit
+    #[Route('/create_produit/{id}', name: 'updateProduit')]
+    public function updateProduit(Produit $produit, ProduitRepository $produitRepo, Request $request, #[Autowire('%photo_dir%')] string $photoDir): Response
+    {
+        return $this->formProduit($produit, $produitRepo, $request, $photoDir);
+    }
+
+    //Suppression d'un produit
+    #[Route('/delete_produit/{id}', name: 'deleteProduit')]
+    public function deleteProduit(Produit $produit, ProduitRepository $produitRepo): Response
+    {
+        $produitRepo->remove($produit, true);
+        return $this->redirectToRoute('maBoutique');
     }
 }
