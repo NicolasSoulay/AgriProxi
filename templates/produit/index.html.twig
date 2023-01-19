@@ -55,6 +55,7 @@
                     </select>
                     <label for="rayon">Rayon:</label>
                     <select name="rayon" id="rayon">
+                        <option value="0"> Toute la région </option>
                         <option value="10"> 10km </option>
                         <option value="25"> 25km </option>
                         <option value="50"> 50km </option>
@@ -65,6 +66,7 @@
             </form>
             <div id="search_result">
                 {% for produit in produits %}
+                <input type="hidden" class="nomEntreprise" value = "{{produit.entreprise.name}}"/>
                 <div class="product_card">
                     <div class="product_desc">
                         <div class="card_image">

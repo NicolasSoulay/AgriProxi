@@ -109,6 +109,9 @@ class ProduitController extends AbstractController
     public function getRadius($rayon)
     {
         switch ($rayon) {
+            case '0':
+                return 6;
+                break;
             case '10':
                 return 12;
                 break;
