@@ -1,5 +1,10 @@
 @import './utility.scss';
 
+.form_width {
+    width: 60%;
+    margin: auto;
+}
+
 body {
     width: 100%;
     height: 100%;
@@ -118,8 +123,11 @@ nav {
 .logo {
     width: 150px;
     position: absolute;
-    top: 15px;
     left: 19px;
+}
+
+.logo_link {
+    position: absolute;
 }
 
 //ICON BURGER MENU

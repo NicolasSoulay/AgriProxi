@@ -11,8 +11,9 @@
 {% block title %}Produit{% endblock %}
 
 {% block body %}
-
-    {{form(form_produit)}}
+    <div class="form_width">
+        {{form_widget(form_produit)}}
+    </div>
 
     {% if message %}
         <div>{{ message }}</div>

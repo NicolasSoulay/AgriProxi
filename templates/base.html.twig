@@ -24,8 +24,9 @@
 	<body>
 		<nav>
 			<!-- LOGO -->
-			<img src="{{ asset('build/images/logo.png') }}" alt="logo de l'entreprise" class="logo"/>
-
+			<a class='logo_link' href='{{path('app_home')}}'>
+				<img src="{{ asset('build/images/logo.png') }}" alt="logo de l'entreprise" class="logo"/>
+			</a>
 			<!-- ICONE MENU BURGER -->
 			<a class="navburger" aria-label="Menu">
 				<ion-icon name="grid-outline" class="navburger_icon"></ion-icon>
