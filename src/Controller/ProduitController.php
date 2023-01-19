@@ -3,10 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\Produit;
-use App\Entity\Adresse;
 use App\Form\ProduitCreationFormType;
 use App\Repository\CategorieRepository;
-use App\Repository\EntrepriseRepository;
 use App\Repository\ProduitRepository;
 use App\Repository\SousCategorieRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
