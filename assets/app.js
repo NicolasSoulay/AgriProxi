@@ -62,3 +62,5 @@ suivant.addEventListener("click", () => {
 });
 
 setInterval(ChangeSlide, 6500, 1);
+
+
