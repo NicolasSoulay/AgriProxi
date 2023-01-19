@@ -17,16 +17,6 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class EntrepriseController extends AbstractController
 {
-    #[Route('/entreprise', name: 'app_entreprise')]
-    public function index(EntrepriseRepository $entrepriseRepo, Request $request): Response
-    {
-        $entreprises = $entrepriseRepo->findAll();
-        return $this->render('entreprise/index.html.twig', [
-            'controller_name' => 'EntrepriseController',
-            'entreprises' => $entreprises
-        ]);
-    }
-
     #[Route('/entreprise/{id}', name: 'viewEntreprise')]
     public function show(string $id, EntrepriseRepository $entrepriseRepo, Request $request): Response
     {
@@ -34,7 +24,6 @@ class EntrepriseController extends AbstractController
         $adresses = $entreprise->getAdresses();
         $produits = $entreprise->getProduits();
         return $this->render('entreprise/show.html.twig', [
-            'controller_name' => 'EntrepriseController',
             'entreprise' => $entreprise,
             'adresses' => $adresses,
             'produits' => $produits
@@ -110,7 +99,7 @@ class EntrepriseController extends AbstractController
     }
 
     //Page de création d'adresse
-    #[Route('/entreprise/create_adresse', name: 'createAdresse')]
+    #[Route('/create_adresse', name: 'createAdresse')]
     public function createAdresse(AdresseRepository $adresseRepo, Request $request): Response
     {
         $adresse = new Adresse();
