@@ -39,9 +39,10 @@ L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
 }).addTo(map);
 
-L.marker([latitude, longitude], {icon: redIcon}).addTo(map)
+L.marker([latitude, longitude], {icon: redIcon, title: "you"}).addTo(map)
 
 addProductMarker(coordinatesProduits);
+
 
 function addProductMarker(coordinates) {
     {
@@ -50,7 +51,9 @@ function addProductMarker(coordinates) {
             
             let lat= coordinates[i][0];
             let long= coordinates[i][1];
-            L.marker([lat, long]).addTo(map).bindPopup("<a href='/entreprise/"+coordinates[i][3]+"'>"+coordinates[i][2]+"</a>");
+            let distance= map.distance([latitude, longitude],[lat, long])
+            distance = distance
+            L.marker([lat, long], {title:coordinates[i][3]+","+distance}).addTo(map).bindPopup("<a href='/entreprise/"+coordinates[i][3]+"'>"+coordinates[i][2]+"</a>");
         }
     };
 }

@@ -32,7 +32,7 @@ class ProduitController extends AbstractController
         $produits = $this->searchByCategorieOrSubCategorie($subCategorie, $categorie, $produitRepo);
         $coordinatesProduits = $this->getCoordinatesProduits($produits);
 
-        return $this->render('produit/index.html.twig', [
+        return $this->render('produit/map.html.twig', [
             'controller_name' => 'ProduitController',
             'produits' => $produits,
             'subCategories' => $subCategorieRepo->findAll(),
@@ -58,9 +58,14 @@ class ProduitController extends AbstractController
             $entrepriseName = $entreprise->getName();
             $entrepriseId = $entreprise->getId();
             foreach ($adresses as $adresse) {
-                $concat = $adresse->getLatitude() . "," . $adresse->getLongitude() . "," . $entrepriseName . "," . $entrepriseId;
-                if (!in_array($concat, $coordinates) && $concat != "0,0") {
-                    $coordinates[] = $concat;
+                $lat = $adresse->getLatitude();
+                $long = $adresse->getLongitude();
+                $adresseCoordinate = $lat . "," . $long;
+                if ($adresseCoordinate != "0,0") {
+                    $concat = $adresseCoordinate . "," . $entrepriseName . "," . $entrepriseId;
+                    if (!in_array($concat, $coordinates)) {
+                        $coordinates[] = $concat;
+                    }
                 }
             }
         }
@@ -109,9 +114,6 @@ class ProduitController extends AbstractController
     public function getRadius($rayon)
     {
         switch ($rayon) {
-            case '0':
-                return 7;
-                break;
             case '10':
                 return 12;
                 break;
