@@ -82,6 +82,9 @@ a:hover {
     border-style: none;
     border-radius: 10px;
     padding: 10px 20px 10px 20px;
+    display: flex;
+    align-items: center;
+    width: fit-content;
 }
 
 .btn_link:hover {
@@ -166,6 +169,10 @@ nav a:hover {
 .nav_item--Secondary {
     cursor: pointer;
     border-right: 0;
+}
+
+.logout {
+    display: none;
 }
 
 //MENU DEROULANT
@@ -275,7 +282,18 @@ nav>ul li:hover .sub-menu {
         visibility: hidden;
     }
 
+    .logout {
+        display: block;
+    }
 }
+
+// @media (max-width: 850px) {
+//     .card_content_user {
+//         display: block;
+//         padding: 20px 0 0 0;
+//     }
+// }
+
 
 /* ------------------ FOOTER ------------------ */
 footer {
@@ -383,6 +401,11 @@ footer {
     background-color: $nude;
     margin: 0 20px;
     padding: 20px;
+}
+
+.card_contain_adress {
+    background-color: $blue;
+    margin: auto;
 }
 
 .card_contain--Secondary {

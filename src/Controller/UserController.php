@@ -16,7 +16,7 @@ class UserController extends AbstractController
     // Page d'affichage dans Mon compte/ Mes informations
     #[Route('/user', name: 'app_user')]
     public function index(): Response
-    {   
+    {
         $user = $this->getUser();
         $entreprise = $user->getEntreprise();
         $adresses = $entreprise->getAdresses();
@@ -28,21 +28,20 @@ class UserController extends AbstractController
     }
 
     //Affichage Formulaire pour l'entité User
-    private function formUser(UserRepository $userRepo, Request $request, User $user):Response
+    private function formUser(UserRepository $userRepo, Request $request, User $user): Response
     {
         $message = '';
         $form = $this->createForm(UserCreationFormType::class, $user);
         $form->handleRequest($request);
-        if($form->isSubmitted() && $form->isValid()){
+        if ($form->isSubmitted() && $form->isValid()) {
             $user->setRoles(["ROLE_USER"]);
             $userRepo->save($user, true);
-            if($request->get('id')){
+            if ($request->get('id')) {
                 $message = 'L\'utilisateur a bien été modifié';
-            }else{
+            } else {
                 $message = 'L\'utilisateur a bien été créé';
             }
-        }
-        elseif($form->isSubmitted()){
+        } elseif ($form->isSubmitted()) {
             $message = 'Les informations ne sont pas valides, ou ce compte existe déjà';
         }
         return $this->render('user/create_user.html.twig', [
@@ -54,7 +53,7 @@ class UserController extends AbstractController
     // Page de création du User
     #[Route('/create_user', name: 'createUser')]
     public function createUser(UserRepository $userRepo, Request $request)
-    {   
+    {
         $user = new User();
         return $this->formUser($userRepo, $request, $user);
     }
@@ -62,7 +61,7 @@ class UserController extends AbstractController
     //Page de modification du User
     #[Route('/update_user/{id}', name: 'updateUser')]
     public function updateUser(User $user, UserRepository $userRepo, Request $request)
-    {   
+    {
         return $this->formUser($userRepo, $request, $user);
     }
 }
