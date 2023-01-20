@@ -7,14 +7,12 @@ use App\Form\ProduitCreationFormType;
 use App\Repository\CategorieRepository;
 use App\Repository\ProduitRepository;
 use App\Repository\SousCategorieRepository;
-use phpDocumentor\Reflection\DocBlock\Tags\Var_;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 class ProduitController extends AbstractController
@@ -182,7 +180,7 @@ class ProduitController extends AbstractController
      * retourne la valeur de zoom en décimale pour leaflet a partir du choix de rayon de recherche
      * 
      * @param string
-     * @return STRIN 
+     * @return int 
      */
     public function getRadius(string $rayon)
     {
