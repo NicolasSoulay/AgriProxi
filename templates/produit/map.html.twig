@@ -20,7 +20,7 @@
 {% block body %}
 {# {{ dump(coordinatesProduits) }} #}
 
-
+<button class="btn_link_green" id="prout">PROUT</button>
 <input type="hidden" id="latitude" value = "{{latitude}}"/>
 <input type="hidden" id="longitude" value = "{{longitude}}"/>
 <input type="hidden" id="zoomLevel" value = "{{zoomLevel}}"/>
@@ -44,10 +44,10 @@
                 </select>
                 <label for="subCategorie"></label>
                 <select name ="subCategorie" id="subCategorie">
-                    <option value="">Sous-catégorie:</option>
+                    {# <option value="">Sous-catégorie:</option>
                     {% for subCategorie in subCategories %}
                         <option class="{{subCategorie.categorie.id}}" value=' {{subCategorie.id}} '> {{subCategorie.name}} </option>
-                    {% endfor %}
+                    {% endfor %} #}
                 </select>
             </div>
             <div>

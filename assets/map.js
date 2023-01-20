@@ -25,7 +25,6 @@ const redIcon = new L.Icon({
 });
 
 
-//console.log(coordinatesProduits)
 
 let map = L.map('map').setView([latitude, longitude], zoomLevel); 
 //zoom level: 
@@ -43,25 +42,38 @@ L.marker([latitude, longitude], {icon: redIcon, title: "you"}).addTo(map)
 
 addProductMarker(coordinatesProduits);
 
-//Affiche la sélection de sous-categories correspondant si une categorie à été choisie
-document.getElementById("categorie").addEventListener("click", function(){ 
-    categorie = document.getElementById("categorie")
-    subCategorie = document.getElementById("subCategorie")
-
-    if (categorie.value != "") {
-        subCategorie.style.visibility = "visible";
-        for (let i=0; i<subCategorie.length; i++) {
-            if (subCategorie.options[i].className != categorie){
-                const classname = subCategorie.options[i].className;
-                console.log(classname)
-                //faut que je trouve comment le cacher.......
-                //subCategorie.options[i].;
-            }
-        }
-    }
+document.getElementById("prout").addEventListener("click", function(){
+    fetch('https://127.0.0.1:8000/produit/ajax/subcat/12')
+    .then((response) => response.json())
+    .then((data) => console.log(data));
 })
 
 
+//Affiche la sélection de sous-categories correspondant si une categorie à été choisie
+document.getElementById("categorie").addEventListener("change", function() { 
+    const categorie = document.getElementById("categorie")
+    const subCategorie = document.getElementById("subCategorie")
+    if (categorie.value != "") {
+        subCategorie.style.visibility = "visible";
+        getSubcategories(categorie.value);
+        return
+    }
+    subCategorie.style.visibility = "hidden";
+})
+
+function getSubcategories(id) {
+    return fetch('https://127.0.0.1:8000/produit/ajax/subcat/'+id)
+        .then((response) => response.json())
+        .then((json) => afficheSubcategories(json, id));
+        
+}
+
+function afficheSubcategories(subCategories, categorieId){
+    for (let i=0; i < subCategories.length; i++) {
+        subCategorie.innerHTML+= '<option class="'+categorieId+'" value="'+subCategories[i][0]+'">'+subCategories[i][1]+'</option>'
+        
+    }
+}
 
 
 

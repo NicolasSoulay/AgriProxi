@@ -10,6 +10,7 @@ use App\Repository\SousCategorieRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -18,10 +19,16 @@ class ProduitController extends AbstractController
 {
 
     /**
-     *  retourne la vue de la page de recherche de produits avec la carte
+     * retourne la vue de la page de recherche de produits avec la carte
+     *
+     * @param ProduitRepository $produitRepo
+     * @param SousCategorieRepository $subCategorieRepo
+     * @param CategorieRepository $categorieRepo
+     * @param Request $request
+     * @return Response
      */
     #[Route('/produit', name: 'app_produit')]
-    public function index(ProduitRepository $produitRepo, SousCategorieRepository $subCategorieRepo, CategorieRepository $categorieRepo, Request $request): Response
+    public function map(ProduitRepository $produitRepo, SousCategorieRepository $subCategorieRepo, CategorieRepository $categorieRepo, Request $request): Response
     {
         $subCategorie = $request->get("subCategorie", '');
         $categorie = $request->get("categorie", '');
@@ -47,9 +54,69 @@ class ProduitController extends AbstractController
 
 
     /**
-     * @return array[] Retourne un tableau de coordonnées, filtrés par produits
+     * Renvoie un tableau:  
+     * idCategorie => [[idSubCat1, nomSubCat1],..] 
+     * 
+     * @param Request $request
+     * @return JsonResponse
      */
-    public function getCoordinatesProduits($produits)
+    #[Route('/produit/ajax/subcat/{id}', name: 'ajax_subcat')]
+    public function ajaxSubCat(Request $request, SousCategorieRepository $subCatRepo)
+    {
+        if (isset($request->request)) {
+            $idCategorie = $request->get('id');
+            $subcats = $subCatRepo->findByCategorie($idCategorie);
+            $json = [];
+            $i = 0;
+            foreach ($subcats as $subcat) {
+                $json[$i][] = $subcat->getId();
+                $json[$i][] = $subcat->getName();
+                $i++;
+            }
+            return new JsonResponse($json, 200);
+        }
+
+        return new JsonResponse(
+            array(
+                'status' => 'ça pas marche',
+                'message' => "c'est con hein?"
+            ),
+            400
+        );
+    }
+
+    /**
+     * Renvoie un tableau:  
+     * idCategorie |idSousCategorie => [[idProduit1, nomProduit1, descriptionProduit1, imageProduit1, idEntrepriseProduit1, nomEntrepriseProduit1, idAdresseEntrepriseProduit1, labelAdresseEntrepriseProduit1, codePostalAdresseEntrepriseProduit1, villeAdresseEntrepriseProduit1 latitudeEntrepriseProduit1, longitudeEntrepriseProduit1],..]
+     * 
+     * @param Request $request
+     * @return ?
+     */
+    #[Route('/produit/ajax/produit/{id}', name: 'ajax_produit')]
+    public function ajaxProduit(Request $request)
+    {
+    }
+
+    /**
+     * Renvoie un tableau: 
+     * idEntrepriseUser => [[idAdresseUser1, labelAdresseUser1, codePostalAdresseUser1, villeAdresseUser1, latitudeAdresseUser1, LongitudeAdresseUser1],..]
+     * 
+     * @param Request $request
+     * @return ?
+     */
+    #[Route('/produit/ajax/user/{id}', name: 'ajax_user')]
+    public function ajaxAdresseUser(Request $request)
+    {
+    }
+
+
+    /**
+     * Retourne un tableau contenant les coordonée, le nom et l'Id d'une entreprise, filtrés par produits
+     * 
+     * @param Produit[] $produits
+     * @return array[] 
+     */
+    public function getCoordinatesProduits(array $produits)
     {
         $coordinates = [];
         foreach ($produits as $produit) {
@@ -73,9 +140,12 @@ class ProduitController extends AbstractController
     }
 
     /**
-     * @return int retourne la latitude en décimal à partir d'une entité "Adresse"
+     * retourne la latitude en décimal de l'adresse pointé par l'Url, sinon de la premiere adresse de l'utilisateur
+     * 
+     * @param Adresse|Adresse[] $adresses
+     * @return int 
      */
-    public function getLatitudeFromUrlOrUser($adresses)
+    public function getLatitudeFromUrlOrUser(mixed  $adresses)
     {
         if (!isset($_GET['adresse']) || $_GET['adresse'] === '') {
             return $adresses[0]->getLatitude();
@@ -89,9 +159,12 @@ class ProduitController extends AbstractController
 
 
     /**
-     * @return int retourne la longitude en décimal à partir d'une entité "Adresse"
+     * retourne la longitude en décimal de l'adresse pointé par l'Url, sinon de la premiere adresse de l'utilisateur
+     * 
+     * @param Adresse|Adresse[] $adresses
+     * @return int 
      */
-    public function getLongitudeFromUrlOrUser($adresses)
+    public function getLongitudeFromUrlOrUser(mixed $adresses)
     {
         if (!isset($_GET['adresse']) || $_GET['adresse'] === '') {
             return $adresses[0]->getLongitude();
@@ -104,14 +177,12 @@ class ProduitController extends AbstractController
     }
 
     /**
-     * @return int retourne la valeur de zoom en décimale pour leaflet a partir du choix de rayon de recherche
+     * retourne la valeur de zoom en décimale pour leaflet a partir du choix de rayon de recherche
+     * 
+     * @param int
+     * @return int 
      */
-    //zoom level: 
-    //12 = 30km -> r = 10km 
-    //11 = 75km -> r = 25km 
-    //10 = 150km -> r = 50km
-    //9 = 240km -> r = 100km
-    public function getRadius($rayon)
+    public function getRadius(int $rayon)
     {
         switch ($rayon) {
             case '10':
@@ -132,14 +203,19 @@ class ProduitController extends AbstractController
     }
 
     /**
-     * @return Produit[] Retourne un tableau de produits, filtrés par categories ou sous-categories
+     * Retourne un tableau de produits, filtrés par categories ou sous-categories
+     *
+     * @param string $subCatId
+     * @param string $catId
+     * @param ProduitRepository $produitRepo
+     * @return Produit[] 
      */
-    public function searchByCategorieOrSubCategorie($subCat, $cat, $produitRepo)
+    public function searchByCategorieOrSubCategorie(string $subCatId, string $catId, ProduitRepository $produitRepo)
     {
         if (!isset($_GET['subCategorie']) || $_GET['subCategorie'] === '') {
-            return $produitRepo->findByCategorie($cat);
+            return $produitRepo->findByCategorie($catId);
         }
-        return $produitRepo->findBySubCategorie($subCat);
+        return $produitRepo->findBySubCategorie($subCatId);
     }
 
     //Affiche la page de ma boutique
