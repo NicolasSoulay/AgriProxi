@@ -17,7 +17,11 @@
         <div>{{ message }}</div>
     {% endif %}
     
+    {% if app.user %}
+    <a href="{{path('app_user')}}">Retour</a>
+    {% else %}
     <a href="{{path('app_login')}}">Retour</a>
+    {% endif %}
 
 </div>
 {% endblock %}

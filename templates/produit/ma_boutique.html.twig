@@ -15,6 +15,11 @@
 
 {% block body %}
 	<h1>Mon catalogue</h1>
+
+	<div class="message">
+		<p>{{ message }}</p>
+	</div>
+
 	<a class="btn_link btn_produit" href="{{path('createProduit')}}">Ajouter un produit</a>
 	
 	{# BLOC : PRODUIT ENTREPRISE  #}

@@ -39,6 +39,16 @@ class EntrepriseRepository extends ServiceEntityRepository
         }
     }
 
+    public function getLastId(){
+        $connexion = $this->getEntityManager()->getConnection();
+
+        $sql = 'SELECT max(e.id) FROM entreprise e';
+
+        $result = $connexion->prepare($sql)->executeQuery();
+
+        return $result->fetchOne();
+    }
+
     //    /**
     //     * @return Entreprise[] Returns an array of Entreprise objects
     //     */

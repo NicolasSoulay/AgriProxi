@@ -22,7 +22,9 @@
         <div>{{ message }}</div>
     {% endif %}
     
+    {% if app.user %}
     <a href="{{path('app_user')}}">Retour</a>
+    {% endif %}
 
 </div>
 {% endblock %}

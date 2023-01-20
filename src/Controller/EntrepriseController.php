@@ -37,16 +37,18 @@ class EntrepriseController extends AbstractController
         $message = '';
         $form = $this->createForm(EntrepriseCreationFormType::class, $entreprise);
         $form->handleRequest($request);
-        // $userId = $this->getUser()->getId();
-        // $user = $userRepo->find($userId);
         if ($form->isSubmitted() && $form->isValid()) {
             $entrepriseRepo->save($entreprise, true);
             $user->setEntreprise($entreprise);
             $userRepo->save($user, true);
             if ($request->get('id')) {
                 $message = 'L\'entreprise a bien été modifiée';
+                return $this->redirectToRoute('app_user', [
+                    'message' => '0'
+                ]);
             } else {
                 $message = 'L\'entreprise a bien été créée';
+                return $this->redirectToRoute('createAdresse');
             }
         } elseif ($form->isSubmitted()) {
             $message = 'Les informations ne sont pas valides, ou cette entreprise existe déjà';
@@ -78,19 +80,29 @@ class EntrepriseController extends AbstractController
 
 
     //Affichage Formulaire pour l'entité Adresse
-    private function formAdresse(Adresse $adresse, AdresseRepository $adresseRepo, Request $request)
+    private function formAdresse(Adresse $adresse, AdresseRepository $adresseRepo, Request $request, Entreprise $entreprise)
     {
         $message = '';
         $form = $this->createForm(AdresseCreationFormType::class, $adresse);
         $form->handleRequest($request);
-        $entreprise = $this->getUser()->getEntreprise();
         if ($form->isSubmitted() && $form->isValid()) {
             $adresse->setEntreprise($entreprise);
             $adresseRepo->save($adresse, true);
             if ($request->get('id')) {
                 $message = 'L\'adresse a bien été modifiée';
+                return $this->redirectToRoute('app_user', [
+                    'message' => '2'
+                ]);
             } else {
                 $message = 'L\'adresse a bien été créée';
+                if($this->getUser()){
+                    return $this->redirectToRoute('app_user', [
+                        'message' => '1'
+                    ]);
+                }
+                else{
+                    return $this->redirectToRoute('app_login');
+                }
             }
         } elseif ($form->isSubmitted()) {
             $message = 'Les informations ne sont pas valides';
@@ -103,23 +115,28 @@ class EntrepriseController extends AbstractController
 
     //Page de création d'adresse
     #[Route('/create_adresse', name: 'createAdresse')]
-    public function createAdresse(AdresseRepository $adresseRepo, Request $request): Response
+    public function createAdresse(AdresseRepository $adresseRepo, Request $request, EntrepriseRepository $entrepriseRepo): Response
     {
+        $entrepriseId = $entrepriseRepo->getLastId();
+        $entreprise = $entrepriseRepo->find($entrepriseId);
         $adresse = new Adresse();
-        return $this->formAdresse($adresse, $adresseRepo, $request);
+        return $this->formAdresse($adresse, $adresseRepo, $request, $entreprise);
     }
 
     //Page de modification d'adresse
     #[Route('/update_adresse/{id}', name: 'updateAdresse')]
     public function updateAdresse(Adresse $adresse, AdresseRepository $adresseRepo, Request $request): Response
     {
-        return $this->formAdresse($adresse, $adresseRepo, $request);
+        $entreprise = $this->getUser()->getEntreprise();
+        return $this->formAdresse($adresse, $adresseRepo, $request, $entreprise);
     }
 
     #[Route('/delete_adresse/{id}', name: 'deleteAdresse')]
     public function deleteAdresse(Adresse $adresse, AdresseRepository $adresseRepo): Response
     {
         $adresseRepo->remove($adresse, true);
-        return $this->redirectToRoute('app_user');
+        return $this->redirectToRoute('app_user',[
+            'message' => '3'
+        ]);
     }
 }
