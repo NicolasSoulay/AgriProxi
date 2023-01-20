@@ -5,14 +5,16 @@
     display: flex;
     #map {  
         width: 1200px;
-        height: 90vh;
+        height: 820px;
         border-radius: 20px;
         border: solid 2px;
         border-color: $blue;
     }
     #product_search {
         width: 35%;
+        height: 820px;
         margin-left: 20px;
+        margin-bottom: 40px;
     }
 }
 
@@ -46,3 +48,8 @@
     display: flex;
     align-items: center;
 }
+
+#subCategorie {
+    visibility: hidden;
+}
+
