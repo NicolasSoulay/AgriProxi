@@ -17,6 +17,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class EntrepriseController extends AbstractController
 {
+    //Affichage fiche entreprise 
     #[Route('/entreprise/{id}', name: 'viewEntreprise')]
     public function show(string $id, EntrepriseRepository $entrepriseRepo): Response
     {
