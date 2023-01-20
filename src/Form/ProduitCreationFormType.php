@@ -28,7 +28,8 @@ class ProduitCreationFormType extends AbstractType
                 'required' => false
             ])
             ->add('description', TextareaType::class, [
-                'label' => 'Description'
+                'label' => 'Description',
+                'required' => false
             ])
             ->add('imageURL', FileType::class, [
                 'label' => 'Choisir une image',

@@ -1,6 +1,11 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{% endblock %}
+{% block title %}AgriProxi | Adresse{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('adresse') }}
+{% endblock %}
 
 {% block body %}
 <style>
@@ -17,7 +22,9 @@
         <div>{{ message }}</div>
     {% endif %}
     
+    {% if app.user %}
     <a href="{{path('app_user')}}">Retour</a>
+    {% endif %}
 
 </div>
 {% endblock %}

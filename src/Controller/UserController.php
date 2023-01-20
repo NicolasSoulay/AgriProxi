@@ -20,10 +20,33 @@ class UserController extends AbstractController
         $user = $this->getUser();
         $entreprise = $user->getEntreprise();
         $adresses = $entreprise->getAdresses();
+        $message = '';
+        if(isset($_GET['message'])){
+            switch ($_GET['message']){
+                case '0':
+                    $message = 'L\'entreprise a bien été modifié';
+                    break;
+                case '1' :
+                    $message = 'L\'adresse a bien été créée';
+                    break;
+                case '2' :
+                    $message = 'L\'adresse a bien été modifiée';
+                    break;
+                case '3' :
+                    $message = 'L\'adresse a bien été supprimée';
+                    break;  
+                case '4' :
+                    $message = 'L\'utilisateur a bien été modifiée';
+                    break; 
+                default :
+                    $message = '';
+            }
+        }
         return $this->render('user/index.html.twig', [
             'user' => $user,
             'entreprise' => $entreprise,
             'adresses' => $adresses,
+            'message' => $message,
         ]);
     }
 
@@ -38,8 +61,12 @@ class UserController extends AbstractController
             $userRepo->save($user, true);
             if ($request->get('id')) {
                 $message = 'L\'utilisateur a bien été modifié';
+                return $this->redirectToRoute('app_user', [
+                    'message' => '4',
+                ]);
             } else {
                 $message = 'L\'utilisateur a bien été créé';
+                return $this->redirectToRoute('createEntreprise');
             }
         } elseif ($form->isSubmitted()) {
             $message = 'Les informations ne sont pas valides, ou ce compte existe déjà';
@@ -61,7 +88,7 @@ class UserController extends AbstractController
     //Page de modification du User
     #[Route('/update_user/{id}', name: 'updateUser')]
     public function updateUser(User $user, UserRepository $userRepo, Request $request)
-    {
+    {   
         return $this->formUser($userRepo, $request, $user);
     }
 }

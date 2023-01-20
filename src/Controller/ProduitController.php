@@ -7,6 +7,7 @@ use App\Form\ProduitCreationFormType;
 use App\Repository\CategorieRepository;
 use App\Repository\ProduitRepository;
 use App\Repository\SousCategorieRepository;
+use phpDocumentor\Reflection\DocBlock\Tags\Var_;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
@@ -142,14 +143,32 @@ class ProduitController extends AbstractController
 
     //Affiche la page de ma boutique
     #[Route('/ma_boutique', name: 'maBoutique')]
-    public function maBoutique(): Response
+    public function maBoutique(Request $request): Response
     {
         $user = $this->getUser();
         $entreprise = $user->getEntreprise();
         $produits = $entreprise->getProduits();
+        $message = '';
+        if(isset($_GET['message'])){
+            switch ($_GET['message']){
+                case '0':
+                    $message = 'Le produit a bien été créé';
+                    break;
+                case '1' :
+                    $message = 'Le produit a bien été modifié';
+                    break;
+                case '2' :
+                    $message = 'Le produit a bien été supprimé';
+                    break;
+                default :
+                    $message = '';
+            }
+        }
+
         return $this->render('produit/ma_boutique.html.twig', [
             'produits' => $produits,
-            'entreprise' => $entreprise
+            'entreprise' => $entreprise,
+            'message' => $message
         ]);
     }
 
@@ -174,10 +193,13 @@ class ProduitController extends AbstractController
             $produit->setEntreprise($entreprise);
             $produitRepo->save($produit, true);
             if ($request->get('id')) {
-                $message = 'Le produit a bien été modifié';
+                $message = '1';
             } else {
-                $message = 'Le produit a bien été créé';
+                $message = '0';
             }
+        return $this->redirectToRoute('maBoutique',[
+            'message' => $message,
+        ]);
         } elseif ($form->isSubmitted()) {
             $message = 'Les informations ne sont pas valides';
         }
@@ -207,6 +229,8 @@ class ProduitController extends AbstractController
     public function deleteProduit(Produit $produit, ProduitRepository $produitRepo): Response
     {
         $produitRepo->remove($produit, true);
-        return $this->redirectToRoute('maBoutique');
+        return $this->redirectToRoute('maBoutique',[
+            'message' => '2',
+        ]);
     }
 }

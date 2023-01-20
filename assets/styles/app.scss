@@ -489,3 +489,19 @@ footer {
 .img {
     width: 65%;
 }
+
+/* ------------------ MESSAGE ------------------ */
+.message{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50px;
+    
+    p{
+        text-align: center;
+        color: $message;
+        font-family: poppins-b;
+        border-radius: 5px;
+        width: 25%;
+    }
+}
