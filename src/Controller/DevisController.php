@@ -23,9 +23,18 @@ class DevisController extends AbstractController
         $devis = $entreprise->getDevis();
         foreach ($devis as $key) {
             foreach ($key->getLigneDevis() as $ligneDevis) {
+
                 $produits[] = $ligneDevis->getProduit();
             }
-            return $this->render('devis/index.html.twig', ["devis" => $produits]);
+            // La fonction array_reduce() va parcourir votre tableau de produits et pour chaque produit, elle va vérifier son id entreprise. Si l'id entreprise existe déjà dans le tableau $carry, elle va ajouter le produit dans ce tableau associatif, sinon elle va créer une nouvelle entrée dans ce tableau associatif avec l'id entreprise en clé.
+            $grouped_produits = array_reduce($produits, function ($carry, $item) {
+                $carry[$item->getEntreprise()->getId()][] = $item;
+                return $carry;
+            }, []);
+            return $this->render('devis/index.html.twig', [
+                "produits" => $grouped_produits,
+                // "entreprises" => $entreprise
+            ]);
         }
     }
     #[Route('/devis/add/{id}', name: 'add_devis')]
