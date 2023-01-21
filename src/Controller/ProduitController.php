@@ -55,16 +55,16 @@ class ProduitController extends AbstractController
 
     /**
      * Renvoie un tableau:  
-     * idCategorie => [[idSubCat1, nomSubCat1],..] 
+     * idCategorie => [[idSubCat1, nomSubCat1],[..],..] 
      * 
      * @param Request $request
      * @return JsonResponse
      */
-    #[Route('/produit/ajax/subcat/{id}', name: 'ajax_subcat')]
+    #[Route('/produit/ajax/subcat/{idCat}', name: 'ajax_subcat')]
     public function ajaxSubCat(Request $request, SousCategorieRepository $subCatRepo)
     {
         if (isset($request->request)) {
-            $idCategorie = $request->get('id');
+            $idCategorie = $request->get('idCat');
             $subcats = $subCatRepo->findByCategorie($idCategorie);
             $json = [];
             $i = 0;
@@ -87,26 +87,69 @@ class ProduitController extends AbstractController
 
     /**
      * Renvoie un tableau:  
-     * idCategorie |idSousCategorie => [[idProduit1, nomProduit1, descriptionProduit1, imageProduit1, idEntrepriseProduit1, nomEntrepriseProduit1, idAdresseEntrepriseProduit1, labelAdresseEntrepriseProduit1, codePostalAdresseEntrepriseProduit1, villeAdresseEntrepriseProduit1 latitudeEntrepriseProduit1, longitudeEntrepriseProduit1],..]
+     * idCategorie |idSousCategorie => [[idProduit1, nomProduit1, descriptionProduit1, inStockProduit1, imageProduit1, idEntrepriseProduit1, nomEntrepriseProduit1, idAdresseEntrepriseProduit1, labelAdresseEntrepriseProduit1, codePostalAdresseEntrepriseProduit1, latitudeEntrepriseProduit1, longitudeEntrepriseProduit1, IdVilleAdresseEntrepriseProduit1, nomVilleAdresseEntrepriseProduit1, idDepartementVilleAdresseEntrepriseProduit1, codeDepartementVilleAdresseEntrepriseProduit1, codeDepartementVilleAdresseEntrepriseProduit1],[..],..]
      * 
      * @param Request $request
      * @return ?
      */
-    #[Route('/produit/ajax/produit/{id}', name: 'ajax_produit')]
-    public function ajaxProduit(Request $request)
+    #[Route('/produit/ajax/produitcat/{idCat}/produitsubcat/{idSubCat}', name: 'ajax_produit')]
+    public function ajaxProduit(Request $request, ProduitRepository $produitRepo)
     {
-    }
+        if (isset($request->request)) {
+            $idCat = $request->get('idCat');
+            $idSubCat = $request->get('idSubCat');
+            if ($idSubCat === 'a') {
+                $produits = $produitRepo->findByCategorie($idCat);
+            } else {
+                $produits = $produitRepo->findBySubCategorie($idSubCat);
+            }
+            $json = [];
 
-    /**
-     * Renvoie un tableau: 
-     * idEntrepriseUser => [[idAdresseUser1, labelAdresseUser1, codePostalAdresseUser1, villeAdresseUser1, latitudeAdresseUser1, LongitudeAdresseUser1],..]
-     * 
-     * @param Request $request
-     * @return ?
-     */
-    #[Route('/produit/ajax/user/{id}', name: 'ajax_user')]
-    public function ajaxAdresseUser(Request $request)
-    {
+            foreach ($produits as $produit) {
+                $adresses = $produit->getEntreprise()->getAdresses();
+                $adressesEntreprise = [];
+                foreach ($adresses as $adresse) {
+                    $adressesEntreprise = [
+                        "id" => $adresse->getId(),
+                        "label" => $adresse->getLabel(),
+                        "zipCode" => $adresse->getZipCode(),
+                        "latitude" => $adresse->getLatitude(),
+                        "longitude" => $adresse->getLongitude(),
+                        "ville" => [
+                            "id" => $adresse->getVille()->getId(),
+                            "name" => $adresse->getVille()->getName(),
+                            "departement" => [
+                                "id" => $adresse->getVille()->getDepartement()->getId(),
+                                "code" => $adresse->getVille()->getDepartement()->getCode(),
+                                "name" => $adresse->getVille()->getDepartement()->getName()
+                            ]
+                        ]
+                    ];
+                }
+                $json[] = [
+                    "id" => $produit->getId(),
+                    "name" => $produit->getName(),
+                    "desc" => $produit->getDescription(),
+                    "inStock" => $produit->isInStock(),
+                    "imageURL" => $produit->getImageURL(),
+                    "entreprise" => [
+                        "id" => $produit->getEntreprise()->getId(),
+                        "name" => $produit->getEntreprise()->getName(),
+                        "adresses" => $adressesEntreprise
+
+                    ]
+                ];
+            }
+            return new JsonResponse($json, 200);
+        }
+
+        return new JsonResponse(
+            array(
+                'status' => 'ça pas marche',
+                'message' => "c'est con hein?"
+            ),
+            400
+        );
     }
 
 
