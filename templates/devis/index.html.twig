@@ -3,18 +3,10 @@
 {% block title %}Hello DevisController!{% endblock %}
 
 {% block body %}
- {{ dump(user) }}
-{# {{ form(form_ligne) }} #}
-{% endblock %}
 {# BLOC : ADRESSE ENTREPRISE #}
-	{# {% for adresse in adresses %}
-		<div class="container_adress">
-			<ion-icon name="location-outline" id="adress_icon"></ion-icon>
-			<ul>
-				<li>{{ adresse.label|upper }}</li>
-				<li>{{ adresse.complement|upper }}</li>
-				<li>{{ adresse.zipCode }}
-					{{ adresse.ville }}</li>
-			</ul>
-		</div>
-	{% endfor %} #}
+	{% for devi in devis %}
+        <ul>
+            <li>{{ dump(devi) }}</li>
+        </ul>
+	{% endfor %}
+{% endblock %}
