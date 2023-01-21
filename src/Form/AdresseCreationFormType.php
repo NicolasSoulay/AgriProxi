@@ -36,7 +36,7 @@ class AdresseCreationFormType extends AbstractType
             //     'choice_label' => 'name',
             // ])
             ->add('ville', TextType::class, [
-                'label' => 'Villes'
+                'label' => 'Ville'
             ])
             ->add('Enregistrer', SubmitType::class)
         ;

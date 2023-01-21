@@ -4,18 +4,15 @@ namespace App\Controller;
 
 use App\Entity\Produit;
 use App\Form\ProduitCreationFormType;
-use App\Form\TestFormType;
 use App\Repository\CategorieRepository;
 use App\Repository\ProduitRepository;
 use App\Repository\SousCategorieRepository;
-use phpDocumentor\Reflection\DocBlock\Tags\Var_;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 class ProduitController extends AbstractController
@@ -185,7 +182,7 @@ class ProduitController extends AbstractController
      * @param string
      * @return int 
      */
-    public function getRadius(int $rayon)
+    public function getRadius(string $rayon)
     {
         switch ($rayon) {
             case '10':

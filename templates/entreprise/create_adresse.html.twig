@@ -2,6 +2,11 @@
 
 {% block title %}AgriProxi | Adresse{% endblock %}
 
+{% block stylesheets %}
+	{{ parent() }}
+	{{ encore_entry_link_tags('adresse') }}
+{% endblock %}
+
 {% block javascripts %}
     {{ parent() }}
     {{ encore_entry_script_tags('adresse') }}
@@ -17,7 +22,11 @@
     <h1>Mon adresse</h1>
 
     {{ form(form_adresse) }}
+
+    <div id="displayCities">
     
+    </div>
+
     {% if message %}
         <div>{{ message }}</div>
     {% endif %}
