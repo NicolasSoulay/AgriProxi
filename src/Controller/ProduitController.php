@@ -223,7 +223,7 @@ class ProduitController extends AbstractController
      * retourne la valeur de zoom en décimale pour leaflet a partir du choix de rayon de recherche
      * 
      * @param string
-     * @return int 
+     * @return STRIN 
      */
     public function getRadius(string $rayon)
     {

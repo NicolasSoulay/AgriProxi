@@ -28,6 +28,7 @@ class DevisController extends AbstractController
         $devis = $entreprise->getDevis();
         foreach ($devis as $key) {
             foreach ($key->getLigneDevis() as $ligneDevis) {
+
                 $produits[] = $ligneDevis->getProduit();
             }
             $grouped_produits = array_reduce($produits, function ($carry, $item) {
