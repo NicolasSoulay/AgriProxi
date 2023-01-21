@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Produit;
 use App\Form\ProduitCreationFormType;
+use App\Form\TestFormType;
 use App\Repository\CategorieRepository;
 use App\Repository\ProduitRepository;
 use App\Repository\SousCategorieRepository;
@@ -222,7 +223,7 @@ class ProduitController extends AbstractController
 
     //Affiche la page de ma boutique
     #[Route('/ma_boutique', name: 'maBoutique')]
-    public function maBoutique(Request $request): Response
+    public function maBoutique(): Response
     {
         $user = $this->getUser();
         $entreprise = $user->getEntreprise();
