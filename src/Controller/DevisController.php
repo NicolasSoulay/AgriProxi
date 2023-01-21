@@ -15,12 +15,19 @@ use Doctrine\ORM\EntityRepository;
 class DevisController extends AbstractController
 {
     #[Route('/devis', name: 'app_devis')]
-    public function index(DevisRepository $devisRepo): Response
+    public function index(LigneDevisRepository $ligneRepo): Response
     {
-        $devis = $devisRepo->findAll();
-        return $this->render('devis/index.html.twig', ["user" => $devis]);
+        $produits = [];
+        $user = $this->getUser();
+        $entreprise = $user->getEntreprise();
+        $devis = $entreprise->getDevis();
+        foreach ($devis as $key) {
+            foreach ($key->getLigneDevis() as $ligneDevis) {
+                $produits[] = $ligneDevis->getProduit();
+            }
+            return $this->render('devis/index.html.twig', ["devis" => $produits]);
+        }
     }
-
     #[Route('/devis/add/{id}', name: 'add_devis')]
     public function addProductDevis($id, ProduitRepository $produitRepo, DevisRepository $devisRepo, LigneDevisRepository $ligneRepo)
     {
