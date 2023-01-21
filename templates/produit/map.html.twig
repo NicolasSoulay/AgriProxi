@@ -21,6 +21,8 @@
 {# {{ dump(coordinatesProduits) }} #}
 
 <button class="btn_link_green" id="prout">PROUT</button>
+<button class="btn_link_blue" id="pouet">POUET</button>
+<button class="btn_link" id="plop">PLOP</button>
 <input type="hidden" id="latitude" value = "{{latitude}}"/>
 <input type="hidden" id="longitude" value = "{{longitude}}"/>
 <input type="hidden" id="zoomLevel" value = "{{zoomLevel}}"/>
@@ -60,7 +62,7 @@
                     <option value="100"> 100km </option>
                 </select>
             </div>
-            <input class="btn_link" type="submit" value="Rechercher"></select>
+            {#<input class="btn_link" type="submit" value="Rechercher"></select>#}
         </form>
         <div id="search_result">
             {% for produit in produits %}

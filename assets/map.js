@@ -48,6 +48,12 @@ document.getElementById("prout").addEventListener("click", function(){
     .then((data) => console.log(data));
 })
 
+document.getElementById("pouet").addEventListener("click", function(){
+    fetch('https://127.0.0.1:8000/produit/ajax/produitcat/12/produitsubcat/a')
+    .then((response) => response.json())
+    .then((data) => console.log(data));
+})
+
 
 //Affiche la sélection de sous-categories correspondant si une categorie à été choisie
 document.getElementById("categorie").addEventListener("change", function() { 
@@ -64,13 +70,18 @@ document.getElementById("categorie").addEventListener("change", function() {
 function getSubcategories(id) {
     return fetch('https://127.0.0.1:8000/produit/ajax/subcat/'+id)
         .then((response) => response.json())
-        .then((json) => afficheSubcategories(json, id));
+        .then((json) => afficheSubcategories(json));
         
 }
 
-function afficheSubcategories(subCategories, categorieId){
+function afficheSubcategories(subCategories){
+    let options = document.getElementsByClassName("dynamicSubCat");
+    for (let i=0; i < options.length; i++) {
+        options[i].remove();
+    }
+    subCategorie.innerHTML+= '<option class="dynamicSubCat" value="a">Aucune</option>';
     for (let i=0; i < subCategories.length; i++) {
-        subCategorie.innerHTML+= '<option class="'+categorieId+'" value="'+subCategories[i][0]+'">'+subCategories[i][1]+'</option>'
+        subCategorie.innerHTML+= '<option class="dynamicSubCat" value="'+subCategories[i][0]+'">'+subCategories[i][1]+'</option>'
         
     }
 }
