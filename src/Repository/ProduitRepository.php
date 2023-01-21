@@ -70,21 +70,7 @@ class ProduitRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    /**
-     * @return Produit[] Returns an array of Produit objects
-     */
-    public function findByEntrepriseId($entrepriseId)
-    {
-        $query = $this->createQueryBuilder('p')
-            ->join('p.ligneDevis', 'ligneDevis')
-            ->join('ligneDevis.devis', 'd')
-            ->join('d.entreprise', 'e')
-            ->where('e.id = :entrepriseId')
-            ->orderBy('e.id', 'ASC')
-            ->setParameter('entrepriseId', $entrepriseId)
-            ->getQuery();
-        return $query->getResult();
-    }
+
     //    public function findOneBySomeField($value): ?Produit
     //    {
     //        return $this->createQueryBuilder('p')

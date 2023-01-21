@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -35,6 +37,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\ManyToOne(inversedBy: 'users')]
     private ?Entreprise $entreprise = null;
+
+    #[ORM\OneToMany(mappedBy: 'users', targetEntity: LigneDevis::class)]
+    private Collection $ligneDevis;
+
+    public function __construct()
+    {
+        $this->ligneDevis = new ArrayCollection();
+    }
 
     public function __toString(){
         return $this->firstName.' '.$this->lastName;
@@ -142,6 +152,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setEntreprise(?Entreprise $entreprise): self
     {
         $this->entreprise = $entreprise;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, LigneDevis>
+     */
+    public function getLigneDevis(): Collection
+    {
+        return $this->ligneDevis;
+    }
+
+    public function addLigneDevi(LigneDevis $ligneDevi): self
+    {
+        if (!$this->ligneDevis->contains($ligneDevi)) {
+            $this->ligneDevis->add($ligneDevi);
+            $ligneDevi->setUsers($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLigneDevi(LigneDevis $ligneDevi): self
+    {
+        if ($this->ligneDevis->removeElement($ligneDevi)) {
+            // set the owning side to null (unless already changed)
+            if ($ligneDevi->getUsers() === $this) {
+                $ligneDevi->setUsers(null);
+            }
+        }
 
         return $this;
     }
