@@ -14,49 +14,70 @@ use Doctrine\ORM\EntityRepository;
 
 class DevisController extends AbstractController
 {
+
     #[Route('/devis', name: 'app_devis')]
-    public function index(LigneDevisRepository $ligneRepo): Response
+    public function index(): Response
     {
         $produits = [];
+        $grouped_produits = [];
         $user = $this->getUser();
         $entreprise = $user->getEntreprise();
+        $type = $entreprise->getTypeEntreprise();
         $devis = $entreprise->getDevis();
         foreach ($devis as $key) {
             foreach ($key->getLigneDevis() as $ligneDevis) {
-
                 $produits[] = $ligneDevis->getProduit();
             }
-            // La fonction array_reduce() va parcourir votre tableau de produits et pour chaque produit, elle va vérifier son id entreprise. Si l'id entreprise existe déjà dans le tableau $carry, elle va ajouter le produit dans ce tableau associatif, sinon elle va créer une nouvelle entrée dans ce tableau associatif avec l'id entreprise en clé.
             $grouped_produits = array_reduce($produits, function ($carry, $item) {
                 $carry[$item->getEntreprise()->getId()][] = $item;
                 return $carry;
             }, []);
+        }
+        if (empty($grouped_produits)) {
+            return $this->render('devis/index.html.twig', [
+                "message" => "Vous n'avez pas encore ajouté de produit à votre liste de devis !"
+            ]);
+        } else {
             return $this->render('devis/index.html.twig', [
                 "produits" => $grouped_produits,
-                // "entreprises" => $entreprise
+                "devis" => $devis,
+                "types" => $type
             ]);
         }
     }
+
+
     #[Route('/devis/add/{id}', name: 'add_devis')]
     public function addProductDevis($id, ProduitRepository $produitRepo, DevisRepository $devisRepo, LigneDevisRepository $ligneRepo)
     {
-        // Je recupère le produit à ajouter au panier
+        // Je récupère le produit à ajouter au panier
         $product = $produitRepo->find($id);
+        $entreprise_id = $product->getEntreprise()->getId();
+
         // Récupérez ou créez un panier pour l'utilisateur connecté
         $user = $this->getUser();
         $entreprise = $user->getEntreprise();
-        $devis =  $devisRepo->findOneBy(['entreprise' => $entreprise]);
-        if (!$devis) {
-            $devis = new Devis();
-            $devis->setEntreprise($entreprise);
-        }
-        //je lie ligne devis à devis
+
         $line = new LigneDevis();
         $line->setProduit($product);
+        $line->setUsers($user);
         $line->setEtat(0);
-        $line->setDevis($devis);
+        $line->setEntrepriseId($entreprise_id); //Produit->entreprise->id
+        // Vérifie si une ligne de devis existe déjà pour le user en cours avec un même produit->entreprise->id
+        $existingLine = $ligneRepo->findOneBy(['users' => $user, 'entrepriseId' => $entreprise_id]);
 
-        $devisRepo->save($devis, true);
+        // Si une ligne existe déjà, récupérez l'id de devis de cette ligne
+        if ($existingLine) {
+            $devis = $existingLine->getDevis();
+        } else {
+            // Sinon, créez un nouveau devis pour l'entreprise en cours
+            $devis = new Devis();
+            $devis->setEntreprise($entreprise);
+            $devisRepo->save($devis, true);
+        }
+
+        //je lie ligne devis à devis
+        $line->setDevis($devis);
         $ligneRepo->save($line, true);
         return $this->redirectToRoute('app_devis');
     }

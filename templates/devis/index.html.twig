@@ -11,31 +11,30 @@
 {% endblock %}
 
 {% block title %}AgriProxi | Mes devis{% endblock %}
-
 {% block body %}
-
-                    {# {% for entreprise in entreprises %}
-            <a href="{{ path('viewEntreprise', { id: produit.entreprise.id }) }}">{{ produit.entreprise.name }}">{{ entreprise.name }}aaa</a>
-			{% endfor %} #}
-{# {{ ( dump(produits))}} #}
-{% for entreprise_id, products in produits %}
-<div class="bloc_pouet">
-{% for product in products %}
-		<div class="container_produit">
-            <img class="img_produit" src={{product.imageURL}}>
-			<div class="desc_produit">
-                <a class="ent_name" href="{{ path('viewEntreprise', { id: product.entreprise.id }) }}">{{ product.entrepriseName }}</a>
-				{% if product.inStock == 1 %}
-					<p class='green'>En stock</p>
-					{%else%}
-					<p class='red'>Indisponible</p>
-				{% endif %}
-				<h3>{{product.name|upper}}</h3>
-				<p>{{product.description}}</p>
-			</div>
-		</div>
-		{% endfor %}
-</div>
-{% endfor %}
-
+	{% if types.id == 2 %}
+		{% if produits ?? false %}
+			{% for entreprise_id, products in produits %}
+				<div class="bloc_pouet">
+					{% for product in products %}
+						<div class="container_produit">
+							<img class="img_produit" src={{product.imageURL}}>
+							<div class="desc_produit">
+								<a class="ent_name" href="{{ path('viewEntreprise', { id: product.entreprise.id }) }}">{{ product.entrepriseName }}</a>
+								{% if product.inStock == 1 %}
+									<p class='green'>En stock</p>
+									{%else%}
+									<p class='red'>Indisponible</p>
+								{% endif %}
+								<h3>{{product.name|upper}}</h3>
+								<p>{{product.description}}</p>
+							</div>
+						</div>
+					{% endfor %}
+				</div>
+			{% endfor %}
+		{% else %} 
+			<div class="message">{{ message }}</div>
+		{% endif %}
+	{% endif %}
 {% endblock %}
