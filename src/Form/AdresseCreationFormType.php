@@ -31,13 +31,13 @@ class AdresseCreationFormType extends AbstractType
                     'maxlength' => 5
                 ]
             ])
-            // ->add('ville', EntityType::class, [
-            //     'class' => Ville::class,
-            //     'choice_label' => 'name',
-            // ])
-            ->add('ville', TextType::class, [
-                'label' => 'Villes'
+            ->add('ville', EntityType::class, [
+                'class' => Ville::class,
+                'choice_label' => 'name',
             ])
+            // ->add('ville', TextType::class, [
+            //     'label' => 'Villes'
+            // ])
             ->add('Enregistrer', SubmitType::class)
         ;
     }
