@@ -55,7 +55,12 @@ label {
 }
 
 a:hover {
-    color: $green;
+    color: currentColor;
+}
+
+.bloc_pouet {
+    background-color: pink;
+    border: solid 1px;
 }
 
 @media (max-width: 1250px) {
@@ -491,13 +496,13 @@ footer {
 }
 
 /* ------------------ MESSAGE ------------------ */
-.message{
+.message {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 50px;
-    
-    p{
+
+    p {
         text-align: center;
         color: $message;
         font-family: poppins-b;

@@ -79,9 +79,8 @@
                     </div>
                 </div>
                 <div class="card_btn">
-                    <button class="btn_link_green">Ajouter à votre liste de commande</button>
-                </div>
-            </div>
+                    <a href="{{path('add_devis', { id: produit.id }) }}"> <button class="btn_link_green">Ajouter à votre liste de commande</button></a>
+                </div>  
             {% endfor %}
         </div>
     </div>

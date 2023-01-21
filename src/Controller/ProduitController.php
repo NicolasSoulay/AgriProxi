@@ -182,9 +182,9 @@ class ProduitController extends AbstractController
      * retourne la valeur de zoom en décimale pour leaflet a partir du choix de rayon de recherche
      * 
      * @param string
-     * @return int 
+     * @return STRIN 
      */
-    public function getRadius(int $rayon)
+    public function getRadius(string $rayon)
     {
         switch ($rayon) {
             case '10':
@@ -228,18 +228,18 @@ class ProduitController extends AbstractController
         $entreprise = $user->getEntreprise();
         $produits = $entreprise->getProduits();
         $message = '';
-        if(isset($_GET['message'])){
-            switch ($_GET['message']){
+        if (isset($_GET['message'])) {
+            switch ($_GET['message']) {
                 case '0':
                     $message = 'Le produit a bien été créé';
                     break;
-                case '1' :
+                case '1':
                     $message = 'Le produit a bien été modifié';
                     break;
-                case '2' :
+                case '2':
                     $message = 'Le produit a bien été supprimé';
                     break;
-                default :
+                default:
                     $message = '';
             }
         }
@@ -276,9 +276,9 @@ class ProduitController extends AbstractController
             } else {
                 $message = '0';
             }
-        return $this->redirectToRoute('maBoutique',[
-            'message' => $message,
-        ]);
+            return $this->redirectToRoute('maBoutique', [
+                'message' => $message,
+            ]);
         } elseif ($form->isSubmitted()) {
             $message = 'Les informations ne sont pas valides';
         }
@@ -308,7 +308,7 @@ class ProduitController extends AbstractController
     public function deleteProduit(Produit $produit, ProduitRepository $produitRepo): Response
     {
         $produitRepo->remove($produit, true);
-        return $this->redirectToRoute('maBoutique',[
+        return $this->redirectToRoute('maBoutique', [
             'message' => '2',
         ]);
     }

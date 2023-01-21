@@ -1,7 +1,5 @@
 @import './utility.scss';
 
-
-
 // PAGE ENTREPRISE : BLOC ADRESSE
 .container_adress {
     display: flex;
@@ -24,7 +22,7 @@
 .container_produit {
     display: flex;
     margin: 20px auto;
-    border: solid 1px #cccccc;
+    border: solid 1px #7b1212;
     padding: 10px;
 }
 
@@ -62,6 +60,18 @@
     font-size: 45px;
 }
 
+.ent_name {
+    color: $blue;
+}
+
+
+.bloc_pouet {
+    background-color: pink;
+    border: solid 1px;
+}
+
+
+/* ----- RESPONSIVE ----- */
 @media (max-width: 1250px) {
     .update_produit {
         width: 25%;
