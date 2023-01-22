@@ -20,9 +20,6 @@
 {% block body %}
 {# {{ dump(coordinatesProduits) }} #}
 
-<button class="btn_link_green" id="prout">PROUT</button>
-<button class="btn_link_blue" id="pouet">POUET</button>
-<button class="btn_link" id="plop">PLOP</button>
 <input type="hidden" id="latitude" value = "{{latitude}}"/>
 <input type="hidden" id="longitude" value = "{{longitude}}"/>
 <input type="hidden" id="zoomLevel" value = "{{zoomLevel}}"/>
@@ -39,7 +36,7 @@
             <div>
                 <label for="categorie"></label>
                 <select name ="categorie" id="categorie">
-                    <option value="">Catégorie:</option>
+                    <option value="a">Catégorie:</option>
                     {% for categorie in categories %}
                         <option value=' {{categorie.id}} '> {{categorie.name}} </option>
                     {% endfor %}
@@ -47,10 +44,6 @@
                 <label for="subCategorie"></label>
                 <select name ="subCategorie" id="subCategorie">
                     <option value="a" selected="selected">Aucune</option>
-                    {# <option value="">Sous-catégorie:</option>
-                    {% for subCategorie in subCategories %}
-                        <option class="{{subCategorie.categorie.id}}" value=' {{subCategorie.id}} '> {{subCategorie.name}} </option>
-                    {% endfor %} #}
                 </select>
             </div>
             <div>
@@ -63,7 +56,6 @@
                     <option value="100"> 100km </option>
                 </select>
             </div>
-            {#<input class="btn_link" type="submit" value="Rechercher"></select>#}
         </form>
         <div id="search_result">
             {#

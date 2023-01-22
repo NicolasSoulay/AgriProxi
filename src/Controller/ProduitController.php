@@ -67,11 +67,11 @@ class ProduitController extends AbstractController
             $idCategorie = $request->get('idCat');
             $subcats = $subCatRepo->findByCategorie($idCategorie);
             $json = [];
-            $i = 0;
             foreach ($subcats as $subcat) {
-                $json[$i][] = $subcat->getId();
-                $json[$i][] = $subcat->getName();
-                $i++;
+                $json[] = [
+                    "id" => $subcat->getId(),
+                    "name" => $subcat->getName()
+                ];
             }
             return new JsonResponse($json, 200);
         }
@@ -98,51 +98,19 @@ class ProduitController extends AbstractController
         if (isset($request->request)) {
             $idCat = $request->get('idCat');
             $idSubCat = $request->get('idSubCat');
-            if ($idSubCat === 'a') {
-                $produits = $produitRepo->findByCategorie($idCat);
-            } else {
+            if ($idSubCat !== 'a' && $idCat !== 'a') {
                 $produits = $produitRepo->findBySubCategorie($idSubCat);
+                $json = $this->templateJsonProduit($produits);
+                return new JsonResponse($json, 200);
             }
-            $json = [];
-
-            foreach ($produits as $produit) {
-                $adresses = $produit->getEntreprise()->getAdresses();
-                $adressesEntreprise = [];
-                foreach ($adresses as $adresse) {
-                    $adressesEntreprise = [
-                        "id" => $adresse->getId(),
-                        "label" => $adresse->getLabel(),
-                        "zipCode" => $adresse->getZipCode(),
-                        "latitude" => $adresse->getLatitude(),
-                        "longitude" => $adresse->getLongitude(),
-                        "ville" => [
-                            "id" => $adresse->getVille()->getId(),
-                            "name" => $adresse->getVille()->getName(),
-                            "departement" => [
-                                "id" => $adresse->getVille()->getDepartement()->getId(),
-                                "code" => $adresse->getVille()->getDepartement()->getCode(),
-                                "name" => $adresse->getVille()->getDepartement()->getName()
-                            ]
-                        ]
-                    ];
-                }
-                $json[] = [
-                    "id" => $produit->getId(),
-                    "name" => $produit->getName(),
-                    "desc" => $produit->getDescription(),
-                    "inStock" => $produit->isInStock(),
-                    "imageURL" => $produit->getImageURL(),
-                    "entreprise" => [
-                        "id" => $produit->getEntreprise()->getId(),
-                        "name" => $produit->getEntreprise()->getName(),
-                        "adresses" => $adressesEntreprise
-
-                    ]
-                ];
+            if ($idSubCat === 'a' && $idCat !== 'a') {
+                $produits = $produitRepo->findByCategorie($idCat);
+                $json = $this->templateJsonProduit($produits);
+                return new JsonResponse($json, 200);
             }
+            $json = ["salut ya rien"];
             return new JsonResponse($json, 200);
         }
-
         return new JsonResponse(
             array(
                 'status' => 'ça pas marche',
@@ -150,6 +118,47 @@ class ProduitController extends AbstractController
             ),
             400
         );
+    }
+
+    public function templateJsonProduit($produits)
+    {
+        $json = [];
+        foreach ($produits as $produit) {
+            $adresses = $produit->getEntreprise()->getAdresses();
+            $adressesEntreprise = [];
+            foreach ($adresses as $adresse) {
+                $adressesEntreprise = [
+                    "id" => $adresse->getId(),
+                    "label" => $adresse->getLabel(),
+                    "zipCode" => $adresse->getZipCode(),
+                    "latitude" => $adresse->getLatitude(),
+                    "longitude" => $adresse->getLongitude(),
+                    "ville" => [
+                        "id" => $adresse->getVille()->getId(),
+                        "name" => $adresse->getVille()->getName(),
+                        "departement" => [
+                            "id" => $adresse->getVille()->getDepartement()->getId(),
+                            "code" => $adresse->getVille()->getDepartement()->getCode(),
+                            "name" => $adresse->getVille()->getDepartement()->getName()
+                        ]
+                    ]
+                ];
+            }
+            $json[] = [
+                "id" => $produit->getId(),
+                "name" => $produit->getName(),
+                "desc" => $produit->getDescription(),
+                "inStock" => $produit->isInStock(),
+                "imageURL" => $produit->getImageURL(),
+                "entreprise" => [
+                    "id" => $produit->getEntreprise()->getId(),
+                    "name" => $produit->getEntreprise()->getName(),
+                    "adresses" => $adressesEntreprise
+
+                ]
+            ];
+        }
+        return $json;
     }
 
 
