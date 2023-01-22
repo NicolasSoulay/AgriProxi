@@ -12,10 +12,12 @@
 
 {% block title %}AgriProxi | Mes devis{% endblock %}
 {% block body %}
-	{% if types.id == 2 %}
+{# {{ dump(ligneDevis )}} #}
+	{% if types.id == 2 and ligneDevis.etat == 0 %}
 		{% if produits ?? false %}
 			{% for entreprise_id, products in produits %}
 				<div class="bloc_pouet">
+				<form action="{{ path('save_devis', { id: product.id }) }}" method="post">
 					{% for product in products %}
 						<div class="container_produit">
 							<img class="img_produit" src={{product.imageURL}}>
@@ -28,9 +30,12 @@
 								{% endif %}
 								<h3>{{product.name|upper}}</h3>
 								<p>{{product.description}}</p>
+								<input type="text" name="name" id="name" required>
 							</div>
 						</div>
 					{% endfor %}
+					<input type="submit" value="Subscribe!">
+					</form>
 				</div>
 			{% endfor %}
 		{% else %} 
