@@ -46,6 +46,7 @@
                 </select>
                 <label for="subCategorie"></label>
                 <select name ="subCategorie" id="subCategorie">
+                    <option value="a" selected="selected">Aucune</option>
                     {# <option value="">Sous-catégorie:</option>
                     {% for subCategorie in subCategories %}
                         <option class="{{subCategorie.categorie.id}}" value=' {{subCategorie.id}} '> {{subCategorie.name}} </option>
@@ -65,12 +66,12 @@
             {#<input class="btn_link" type="submit" value="Rechercher"></select>#}
         </form>
         <div id="search_result">
+            {#
             {% for produit in produits %}
             <input type="hidden" class="nomEntreprise" id="{{produit.entreprise.id}}" value = "{{produit.entreprise.name}}"/>
             <div class="product_card">
                 <div class="product_desc">
                     <div class="card_image">
-                        {# <img src="{{ asset('build/images/placeholder_612x612.jpg') }}" alt="product_image" width="100" height="100"> #}
                         <img class="product_img" src="{{ produit.imageUrl }}" alt="product_image" width="200" height="200">
                     </div>
                     <div class="card_text">
@@ -85,6 +86,7 @@
                 </div>
             </div>
             {% endfor %}
+            #}
         </div>
     </div>
 </div>
