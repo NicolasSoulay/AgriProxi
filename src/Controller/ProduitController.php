@@ -28,24 +28,17 @@ class ProduitController extends AbstractController
      * @return Response
      */
     #[Route('/produit', name: 'app_produit')]
-    public function map(ProduitRepository $produitRepo, SousCategorieRepository $subCategorieRepo, CategorieRepository $categorieRepo, Request $request): Response
+    public function map(CategorieRepository $categorieRepo, Request $request): Response
     {
-        $subCategorie = $request->get("subCategorie", '');
-        $categorie = $request->get("categorie", '');
         $userAdresses = $this->getUser()->getEntreprise()->getAdresses();
-        $latitude = $this->getLatitudeFromUrlOrUser($userAdresses);
-        $longitude = $this->getLongitudeFromUrlOrUser($userAdresses);
+        $latitude = $userAdresses[0]->getLatitude();
+        $longitude = $userAdresses[0]->getLongitude();
         $zoomLevel = $this->getRadius($request->get("rayon", ''));
-        $produits = $this->searchByCategorieOrSubCategorie($subCategorie, $categorie, $produitRepo);
-        $coordinatesProduits = $this->getCoordinatesProduits($produits);
 
         return $this->render('produit/map.html.twig', [
             'controller_name' => 'ProduitController',
-            'produits' => $produits,
-            'subCategories' => $subCategorieRepo->findAll(),
             'categories' => $categorieRepo->findAll(),
             'adresses' => $userAdresses,
-            'coordinatesProduits' => $coordinatesProduits,
             'latitude' => $latitude,
             'longitude' => $longitude,
             'zoomLevel' => $zoomLevel,
@@ -100,12 +93,18 @@ class ProduitController extends AbstractController
             $idSubCat = $request->get('idSubCat');
             if ($idSubCat !== 'a' && $idCat !== 'a') {
                 $produits = $produitRepo->findBySubCategorie($idSubCat);
-                $json = $this->templateJsonProduit($produits);
+                $json = [
+                    "produits" => $this->templateJsonProduit($produits),
+                    "entreprises" => $this->getCoordinatesEntreprises($produits)
+                ];
                 return new JsonResponse($json, 200);
             }
             if ($idSubCat === 'a' && $idCat !== 'a') {
                 $produits = $produitRepo->findByCategorie($idCat);
-                $json = $this->templateJsonProduit($produits);
+                $json = [
+                    "produits" => $this->templateJsonProduit($produits),
+                    "entreprises" => $this->getCoordinatesEntreprises($produits)
+                ];
                 return new JsonResponse($json, 200);
             }
             $json = ["salut ya rien"];
@@ -130,6 +129,7 @@ class ProduitController extends AbstractController
                 $adressesEntreprise = [
                     "id" => $adresse->getId(),
                     "label" => $adresse->getLabel(),
+                    "complement" => $adresse->getComplement(),
                     "zipCode" => $adresse->getZipCode(),
                     "latitude" => $adresse->getLatitude(),
                     "longitude" => $adresse->getLongitude(),
@@ -163,14 +163,14 @@ class ProduitController extends AbstractController
 
 
     /**
-     * Retourne un tableau contenant les coordonée, le nom et l'Id d'une entreprise, filtrés par produits
+     * Retourne un tableau contenant les coordonée, le nom, l'adresse et l'Id d'une entreprise, filtrés par produits
      * 
      * @param Produit[] $produits
      * @return array[] 
      */
-    public function getCoordinatesProduits(array $produits)
+    public function getCoordinatesEntreprises(array $produits)
     {
-        $coordinates = [];
+        $entreprises = [];
         foreach ($produits as $produit) {
             $entreprise = $produit->getEntreprise();
             $adresses = $entreprise->getAdresses();
@@ -179,60 +179,46 @@ class ProduitController extends AbstractController
             foreach ($adresses as $adresse) {
                 $lat = $adresse->getLatitude();
                 $long = $adresse->getLongitude();
-                $adresseCoordinate = $lat . "," . $long;
-                if ($adresseCoordinate != "0,0") {
-                    $concat = $adresseCoordinate . "," . $entrepriseName . "," . $entrepriseId;
-                    if (!in_array($concat, $coordinates)) {
-                        $coordinates[] = $concat;
+                $adresseEntreprise = [
+                    "id" => $adresse->getId(),
+                    "label" => $adresse->getLabel(),
+                    "complement" => $adresse->getComplement(),
+                    "zipCode" => $adresse->getZipCode(),
+                    "ville" => [
+                        "id" => $adresse->getVille()->getId(),
+                        "name" => $adresse->getVille()->getName(),
+                        "departement" => [
+                            "id" => $adresse->getVille()->getDepartement()->getId(),
+                            "code" => $adresse->getVille()->getDepartement()->getCode(),
+                            "name" => $adresse->getVille()->getDepartement()->getName()
+                        ]
+                    ]
+                ];
+                $adresseCoordinate = [
+                    "latitude" => $lat,
+                    "longitude" => $long,
+                ];
+                if ($adresseCoordinate["latitude"] != "0" && $adresseCoordinate["longitude"] != "0") {
+                    $entreprise = [
+                        "id" => $entrepriseId,
+                        "name" => $entrepriseName,
+                        "adresse" => $adresseEntreprise,
+                        "coordinates" => $adresseCoordinate
+                    ];
+                    if (!in_array($entreprise, $entreprise)) {
+                        $entreprises[] = $entreprise;
                     }
                 }
             }
         }
-        return $coordinates;
-    }
-
-    /**
-     * retourne la latitude en décimal de l'adresse pointé par l'Url, sinon de la premiere adresse de l'utilisateur
-     * 
-     * @param Adresse|Adresse[] $adresses
-     * @return int 
-     */
-    public function getLatitudeFromUrlOrUser(mixed  $adresses)
-    {
-        if (!isset($_GET['adresse']) || $_GET['adresse'] === '') {
-            return $adresses[0]->getLatitude();
-        }
-        foreach ($adresses as $adresse) {
-            if ($adresse->getId() == $_GET['adresse']) {
-                return $adresse->getLatitude();
-            }
-        }
-    }
-
-
-    /**
-     * retourne la longitude en décimal de l'adresse pointé par l'Url, sinon de la premiere adresse de l'utilisateur
-     * 
-     * @param Adresse|Adresse[] $adresses
-     * @return int 
-     */
-    public function getLongitudeFromUrlOrUser(mixed $adresses)
-    {
-        if (!isset($_GET['adresse']) || $_GET['adresse'] === '') {
-            return $adresses[0]->getLongitude();
-        }
-        foreach ($adresses as $adresse) {
-            if ($adresse->getId() == $_GET['adresse']) {
-                return $adresse->getLongitude();
-            }
-        }
+        return $entreprises;
     }
 
     /**
      * retourne la valeur de zoom en décimale pour leaflet a partir du choix de rayon de recherche
      * 
      * @param string
-     * @return STRIN 
+     * @return int 
      */
     public function getRadius(string $rayon)
     {

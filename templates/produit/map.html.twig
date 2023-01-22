@@ -8,9 +8,6 @@
 
 {% block javascripts %}
     {{ parent() }}
-    <script>
-        const coordinatesProduits = {{ coordinatesProduits|json_encode|raw }};
-    </script>
     {{ encore_entry_script_tags('map') }}
     <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js" integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM=" crossorigin=""></script>
 {% endblock %}
@@ -18,7 +15,6 @@
 {% block title %}Salut bande de tocards!{% endblock %}
 
 {% block body %}
-{# {{ dump(coordinatesProduits) }} #}
 
 <input type="hidden" id="latitude" value = "{{latitude}}"/>
 <input type="hidden" id="longitude" value = "{{longitude}}"/>
