@@ -40,7 +40,6 @@ class AdresseRepository extends ServiceEntityRepository
     }
 
 
-
     //    /**
     //     * @return Adresse[] Returns an array of Adresse objects
     //     */

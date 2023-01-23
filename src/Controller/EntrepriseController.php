@@ -5,12 +5,12 @@ namespace App\Controller;
 use App\Entity\Adresse;
 use App\Entity\Entreprise;
 use App\Entity\User;
-use App\Form\AdresseCreationFormType;
 use App\Form\EntrepriseCreationFormType;
 use App\Form\EntrepriseUpadteFormType;
 use App\Repository\AdresseRepository;
 use App\Repository\EntrepriseRepository;
 use App\Repository\UserRepository;
+use App\Repository\VilleRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
@@ -43,7 +43,7 @@ class EntrepriseController extends AbstractController
             $entrepriseRepo->save($entreprise, true);
             $user->setEntreprise($entreprise);
             $userRepo->save($user, true);
-            return $this->redirectToRoute('createAdresse');
+            return $this->redirectToRoute('app_login');
         } elseif ($form->isSubmitted()) {
             $message = 'Les informations ne sont pas valides, ou cette entreprise existe déjà';
         }
@@ -92,14 +92,17 @@ class EntrepriseController extends AbstractController
 
 
     //Affichage Formulaire pour l'entité Adresse
-    private function formAdresse(Adresse $adresse, AdresseRepository $adresseRepo, Request $request, Entreprise $entreprise)
+    private function formAdresse(Adresse $adresse, AdresseRepository $adresseRepo, Request $request, Entreprise $entreprise, VilleRepository $villeRepo)
     {
         $message = '';
-        $form = $this->createForm(AdresseCreationFormType::class, $adresse);
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
+        if(isset($_POST['submitAdresse'])){
+            $adresse->setLabel($_POST['label']);
+            $adresse->setComplement($_POST['complement']);
+            $adresse->setZipCode($_POST['zip_code']);
             $adresse->setEntreprise($entreprise);
-            $adresseRepo->save($adresse, true);
+            $ville = $villeRepo->find($_POST['villeId']);
+            $adresse->setVille($ville);
+            $adresseRepo->save($adresse,true);
             if ($request->get('id')) {
                 $message = 'L\'adresse a bien été modifiée';
                 return $this->redirectToRoute('app_user', [
@@ -116,33 +119,30 @@ class EntrepriseController extends AbstractController
                     return $this->redirectToRoute('app_login');
                 }
             }
-        } elseif ($form->isSubmitted()) {
-            $message = 'Les informations ne sont pas valides';
         }
         return $this->render('entreprise/create_adresse.html.twig', [
-            'form_adresse' => $form->createView(),
-            'message' => $message
-        ]);
+                'message' => $message,
+            ]);
     }
 
     //Page de création d'adresse
     #[Route('/create_adresse', name: 'createAdresse')]
-    public function createAdresse(AdresseRepository $adresseRepo, Request $request, EntrepriseRepository $entrepriseRepo): Response
+    public function createAdresse(AdresseRepository $adresseRepo, Request $request, EntrepriseRepository $entrepriseRepo, VilleRepository $villeRepo): Response
     {
-        $entrepriseId = $entrepriseRepo->getLastId();
-        $entreprise = $entrepriseRepo->find($entrepriseId);
+        $entreprise = $this->getUser()->getEntreprise();
         $adresse = new Adresse();
-        return $this->formAdresse($adresse, $adresseRepo, $request, $entreprise);
+        return $this->formAdresse($adresse, $adresseRepo, $request, $entreprise, $villeRepo);
     }
 
     //Page de modification d'adresse
     #[Route('/update_adresse/{id}', name: 'updateAdresse')]
-    public function updateAdresse(Adresse $adresse, AdresseRepository $adresseRepo, Request $request): Response
+    public function updateAdresse(Adresse $adresse, AdresseRepository $adresseRepo, Request $request, VilleRepository $villeRepo): Response
     {
         $entreprise = $this->getUser()->getEntreprise();
-        return $this->formAdresse($adresse, $adresseRepo, $request, $entreprise);
+        return $this->formAdresse($adresse, $adresseRepo, $request, $entreprise, $villeRepo);
     }
 
+    //Suppression adresse
     #[Route('/delete_adresse/{id}', name: 'deleteAdresse')]
     public function deleteAdresse(Adresse $adresse, AdresseRepository $adresseRepo): Response
     {

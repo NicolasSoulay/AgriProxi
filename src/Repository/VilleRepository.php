@@ -39,13 +39,22 @@ class VilleRepository extends ServiceEntityRepository
         }
     }
 
-    public function findNameLike(String $string){
+    public function findNameLike(string $string){
         $string = strtoupper($string);
         return $this->createQueryBuilder('v')
             ->where('v.name LIKE :val')
             ->setParameter('val', $string."%")
             ->setMaxResults('6')
             ->orderBy('v.name', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findByOneName(string $name){
+        $name = strtoupper($name);
+        return $this->createQueryBuilder('v')
+            ->where('v.name = :val')
+            ->setParameter('val', $name)
             ->getQuery()
             ->getResult();
     }

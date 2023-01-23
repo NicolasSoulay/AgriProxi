@@ -1,7 +1,10 @@
 import './styles/adresse.scss';
 
 // Je déclare une constante correspondant à l'élément html de l'input ville
-const inputCity = document.getElementById('adresse_creation_form_ville');
+const inputCity = document.getElementById('ville');
+
+// Je déclare une constante correspondant à l'élément html de l'input villeId
+const inputId = document.getElementById('villeId');
 
 // Je déclare une constante correspondant à l'élément html où apparaîtront mes villes
 const divCities = document.getElementById('displayCities');
@@ -20,6 +23,7 @@ function createDivCity(json){
     for(let i=0; i <json.length; i++){
         let nameCity = json[i].ville;
         let departementCity = json[i].codeDepartement;
+        let idCity = json[i].id
         const city= document.createElement('div');
         city.classList.add('displayCity');
         city.setAttribute('id', json[i].id);
@@ -27,6 +31,7 @@ function createDivCity(json){
         divCities.appendChild(city);
         city.addEventListener('click', ()=> {
             inputCity.value = nameCity;
+            inputId.value = idCity;
         })
     }
 }
