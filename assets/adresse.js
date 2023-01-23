@@ -14,19 +14,19 @@ inputCity.addEventListener('input', (event)=>{
     .then((json) => createDivCity(json))
 })
 
-// Fonction qui crée des div avec la ville et le code département depuis un json
+// Fonction qui crée des div avec la ville et le code département depuis un json et qui ajoute un évènement au click afin que ça effectue une autocomplétion
 function createDivCity(json){
     divCities.innerHTML = '';
     for(let i=0; i <json.length; i++){
-        divCities.innerHTML += `<div class="displayCity" id="${json[i].id}">${json[i].ville} - ${json[i].codeDepartement}</div>`
+        let nameCity = json[i].ville;
+        let departementCity = json[i].codeDepartement;
+        const city= document.createElement('div');
+        city.classList.add('displayCity');
+        city.setAttribute('id', json[i].id);
+        city.textContent = nameCity+' - '+departementCity;
+        divCities.appendChild(city);
+        city.addEventListener('click', ()=> {
+            inputCity.value = nameCity;
+        })
     }
 }
-
-//Je déclare une constante correspondant aux élément html des villes qui apparaissent selon les input rentrés dans ville
-const displayCity = document.querySelectorAll(".displayCity");
-
-// Je crée un écouteur pour qu'au click sur l'une des div ville, cela alimente le champs ville
-displayCity.forEach(element => element.addEventListener('click',() => {
-    //inputCity.value = element.value;
-    console.log('hi');
-}));
