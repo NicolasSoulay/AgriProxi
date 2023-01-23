@@ -14,31 +14,36 @@
 {% endblock %}
 
 {% block body %}
-	<h1>Mon catalogue</h1>
+	<h1>Mon catalogue de produits</h1>
 
 	<div class="message">
 		<p>{{ message }}</p>
 	</div>
 
-	<a class="btn_link btn_produit" href="{{path('createProduit')}}">Ajouter un produit</a>
+	<a class="btn_link" href="{{path('createProduit')}}">Ajouter un produit</a>
 	
 	{# BLOC : PRODUIT ENTREPRISE  #}
 	{% for produit in produits %}
 		<div class="container_produit">
-			<img class="img_produit" src={{produit.imageURL}}>
-			<div class="desc_produit">
-				{% if produit.inStock == 1 %}
-					<p class='green'>En stock</p>
-					{%else%}
-					<p class='red'>Indisponible</p>
-				{% endif %}
-				<h3>{{produit.name|upper}}</h3>
-				<p>{{produit.description}}</p>
+			<div class="bloc_produit">
+				<img class="img_produit" src={{produit.imageURL}}>
+				<div class="desc_produit">
+					{% if produit.inStock == 1 %}
+						<p class='green'>En stock</p>
+						{%else%}
+						<p class='red'>Indisponible</p>
+					{% endif %}
+					<h3>{{produit.name|upper}}</h3>
+					<p>{{produit.description}}</p>
+				</div>
 			</div>
+			{# BLOC UPDATE / DELETE PRODUIT #}
 			<div class="update_produit">
-				<a class="green bloc_icon" href="{{path('updateProduit',{id: produit.id})}}">Modifier
-					<ion-icon name="refresh-circle-sharp" class="produit_icon"></ion-icon>
-				</a>
+				<form action="{{path('updateProduit',{id: produit.id})}}">
+					<button class="green bloc_icon" href="">Modifier
+						<ion-icon name="refresh-circle-sharp" class="produit_icon"></ion-icon>
+					</button>
+				</form>
 				<button class="myBtn red bloc_icon" data-href="{{path('deleteProduit',{id: produit.id})}}" href="">Supprimer
 					<ion-icon name="close-circle-sharp" class="produit_icon"></ion-icon>
 				</button>
