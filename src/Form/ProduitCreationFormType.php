@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Produit;
 use App\Entity\SousCategorie;
+use App\Repository\SousCategorieRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -42,6 +43,10 @@ class ProduitCreationFormType extends AbstractType
             ->add('subCategorie', EntityType::class, [
                 'class' => SousCategorie::class,
                 'choice_label' => 'name',
+                'query_builder' => function (SousCategorieRepository $subCatRepo) {
+                    return $subCatRepo->createQueryBuilder('sc')
+                        ->orderBy('sc.name', 'ASC');
+                },
             ])
             ->add('Enregistrer', SubmitType::class)
         ;
