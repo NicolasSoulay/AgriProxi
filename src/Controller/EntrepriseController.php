@@ -6,7 +6,7 @@ use App\Entity\Adresse;
 use App\Entity\Entreprise;
 use App\Entity\User;
 use App\Form\EntrepriseCreationFormType;
-use App\Form\EntrepriseUpadteFormType;
+use App\Form\EntrepriseUpdateFormType;
 use App\Repository\AdresseRepository;
 use App\Repository\EntrepriseRepository;
 use App\Repository\UserRepository;
@@ -70,7 +70,7 @@ class EntrepriseController extends AbstractController
     {
         $user = $this->getUser();
         $message = '';
-        $form = $this->createForm(EntrepriseUpadteFormType::class, $entreprise);
+        $form = $this->createForm(EntrepriseUpdateFormType::class, $entreprise);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $entrepriseRepo->save($entreprise, true);

@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello UserController!{% endblock %}
+{% block title %}Agriproxi | Utilisateur{% endblock %}
 
 {% block body %}
 <style>
@@ -10,7 +10,7 @@
 
 <div class="example-wrapper">
     <h1>Mon compte</h1>
-
+    <p class="annotation">Tous les champs sont obligatoires *</p>
     {{ form(form_user) }}
     
     {% if message %}
