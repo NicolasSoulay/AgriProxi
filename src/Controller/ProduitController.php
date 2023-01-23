@@ -90,9 +90,11 @@ class ProduitController extends AbstractController
      * @return JsonResponse
      */
     #[Route('/produit/ajax/subcat/{idCat}', name: 'ajax_subcat')]
+    #[Route('/produit/ajax/subcat/{idCat}', name: 'ajax_subcat')]
     public function ajaxSubCat(Request $request, SousCategorieRepository $subCatRepo)
     {
         if (isset($request->request)) {
+            $idCategorie = $request->get('idCat');
             $idCategorie = $request->get('idCat');
             $subcats = $subCatRepo->findByCategorie($idCategorie);
             $json = [];
@@ -117,10 +119,13 @@ class ProduitController extends AbstractController
     /**
      * Renvoie un tableau:  
      * idCategorie |idSousCategorie => [[idProduit1, nomProduit1, descriptionProduit1, inStockProduit1, imageProduit1, idEntrepriseProduit1, nomEntrepriseProduit1, idAdresseEntrepriseProduit1, labelAdresseEntrepriseProduit1, codePostalAdresseEntrepriseProduit1, latitudeEntrepriseProduit1, longitudeEntrepriseProduit1, IdVilleAdresseEntrepriseProduit1, nomVilleAdresseEntrepriseProduit1, idDepartementVilleAdresseEntrepriseProduit1, codeDepartementVilleAdresseEntrepriseProduit1, codeDepartementVilleAdresseEntrepriseProduit1],[..],..]
+     * idCategorie |idSousCategorie => [[idProduit1, nomProduit1, descriptionProduit1, inStockProduit1, imageProduit1, idEntrepriseProduit1, nomEntrepriseProduit1, idAdresseEntrepriseProduit1, labelAdresseEntrepriseProduit1, codePostalAdresseEntrepriseProduit1, latitudeEntrepriseProduit1, longitudeEntrepriseProduit1, IdVilleAdresseEntrepriseProduit1, nomVilleAdresseEntrepriseProduit1, idDepartementVilleAdresseEntrepriseProduit1, codeDepartementVilleAdresseEntrepriseProduit1, codeDepartementVilleAdresseEntrepriseProduit1],[..],..]
      * 
      * @param Request $request
      * @return ?
      */
+    #[Route('/produit/ajax/produitcat/{idCat}/produitsubcat/{idSubCat}', name: 'ajax_produit')]
+    public function ajaxProduit(Request $request, ProduitRepository $produitRepo)
     #[Route('/produit/ajax/produitcat/{idCat}/produitsubcat/{idSubCat}', name: 'ajax_produit')]
     public function ajaxProduit(Request $request, ProduitRepository $produitRepo)
     {
@@ -257,6 +262,7 @@ class ProduitController extends AbstractController
      * @return int 
      */
     public function getRadius(string $rayon)
+    public function getRadius(string $rayon)
     {
         switch ($rayon) {
             case '10':
@@ -294,7 +300,7 @@ class ProduitController extends AbstractController
 
     //Affiche la page de ma boutique
     #[Route('/ma_boutique', name: 'maBoutique')]
-    public function maBoutique(Request $request): Response
+    public function maBoutique(): Response
     {
         $user = $this->getUser();
         $entreprise = $user->getEntreprise();
@@ -302,15 +308,20 @@ class ProduitController extends AbstractController
         $message = '';
         if (isset($_GET['message'])) {
             switch ($_GET['message']) {
+        if (isset($_GET['message'])) {
+            switch ($_GET['message']) {
                 case '0':
                     $message = 'Le produit a bien été créé';
                     break;
                 case '1':
+                case '1':
                     $message = 'Le produit a bien été modifié';
                     break;
                 case '2':
+                case '2':
                     $message = 'Le produit a bien été supprimé';
                     break;
+                default:
                 default:
                     $message = '';
             }
@@ -351,6 +362,9 @@ class ProduitController extends AbstractController
             return $this->redirectToRoute('maBoutique', [
                 'message' => $message,
             ]);
+            return $this->redirectToRoute('maBoutique', [
+                'message' => $message,
+            ]);
         } elseif ($form->isSubmitted()) {
             $message = 'Les informations ne sont pas valides';
         }
@@ -380,6 +394,7 @@ class ProduitController extends AbstractController
     public function deleteProduit(Produit $produit, ProduitRepository $produitRepo): Response
     {
         $produitRepo->remove($produit, true);
+        return $this->redirectToRoute('maBoutique', [
         return $this->redirectToRoute('maBoutique', [
             'message' => '2',
         ]);

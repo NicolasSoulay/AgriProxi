@@ -2,6 +2,11 @@
 
 {% block title %}AgriProxi | Adresse{% endblock %}
 
+{% block stylesheets %}
+	{{ parent() }}
+	{{ encore_entry_link_tags('adresse') }}
+{% endblock %}
+
 {% block javascripts %}
     {{ parent() }}
     {{ encore_entry_script_tags('adresse') }}
@@ -16,8 +21,22 @@
 <div class="example-wrapper">
     <h1>Mon adresse</h1>
 
-    {{ form(form_adresse) }}
+    <form method='POST' id="createAdresse">
+        <label for="label">Adresse</label>
+        <input type="text" name="label" id="label">
+        <label for="complement">Complément</label>
+        <input type="textarea" name="complement" id="complement">
+        <label for="ville">Ville</label>
+        <input type="text" name="ville" id="ville">
+        <input type="hidden" name="villeId" id="villeId">
+        <div id="displayCities"></div>
+        <label for="zip_code">Code Postal</label>
+        <input type="text" name="zip_code" id="zip_code">
+        <input type="submit" value='Enregistrer' name="submitAdresse">
+    </form>
     
+    </div>
+
     {% if message %}
         <div>{{ message }}</div>
     {% endif %}

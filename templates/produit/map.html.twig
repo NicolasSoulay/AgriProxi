@@ -55,6 +55,7 @@
         </form>
         <div id="search_result">
             {#
+            {#
             {% for produit in produits %}
             <input type="hidden" class="nomEntreprise" id="{{produit.entreprise.id}}" value = "{{produit.entreprise.name}}"/>
             <div class="product_card">
@@ -72,7 +73,10 @@
                 <div class="card_btn">
                     <a href="{{path('add_devis', { id: produit.id }) }}"> <button class="btn_link_green">Ajouter à votre liste de commande</button></a>
                 </div>  
+                    <a href="{{path('add_devis', { id: produit.id }) }}"> <button class="btn_link_green">Ajouter à votre liste de commande</button></a>
+                </div>  
             {% endfor %}
+            #}
             #}
         </div>
     </div>
