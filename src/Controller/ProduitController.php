@@ -126,8 +126,6 @@ class ProduitController extends AbstractController
      */
     #[Route('/produit/ajax/produitcat/{idCat}/produitsubcat/{idSubCat}', name: 'ajax_produit')]
     public function ajaxProduit(Request $request, ProduitRepository $produitRepo)
-    #[Route('/produit/ajax/produitcat/{idCat}/produitsubcat/{idSubCat}', name: 'ajax_produit')]
-    public function ajaxProduit(Request $request, ProduitRepository $produitRepo)
     {
         if (isset($request->request)) {
             $idCat = $request->get('idCat');
@@ -262,7 +260,6 @@ class ProduitController extends AbstractController
      * @return int 
      */
     public function getRadius(string $rayon)
-    public function getRadius(string $rayon)
     {
         switch ($rayon) {
             case '10':
@@ -308,20 +305,15 @@ class ProduitController extends AbstractController
         $message = '';
         if (isset($_GET['message'])) {
             switch ($_GET['message']) {
-        if (isset($_GET['message'])) {
-            switch ($_GET['message']) {
                 case '0':
                     $message = 'Le produit a bien été créé';
                     break;
                 case '1':
-                case '1':
                     $message = 'Le produit a bien été modifié';
                     break;
                 case '2':
-                case '2':
                     $message = 'Le produit a bien été supprimé';
                     break;
-                default:
                 default:
                     $message = '';
             }
@@ -394,7 +386,6 @@ class ProduitController extends AbstractController
     public function deleteProduit(Produit $produit, ProduitRepository $produitRepo): Response
     {
         $produitRepo->remove($produit, true);
-        return $this->redirectToRoute('maBoutique', [
         return $this->redirectToRoute('maBoutique', [
             'message' => '2',
         ]);

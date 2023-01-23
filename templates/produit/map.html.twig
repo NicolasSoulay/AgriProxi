@@ -54,30 +54,7 @@
             </div>
         </form>
         <div id="search_result">
-            {#
-            {#
-            {% for produit in produits %}
-            <input type="hidden" class="nomEntreprise" id="{{produit.entreprise.id}}" value = "{{produit.entreprise.name}}"/>
-            <div class="product_card">
-                <div class="product_desc">
-                    <div class="card_image">
-                        <img class="product_img" src="{{ produit.imageUrl }}" alt="product_image" width="200" height="200">
-                    </div>
-                    <div class="card_text">
-                        <h3> {{ produit.name }} </h3>
-                        <a href="{{ path('viewEntreprise', { id: produit.entreprise.id }) }}">{{ produit.entreprise.name }}</a>
-                        <p> {{ produit.description }} </p>
-                        <h3 class= "{{ produit.entreprise.id }}{{ produit.entreprise.name }}">  <h3>
-                    </div>
-                </div>
-                <div class="card_btn">
-                    <a href="{{path('add_devis', { id: produit.id }) }}"> <button class="btn_link_green">Ajouter à votre liste de commande</button></a>
-                </div>  
-                    <a href="{{path('add_devis', { id: produit.id }) }}"> <button class="btn_link_green">Ajouter à votre liste de commande</button></a>
-                </div>  
-            {% endfor %}
-            #}
-            #}
+           
         </div>
     </div>
 </div>
