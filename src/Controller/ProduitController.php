@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Produit;
 use App\Form\ProduitCreationFormType;
+use App\Repository\AdresseRepository;
 use App\Repository\CategorieRepository;
 use App\Repository\ProduitRepository;
 use App\Repository\SousCategorieRepository;
@@ -45,6 +46,41 @@ class ProduitController extends AbstractController
         ]);
     }
 
+
+    /**
+     * Renvoie un tableau:  
+     * idCategorie => [[idSubCat1, nomSubCat1],[..],..] 
+     * 
+     * @param Request $request
+     * @return JsonResponse
+     */
+    #[Route('/produit/ajax/adresse/{idAdresse}', name: 'ajax_adresse')]
+    public function ajaxAdresse(Request $request, AdresseRepository $adresseRepo)
+    {
+        if (isset($request->request)) {
+            $idAdresse = $request->get('idAdresse');
+            $adresse = $adresseRepo->findBy(['id' => $idAdresse]);
+            $json[] = [
+                "id" => $adresse[0]->getId(),
+                "label" => $adresse[0]->getLabel(),
+                "complement" => $adresse[0]->getComplement(),
+                "zipCode" => $adresse[0]->getZipCode(),
+                "latitude" => $adresse[0]->getLatitude(),
+                "longitude" => $adresse[0]->getLongitude(),
+                "ville" => $adresse[0]->getVille(),
+            ];
+
+            return new JsonResponse($json, 200);
+        }
+
+        return new JsonResponse(
+            array(
+                'status' => 'ça pas marche',
+                'message' => "c'est con hein?"
+            ),
+            400
+        );
+    }
 
     /**
      * Renvoie un tableau:  
@@ -205,7 +241,7 @@ class ProduitController extends AbstractController
                         "adresse" => $adresseEntreprise,
                         "coordinates" => $adresseCoordinate
                     ];
-                    if (!in_array($entreprise, $entreprise)) {
+                    if (!in_array($entreprise, $entreprises)) {
                         $entreprises[] = $entreprise;
                     }
                 }
