@@ -41,6 +41,7 @@ L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
 }).addTo(map);
 
 L.marker([latitude, longitude], {icon: redIcon, title: "you"}).addTo(map)
+//L.marker([43.511436, 5.464888], {icon: redIcon, title: "you"}).addTo(map)
 
 addProductMarker(coordinatesProduits);
 

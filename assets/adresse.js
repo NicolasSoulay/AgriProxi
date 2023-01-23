@@ -1,10 +1,17 @@
 import './styles/adresse.scss';
 
+// Je déclare une constante correspondant à l'élément html de l'input label
+const inputLabel = document.getElementById('label');
+
 // Je déclare une constante correspondant à l'élément html de l'input ville
 const inputCity = document.getElementById('ville');
 
-// Je déclare une constante correspondant à l'élément html de l'input villeId
+// Je déclare une constante correspondant à l'élément html de l'input caché villeId
 const inputId = document.getElementById('villeId');
+
+// Je déclare les constantes correspondant aux éléments html des input cachés longitude et latitude
+const inputLongitude = document.getElementById('longitude');
+const inputLatitude = document.getElementById('latitude');
 
 // Je déclare une constante correspondant à l'élément html où apparaîtront mes villes
 const divCities = document.getElementById('displayCities');
@@ -18,6 +25,7 @@ inputCity.addEventListener('input', (event)=>{
 })
 
 // Fonction qui crée des div avec la ville et le code département depuis un json et qui ajoute un évènement au click afin que ça effectue une autocomplétion
+// Lorsque l'on clique sur la ville, l'appel à l'API s'effectue pour alimenter les champs longitude et latitude
 function createDivCity(json){
     divCities.innerHTML = '';
     for(let i=0; i <json.length; i++){
@@ -32,6 +40,17 @@ function createDivCity(json){
         city.addEventListener('click', ()=> {
             inputCity.value = nameCity;
             inputId.value = idCity;
+            let label = inputLabel.value;
+            let ville = inputCity.value;
+            fetch('https://api-adresse.data.gouv.fr/search/?q='+label+ville+'&type=street&autocomplete=0')
+            .then((response) => response.json())
+            .then((json) => addLongAndLat(json));
         })
     }
+}
+
+// Fonction d'ajout de la longitude et latitude pour la soumission du formulaire
+function addLongAndLat(json){
+    inputLongitude.value = json.features[0].geometry.coordinates[0];
+    inputLatitude.value = json.features[0].geometry.coordinates[1];
 }

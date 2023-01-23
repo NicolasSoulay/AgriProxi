@@ -20,6 +20,7 @@ class UserController extends AbstractController
         $user = $this->getUser();
         $entreprise = $user->getEntreprise();
         $adresses = $entreprise->getAdresses();
+        $typeEntreprise = $entreprise->getTypeEntreprise();
         $message = '';
         if(isset($_GET['message'])){
             switch ($_GET['message']){
@@ -47,6 +48,7 @@ class UserController extends AbstractController
             'entreprise' => $entreprise,
             'adresses' => $adresses,
             'message' => $message,
+            'typeEntreprise' => $typeEntreprise,
         ]);
     }
 
