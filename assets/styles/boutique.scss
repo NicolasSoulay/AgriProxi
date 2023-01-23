@@ -1,6 +1,60 @@
 @import './utility.scss';
 
-// PAGE ENTREPRISE : BLOC ADRESSE
+// ------ BLOC PRODUIT COMMUN --------
+//BLOC PRODUIT
+.container_produit {
+    display: flex;
+    margin: 20px auto;
+    border: solid 1px #cccccc;
+    padding: 10px;
+}
+
+//BLOC PRODUIT : IMAGE + DESC
+.bloc_produit {
+    display: flex;
+    align-items: center;
+    width: 90%;
+    margin: auto;
+}
+
+//IMAGE PRODUIT
+.img_produit {
+    width: 200px;
+    height: 150px;
+    object-fit: cover;
+}
+
+//DESC PRODUIT
+.desc_produit {
+    padding: 0 10px;
+    width: 70%;
+}
+
+//BLOC BOUTON MAJ PRODUIT (UPDATE/DELETE)
+.update_produit {
+    width: 40%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+//ICON + TEXT
+.bloc_icon {
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+    background-color: white;
+    border: 0;
+    padding: 20px;
+}
+
+//ICON
+.produit_icon {
+    font-size: 45px;
+}
+
+// --------  FICHE ENTREPRISE --------
+//BLOC ADRESSE
 .container_adress {
     display: flex;
     background-color: $nude;
@@ -9,79 +63,133 @@
     padding: 10px;
 }
 
+//ICON ADRESS
 #adress_icon {
     font-size: 35px;
 }
 
-// PAGE PRODUIT / CATALOGUE
-.catalogue_produit {
-    width: 70%;
-    margin: auto;
-}
 
-.container_produit {
-    display: flex;
-    margin: 20px auto;
-    border: solid 1px #cccccc;
-    padding: 10px;
-}
-
-.btn_produit {
-    margin-top: 20px;
-}
-
-.img_produit {
-    width: 200px;
-    height: 150px;
-    object-fit: cover;
-}
-
-.desc_produit {
-    padding: 0 10px;
-    width: 70%;
-}
-
-.update_produit {
-    width: 25%;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-}
-
-.bloc_icon {
-    display: flex;
-    flex-direction: column-reverse;
-    align-items: center;
-    background-color: white;
+// ------------ DEVIS ------------
+//CONTAINER PRODUIT
+.container_produit--Secondary {
+    background-color: #84c3db21;
     border: 0;
 }
 
-.produit_icon {
-    font-size: 45px;
-}
-
-.ent_name {
-    color: $blue;
-}
-
+//BLOC LIGNE PAR ACHETEUR / PRODUCTEUR
 .bloc_devis {
-    background-color: $light-green;
-    padding: 15px;
-    margin: 10px 0;
+    border: solid 1px #31b86b47;
+    margin: 25px 0;
+    padding: 15px 30px;
 }
 
-/* ----- RESPONSIVE ----- */
+//BLOC BOUTON + INPUT DEVIS
+.action_devis {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    width: 40%;
+}
+
+//<p> STATUT DEVIS
+.statut_devis {
+    font-weight: bold;
+    text-align: center;
+}
+
+//<p> STATUT DEVIS ANNULER
+.statut_devis--Secondary {
+    color: $red;
+}
+
+//DEVIS TITRE
+.statut_title {
+    font-style: italic;
+}
+
+//DEVIS INFOS
+.statut_infos {
+    font-size: 12px;
+    font-style: italic;
+    margin-bottom: 5px;
+}
+
+//IMPUT BLOC
+.bloc_imput {
+    display: flex;
+    align-items: center;
+}
+
+//INPUT
+.input_devis {
+    text-align: end;
+    padding: 10px;
+    border-radius: 5px;
+    border: solid 1px $green;
+}
+
+.text_imput_devis {
+    font-size: 32px;
+    color: $green;
+    font-weight: bold;
+    padding: 0 5px;
+}
+
+.button_devis {
+    background-color: $green;
+    padding: 10px;
+    border-radius: 5px;
+    color: white;
+    font-weight: bold;
+    margin: 0 4px;
+    border: 0;
+}
+
+.button_devis--Secondary {
+    background-color: $red;
+}
+
+/* -------------------- RESPONSIVE ----------------- */
 @media (max-width: 1250px) {
-    .update_produit {
-        width: 25%;
-        display: flex;
+
+    //CONTAINER PRODUIT
+    .container_produit {
         flex-direction: column;
-        align-items: center;
+    }
+
+    //BLOC BOUTON + INPUT DEVIS
+    .action_devis {
+        border: solid 1px;
+        margin: 20px auto;
+        width: 60%;
+    }
+
+    //AJOUT PRODUIT AU DEVIS (FICHE ENTREPRISE)
+    .action_devis--Secondary {
+        border: 0;
+    }
+
+    //UPDATE PRODUIT
+    .update_produit {
+        margin: auto;
     }
 }
 
-/* ------------------ MODAL ------------------ */
-//MODAL LAYOUT
+
+@media (max-width: 750px) {
+
+    //BLOC BOUTON + INPUT DEVIS
+    .action_devis {
+        width: 90%;
+    }
+
+
+}
+
+/* ------------ MODAL DE CONFIRMATION SUPPRESSION ---------------- */
+//LAYOUT
 .myModal {
     display: none;
     position: fixed;
@@ -95,7 +203,7 @@
     background-color: rgba(0, 0, 0, 0.4);
 }
 
-//MODAL CONTENU
+//CONTENU
 .modal-content {
     background-color: #fefefe;
     margin: auto;
@@ -105,7 +213,7 @@
     text-align: center;
 }
 
-//FERMETURE MODAL
+//FERMETURE
 .close {
     color: #aaaaaa;
     font-size: 28px;

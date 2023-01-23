@@ -40,18 +40,27 @@ class DevisController extends AbstractController
                 }, []);
             }
         } else {
-            $pouet = $ligneRepo->findBy(['entrepriseId' =>  $id_entreprise]);
+            $pouet = $ligneRepo->findBy(['entrepriseId' =>  $id_entreprise, 'etat' => [1, 2, 3, 4, 5]]);
             $grouped_produits = array_reduce($pouet, function ($carry, $item) {
                 $carry[$item->getUsers()->getId()][] = $item;
                 return $carry;
             }, []);
         }
         if (empty($grouped_produits)) { //si on à encore rien mis dans notre panier
-            return $this->render('devis/index.html.twig', [
-                "message" => "Vous n'avez pas encore ajouté de produit à votre liste de devis !"
-            ]);
+            if ($typeid == 1) {
+                return $this->render('devis/index.html.twig', [
+                    "message" => "Vous n'avez pas encore de demande de devis!",
+                    "type" => $typeid, //type d'entreprise de l'user
+                ]);
+            } else {
+                return $this->render('devis/index.html.twig', [
+                    "message" => "Vous n'avez pas encore ajouté de produit à votre liste!",
+                    "type" => $typeid, //type d'entreprise de l'user
+                ]);
+            }
         } else {
             return $this->render('devis/index.html.twig', [
+                "user" => $entreprise,
                 "type" => $typeid, //type d'entreprise de l'user
                 "grouped_produits" =>  $grouped_produits, //les lignes de demande de devis
             ]);
