@@ -55,8 +55,10 @@ label {
 }
 
 a:hover {
-    color: $green;
+    color: currentColor;
 }
+
+
 
 @media (max-width: 1250px) {
     main {
@@ -101,6 +103,18 @@ a:hover {
     font-size: 20px;
     color: white;
     background-color: $green;
+    border-style: none;
+    border-radius: 10px;
+    padding: 10px;
+    padding-left: 30px;
+    padding-right: 30px;
+}
+
+.btn_link_blue {
+    font-family: exo;
+    font-size: 20px;
+    color: white;
+    background-color: $blue;
     border-style: none;
     border-radius: 10px;
     padding: 10px;
@@ -491,13 +505,13 @@ footer {
 }
 
 /* ------------------ MESSAGE ------------------ */
-.message{
+.message {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 50px;
-    
-    p{
+
+    p {
         text-align: center;
         color: $message;
         font-family: poppins-b;

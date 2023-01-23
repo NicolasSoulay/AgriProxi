@@ -177,4 +177,9 @@ class Produit
 
         return $this;
     }
+
+    public function getEntrepriseName()
+    {
+        return $this->entreprise->getName();
+    }
 }

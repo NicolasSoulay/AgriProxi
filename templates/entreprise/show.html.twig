@@ -44,6 +44,8 @@
 				<h3>{{produit.name|upper}}</h3>
 				<p>{{produit.description}}</p>
 			</div>
+			<a href="{{path('add_devis', { id: produit.id }) }}"> <button class="btn_link_green">Ajouter à votre liste de commande</button></a>
+            </div>
 		</div>
 	{% endfor %}
 {% endblock %}

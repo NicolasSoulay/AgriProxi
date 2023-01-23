@@ -12,11 +12,16 @@ class LigneDevisType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('etat')
             ->add('quantity')
-            ->add('price')
-            ->add('produit')
-            ->add('devis');
+            ->add('price');
+        // ->add('name', TextType::class, [
+        //     'label' => 'Nom'
+        // ])
+        // ->add('description', TextareaType::class, [
+        //     'label' => 'Description',
+        //     'required' => false
+        // ])
+        // ->add('Enregistrer', SubmitType::class)
     }
 
     public function configureOptions(OptionsResolver $resolver): void

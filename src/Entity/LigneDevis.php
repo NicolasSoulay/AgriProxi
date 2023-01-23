@@ -30,6 +30,13 @@ class LigneDevis
     #[ORM\JoinColumn(nullable: false)]
     private ?Devis $devis = null;
 
+    #[ORM\Column]
+    private ?int $entrepriseId = null;
+
+    #[ORM\ManyToOne(inversedBy: 'ligneDevis')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $users = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -91,6 +98,30 @@ class LigneDevis
     public function setDevis(?Devis $devis): self
     {
         $this->devis = $devis;
+
+        return $this;
+    }
+
+    public function getEntrepriseId(): ?int
+    {
+        return $this->entrepriseId;
+    }
+
+    public function setEntrepriseId(int $entrepriseId): self
+    {
+        $this->entrepriseId = $entrepriseId;
+
+        return $this;
+    }
+
+    public function getUsers(): ?User
+    {
+        return $this->users;
+    }
+
+    public function setUsers(?User $users): self
+    {
+        $this->users = $users;
 
         return $this;
     }
