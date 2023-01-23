@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Agriproxi | Entreprise{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+
+<div class="example-wrapper">
+    <h1>Mon entreprise</h1>
+
+    <p class="annotation">Tous les champs sont obligatoires *</p>
+    {{ form(form_entreprise) }}
+    
+    {% if message %}
+        <div>{{ message }}</div>
+    {% endif %}
+    
+    {% if app.user %}
+    <a href="{{path('app_user')}}">Retour</a>
+    {% endif %}
+
+</div>
+{% endblock %}

@@ -56,6 +56,17 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $this->save($user, true);
     }
 
+    //Va chercher le dernier utilisateur créé
+    public function getLastId(){
+        $connexion = $this->getEntityManager()->getConnection();
+
+        $sql = 'SELECT max(u.id) FROM user u';
+
+        $result = $connexion->prepare($sql)->executeQuery();
+
+        return $result->fetchOne();
+    }
+
 //    /**
 //     * @return User[] Returns an array of User objects
 //     */

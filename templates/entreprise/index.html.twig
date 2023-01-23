@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello EntrepriseController!{% endblock %}
+{% block title %}Agriproxi | Entreprise{% endblock %}
 
 {% block body %}
 <style>
@@ -9,12 +9,17 @@
 </style>
 
 <div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/wamp64/www/AgriProxi/src/Controller/EntrepriseController.php'|file_link(0) }}">src/Controller/EntrepriseController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/wamp64/www/AgriProxi/templates/entreprise/index.html.twig'|file_link(0) }}">templates/entreprise/index.html.twig</a></code></li>
+        <ul class="">
+        {% for entreprise in entreprises %}
+            {# <a class="text-decoration-none" href="{{ path('ficheConference', { id: conference.id }) }}"> #}
+                <li class="">
+                    {{ entreprise.name }}
+                </li>
+            </a>
+        {% endfor %}
     </ul>
+
+    <a href="{{path('createEntreprise')}}">Création d'entreprise</a>
+    <a href="{{path('createAdresse')}}">Création d'adresse</a>
 </div>
 {% endblock %}

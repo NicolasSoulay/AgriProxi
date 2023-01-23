@@ -32,10 +32,18 @@ class Entreprise
     #[ORM\OneToMany(mappedBy: 'entreprise', targetEntity: Produit::class, orphanRemoval: true)]
     private Collection $produits;
 
+    #[ORM\OneToMany(mappedBy: 'entreprise', targetEntity: User::class)]
+    private Collection $users;
+
+    #[ORM\OneToMany(mappedBy: 'entreprise', targetEntity: Devis::class, orphanRemoval: true)]
+    private Collection $devis;
+
     public function __construct()
     {
         $this->adresses = new ArrayCollection();
         $this->produits = new ArrayCollection();
+        $this->users = new ArrayCollection();
+        $this->devis = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -137,5 +145,70 @@ class Entreprise
         }
 
         return $this;
+    }
+
+    /**
+     * @return Collection<int, User>
+     */
+    public function getUsers(): Collection
+    {
+        return $this->users;
+    }
+
+    public function addUser(User $user): self
+    {
+        if (!$this->users->contains($user)) {
+            $this->users->add($user);
+            $user->setEntreprise($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUser(User $user): self
+    {
+        if ($this->users->removeElement($user)) {
+            // set the owning side to null (unless already changed)
+            if ($user->getEntreprise() === $this) {
+                $user->setEntreprise(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Devis>
+     */
+    public function getDevis(): Collection
+    {
+        return $this->devis;
+    }
+
+    public function addDevi(Devis $devi): self
+    {
+        if (!$this->devis->contains($devi)) {
+            $this->devis->add($devi);
+            $devi->setEntreprise($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDevi(Devis $devi): self
+    {
+        if ($this->devis->removeElement($devi)) {
+            // set the owning side to null (unless already changed)
+            if ($devi->getEntreprise() === $this) {
+                $devi->setEntreprise(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function __toString()
+    {
+        return $this->name;
     }
 }

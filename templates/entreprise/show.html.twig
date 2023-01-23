@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+	{{ parent() }}
+	{{ encore_entry_link_tags('boutique') }}
+{% endblock %}
+
+{% block javascripts %}
+	{{ parent() }}
+	{{ encore_entry_script_tags('boutique') }}
+{% endblock %}
+
+{% block title %}
+	Agriproxi | {{entreprise.name}}
+{% endblock %}
+
+{% block body %}
+	<h1>{{entreprise.name}}</h1>
+	<h2>{{entreprise.description}}</h2>
+
+	{# BLOC : ADRESSE ENTREPRISE #}
+	{% for adresse in adresses %}
+		<div class="container_adress">
+			<ion-icon name="location-outline" id="adress_icon"></ion-icon>
+			<ul>
+				<li>{{ adresse.label|upper }}</li>
+				<li>{{ adresse.complement|upper }}</li>
+				<li>{{ adresse.zipCode }}
+					{{ adresse.ville }}</li>
+			</ul>
+		</div>
+	{% endfor %}
+
+	{# BLOC : PRODUIT ENTREPRISE  #}
+	{% for produit in produits %}
+		<div class="container_produit">
+			<img class="img_produit" src={{produit.imageURL}}>
+			<div class="desc_produit">
+				{% if produit.inStock == 1 %}
+					<p class='green'>En stock</p>
+					{%else%}
+					<p class='red'>Indisponible</p>
+				{% endif %}
+				<h3>{{produit.name|upper}}</h3>
+				<p>{{produit.description}}</p>
+			</div>
+			<a href="{{path('add_devis', { id: produit.id }) }}"> <button class="btn_link_green">Ajouter à votre liste de commande</button></a>
+            </div>
+		</div>
+	{% endfor %}
+{% endblock %}

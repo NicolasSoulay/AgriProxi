@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+{% endblock %}
+
+{% block title %}Agriproxi | Produit{% endblock %}
+
+{% block body %}
+    <div class="form_width">
+        {{form(form_produit)}}
+    </div>
+
+    {% if message %}
+        <div>{{ message }}</div>
+    {% endif %}
+    <a href="{{ path('maBoutique') }}">Retour</a>
+    
+{% endblock %}

@@ -1,20 +1,86 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello UserController!{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('user') }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('user') }}
+{% endblock %}
+
+{% block title %}Agriproxi | Espace personnel{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+    <div id="user_container">
+        <h1>Votre espace personnel</h1>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/wamp64/www/AgriProxi/src/Controller/UserController.php'|file_link(0) }}">src/Controller/UserController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/wamp64/www/AgriProxi/templates/user/index.html.twig'|file_link(0) }}">templates/user/index.html.twig</a></code></li>
-    </ul>
-</div>
+        <div class="message">
+            <p>{{ message }}</p>
+        </div>
+        
+        <div class="cards">
+            <div class="card_contain">
+                <div class="head_card"> 
+                    <h2>Espace utilisateur</h2>
+                    <a href="{{path('updateUser',{ id: user.id })}}"><ion-icon name="settings-sharp" class='btn_icon'></ion-icon></a>
+                    <a href="{{path('deleteUser',{ id: user.id })}}"><ion-icon name="trash-sharp" class='btn_icon'></ion-icon></a>
+                </div>
+                <div class="card_content">
+                    <ul>
+                        <li><span class="bold">Nom:</span> {{ user.lastName }}</li>
+                        <li><span class="bold">Prénom:</span> {{ user.firstName }}</li>
+                        <li><span class="bold">Email:</span> {{ user.email }}</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="card_contain card_contain--Secondary">
+                <div class="head_card">
+                    <h2>Espace entreprise</h2>
+                    <a class="" href="{{path('updateEntreprise',{ id: entreprise.id })}}"><ion-icon name="settings-sharp" class='btn_icon'></ion-icon></a>
+                </div>
+                <div class="card_content card_content_user">
+                    <ul>
+                        <li><span class="bold">Nom:</span> {{ entreprise.name }}</li>
+                        <li><span class="bold">Type d'entreprise:</span> {{ typeEntreprise.name }}</li>
+                        <li><span class="bold">Descritpion:</span> {{ entreprise.description }}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="card_contain card_contain_adress">
+            <div class="head_card">
+                <h2>{{ (adresses|length == 1) ? 'Mon adresse' : "Mon carnet d'adresse" }}</h2>
+                
+                <a href="{{path('createAdresse')}}"><ion-icon name="add-circle-sharp" class='btn_icon'></ion-icon></a>
+            </div>
+            <div class="card_content card_content_user">
+                {% for adresse in adresses %}
+                    <div class='adress'>
+                        <div class="adress_icon">
+                            <a class="link" href="{{path('updateAdresse',{ id: adresse.id })}}"><ion-icon name="settings-sharp"></ion-icon></a>
+                            <button class="mybtn link" data-href="{{path('deleteAdresse',{ id: adresse.id })}}" href="">
+                                <ion-icon name="trash-sharp"></ion-icon>
+                            </button>
+                        </div>
+                        <ul>
+                            <li><span class="bold">Label:</span> {{ adresse.label }}</li>
+                            <li><span class="bold">Complément:</span> {{ adresse.complement }}</li>
+                            <li><span class="bold">Code Postal:</span> {{ adresse.zipCode }}</li>
+                            <li><span class="bold">Ville:</span> {{ adresse.ville }}</li>
+                        </ul>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    {# MODAL DELETE #}
+    <div class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h3>Etes vous sur de vouloir supprimer cette adresse ?</h3>
+            <a class="red bloc_icon" id="link_del" href="">Supprimer<ion-icon name="close-circle-sharp" class="produit_icon"></ion-icon></a>
+        </div>
+    </div>
 {% endblock %}

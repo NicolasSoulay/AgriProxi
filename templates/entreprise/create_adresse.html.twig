@@ -1,0 +1,63 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}AgriProxi | Adresse{% endblock %}
+
+{% block stylesheets %}
+	{{ parent() }}
+	{{ encore_entry_link_tags('adresse') }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('adresse') }}
+{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+
+<div class="example-wrapper">
+    <h1>Mon adresse</h1>
+
+
+    <form method='POST' id="createAdresse">
+        <p>(<span>*</span>)Champs obligatoires</p>
+        <div class="form-group">
+            <label for="label">Adresse <span>*</span></label>
+            <input type="text" class="form-control" name="label" id="label" required placeholder="ex: 10 rue nomDeLaRue">
+        </div>
+        <div class="form-group">
+            <label for="complement">Complément</label>
+            <input type="textarea" class="form-control" name="complement" id="complement" placeholder="ex: Bâtiment B">
+        </div>
+        <div class="form-group">
+            <label for="zip_code">Code Postal <span>*</span></label>
+            <input type="text" class="form-control" name="zip_code" id="zip_code" required placeholder="ex: 34000" minlength="5" maxlength="5">
+        </div>
+        <div class="form-group">
+            <label for="ville">Ville <span>*</span></label>
+            <input type="text" class="form-control" name="ville" id="ville" required placeholder="ex: Nom-De-La-Ville">
+            <input type="hidden" name="villeId" id="villeId">
+            <div id="displayCities"></div>
+        </div>
+        <div class="form-group">
+            <input type="submit" class="btn btn-primary" value='Enregistrer' name="submitAdresse" id="submitAdresse">
+        </div>
+        <input type="hidden" name="latitude" id="latitude" placeholder="latitude">
+        <input type="hidden" name="longitude" id="longitude" placeholder="longitude">
+    </form>
+    
+    </div>
+
+    {% if message %}
+        <div>{{ message }}</div>
+    {% endif %}
+    
+    {% if app.user %}
+    <a href="{{path('app_user')}}">Retour</a>
+    {% endif %}
+
+</div>
+{% endblock %}
