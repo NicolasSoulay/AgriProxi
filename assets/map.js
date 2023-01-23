@@ -10,6 +10,7 @@ const categorie = document.getElementById("categorie")
 const subCategorie = document.getElementById("subCategorie")
 const listeProduits = document.getElementById("search_result")
 const adresseUser = document.getElementById("adresse")
+const rayon = document.getElementById("rayon")
 
 const greenIcon = new L.Icon({
     iconUrl: 'build/images/marker-icon-2x-green.png',
@@ -88,6 +89,7 @@ adresseUser.addEventListener("change", function() {
 
 
 
+
 /**ICI C'EST LES FONCTIONS */
 
 /** RECHERCHE DE PRODUITS & AJAX*/ 
@@ -139,11 +141,10 @@ function afficheProduitsAndMarkers(json){
 function afficheProduits(produits) {
     for (let i=0; i < produits.length; i++) {
         listeProduits.innerHTML+= 
-            '<div class="product_card" id="'+produits[i].name+produits[i].id+'"><div class="product_desc"><div class="card_image"><img class="product_img" src="'+produits[i].imageURL+'" alt="product_image" width="200" height="200"></div><div class="card_text"><h3>'+produits[i].name+'</h3><a href="https://127.0.0.1:8000/entreprise/'+produits[i].entreprise.id+'">'+produits[i].entreprise.name+'</a><p>'+produits[i].desc+'</p><h3 classe="'+produits[i].entreprise.id+'distance"></h3></div></div><div class="btn_link" id="panTo'+produits[i].id+'">Voir sur la map</div><div class="card_btn"><a href="https://127.0.0.1:8000/devis/add/'+produits[i].id+'"><button class="btn_link_green">Ajouter à votre liste de commande</button><a></div></div>'
+            '<div class="product_card" id="'+produits[i].name+produits[i].id+'"><div class="product_desc"><div class="card_image"><img class="product_img" src="'+produits[i].imageURL+'" alt="product_image" width="200" height="200"></div><div class="card_text"><h3>'+produits[i].name+'</h3><a href="https://127.0.0.1:8000/entreprise/'+produits[i].entreprise.id+'">'+produits[i].entreprise.name+'</a><p>'+produits[i].desc+'</p></div></div><div class="card_btn"><a href="https://127.0.0.1:8000/devis/add/'+produits[i].id+'"><button class="btn_link_green">Ajouter à votre liste de commande</button><a></div></div>'
         ;
-        
-    }
 
+    }
 }
 
 
