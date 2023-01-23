@@ -90,7 +90,6 @@ class ProduitController extends AbstractController
      * @return JsonResponse
      */
     #[Route('/produit/ajax/subcat/{idCat}', name: 'ajax_subcat')]
-    #[Route('/produit/ajax/subcat/{idCat}', name: 'ajax_subcat')]
     public function ajaxSubCat(Request $request, SousCategorieRepository $subCatRepo)
     {
         if (isset($request->request)) {

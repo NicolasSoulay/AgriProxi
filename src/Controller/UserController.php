@@ -2,9 +2,9 @@
 
 namespace App\Controller;
 
-use App\Entity\Adresse;
 use App\Entity\User;
 use App\Form\UserCreationFormType;
+use App\Repository\EntrepriseRepository;
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -92,5 +92,46 @@ class UserController extends AbstractController
     public function updateUser(User $user, UserRepository $userRepo, Request $request)
     {
         return $this->formUser($userRepo, $request, $user);
+    }
+
+    //Suppression du User
+    #[Route('/delete_user/{id}', name: 'deleteUser')]
+    public function deleteUser(User $user, UserRepository $userRepo, EntrepriseRepository $entrepriseRepo)
+    {
+        $user = $this->getUser();
+        $entreprise = $user->getEntreprise();
+
+        //Suppression des lignes devis
+        $linesDevis = $user->getLigneDevis();
+        foreach($linesDevis as $lineDevis){
+            $user->removeLigneDevi($lineDevis);
+        }
+        //Suppression des devis
+        $devis = $entreprise->getDevis();
+        foreach($devis as $devi){
+            $entreprise->removeDevi($devi);
+        }
+        if(count($entreprise->getUsers())===1){
+            //Suppression des adresses
+            $adresses = $entreprise->getAdresses();
+            foreach($adresses as $adresse){
+                $entreprise->removeAdress($adresse);
+            }
+            //Suppression des produits
+            $products = $entreprise->getProduits();
+            foreach($products as $product){
+                $entreprise->removeProduit($product);
+            }
+            //Suppression du user
+            $userRepo->remove($user, true);
+            //Suppression de l'entreprise
+            $entrepriseRepo->remove($entreprise, true);
+        }
+        else{
+            //Suppression du user
+            $userRepo->remove($user, true);
+        }
+
+    return $this->redirectToRoute('app_login');
     }
 }
