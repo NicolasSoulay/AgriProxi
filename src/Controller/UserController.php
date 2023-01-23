@@ -21,24 +21,24 @@ class UserController extends AbstractController
         $entreprise = $user->getEntreprise();
         $adresses = $entreprise->getAdresses();
         $message = '';
-        if(isset($_GET['message'])){
-            switch ($_GET['message']){
+        if (isset($_GET['message'])) {
+            switch ($_GET['message']) {
                 case '0':
                     $message = 'L\'entreprise a bien été modifié';
                     break;
-                case '1' :
+                case '1':
                     $message = 'L\'adresse a bien été créée';
                     break;
-                case '2' :
+                case '2':
                     $message = 'L\'adresse a bien été modifiée';
                     break;
-                case '3' :
+                case '3':
                     $message = 'L\'adresse a bien été supprimée';
-                    break;  
-                case '4' :
+                    break;
+                case '4':
                     $message = 'L\'utilisateur a bien été modifiée';
-                    break; 
-                default :
+                    break;
+                default:
                     $message = '';
             }
         }
@@ -88,7 +88,7 @@ class UserController extends AbstractController
     //Page de modification du User
     #[Route('/update_user/{id}', name: 'updateUser')]
     public function updateUser(User $user, UserRepository $userRepo, Request $request)
-    {   
+    {
         return $this->formUser($userRepo, $request, $user);
     }
 }
