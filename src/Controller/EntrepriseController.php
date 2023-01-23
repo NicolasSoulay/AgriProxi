@@ -57,7 +57,7 @@ class EntrepriseController extends AbstractController
     //Page de création d'entreprise
     #[Route('/create_entreprise', name: 'createEntreprise')]
     public function createEntreprise(EntrepriseRepository $entrepriseRepo, UserRepository $userRepo, Request $request): Response
-    {   
+    {
         $userId = $userRepo->getLastId();
         $user = $userRepo->find($userId);
         $entreprise = new Entreprise();
@@ -112,12 +112,11 @@ class EntrepriseController extends AbstractController
                 ]);
             } else {
                 $message = 'L\'adresse a bien été créée';
-                if($this->getUser()){
+                if ($this->getUser()) {
                     return $this->redirectToRoute('app_user', [
                         'message' => '1'
                     ]);
-                }
-                else{
+                } else {
                     return $this->redirectToRoute('app_login');
                 }
             }
@@ -149,7 +148,7 @@ class EntrepriseController extends AbstractController
     public function deleteAdresse(Adresse $adresse, AdresseRepository $adresseRepo): Response
     {
         $adresseRepo->remove($adresse, true);
-        return $this->redirectToRoute('app_user',[
+        return $this->redirectToRoute('app_user', [
             'message' => '3'
         ]);
     }
