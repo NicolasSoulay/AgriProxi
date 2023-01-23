@@ -101,6 +101,8 @@ class EntrepriseController extends AbstractController
             $adresse->setZipCode($_POST['zip_code']);
             $adresse->setEntreprise($entreprise);
             $ville = $villeRepo->find($_POST['villeId']);
+            $adresse->setLongitude($_POST['longitude']);
+            $adresse->setLatitude($_POST['latitude']);
             $adresse->setVille($ville);
             $adresseRepo->save($adresse,true);
             if ($request->get('id')) {

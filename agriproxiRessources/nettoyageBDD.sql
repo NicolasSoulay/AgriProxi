@@ -93,3 +93,16 @@ from entreprise
 where id in (select e.id
 from (select * from entreprise) as e
 where e.description like '%nettoyageBDD');-- 37
+
+-- Doublon d'adresse
+select max(id)
+from adresse a 
+group by concat(label,entreprise_id,ville_id)
+having count(concat(label,entreprise_id,ville_id))>1;
+
+delete
+from adresse 
+where id in(select max(a.id)
+from (select * from adresse) as a
+group by concat(label,entreprise_id,ville_id)
+having count(concat(label,entreprise_id,ville_id))>1);
