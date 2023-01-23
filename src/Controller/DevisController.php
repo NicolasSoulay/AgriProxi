@@ -10,63 +10,46 @@ use App\Repository\ProduitRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Doctrine\ORM\EntityRepository;
-use Symfony\Component\BrowserKit\Request;
 use Symfony\Component\HttpFoundation\Request as HttpFoundationRequest;
 
 class DevisController extends AbstractController
 {
-
+    //affichage page devis
     #[Route('/devis', name: 'app_devis')]
     public function index(LigneDevisRepository $ligneRepo): Response
     {
-        $produits = [];
-        $grouped_produits = [];
-        $user = $this->getUser();
-        $entreprise = $user->getEntreprise();
-        $id_entreprise = $entreprise->getId();
-        // $ligne = $entreprise->getEtat();
-        $type = $entreprise->getTypeEntreprise();
-        $typeid = $type->getId();
+        $user = $this->getUser(); //user connecté
+        $entreprise = $user->getEntreprise(); //entreprise de user
+        $id_entreprise = $entreprise->getId(); // id de l'entreprise de user
+        $type = $entreprise->getTypeEntreprise(); //type d'entreprise
+        $typeid = $type->getId(); //id du type
 
-
-
-        if ($typeid == 2) {
+        if ($typeid == 2) { //si restaurateur
             $devis = $entreprise->getDevis();
             foreach ($devis as $key) {
                 $ligneDevis = $key->getLigneDevis();
                 foreach ($ligneDevis as $lignedevis) {
                     $lignedevis = $user->getLigneDevis();
-                    // $lignedevis = $user->getLigneDevis();
-                    // $lignedevis = $ligneRepo->findBy(['entrepriseId' =>  285]);
-
-
-                    // $li = $entreprise->getLigneDevis();
-                    // $produits[] = $ligneDevis->getProduit();
                     $lignedevis =  $lignedevis;
                 }
             }
         } else {
             $lignedevis = $ligneRepo->findBy(['entrepriseId' =>  $id_entreprise]);
         }
-        // $grouped_produits = array_reduce($produits, function ($carry, $item) {
-        //     $carry[$item->getEntreprise()->getId()][] = $item;
-        //     return $carry;
-        // }, []);
-
-        if (empty($lignedevis)) {
+        if (empty($lignedevis)) { //si on à encore rien mis dans notre panier
             return $this->render('devis/index.html.twig', [
                 "message" => "Vous n'avez pas encore ajouté de produit à votre liste de devis !"
             ]);
         } else {
             return $this->render('devis/index.html.twig', [
-                "type" => $type,
-                "ligneDevis" =>  $lignedevis,
-                // 'dev' => $dev,
+                "type" => $type, //type d'entreprise de l'user
+                "ligneDevis" =>  $lignedevis, //les lignes de demande de devis
+
             ]);
         };
     }
 
+    //Restaurateur : ajouter un produit d'un producteur a la liste devis
     #[Route('/devis/add/{id}', name: 'add_devis')]
     public function addProductDevis($id, ProduitRepository $produitRepo, DevisRepository $devisRepo, LigneDevisRepository $ligneRepo)
     {
@@ -110,7 +93,6 @@ class DevisController extends AbstractController
             $user = $this->getUser();
             $entreprise = $user->getEntreprise();
             $id_entreprise = $entreprise->getId();
-            $type = $entreprise->getTypeEntreprise();
             $devis = $entreprise->getDevis();
             foreach ($devis as $ligneDevis) {
                 $ligneDevis = $ligneDevis->getLigneDevis();
@@ -159,7 +141,6 @@ class DevisController extends AbstractController
             foreach ($lignedevis as $ligne) {
                 $id = $ligne->getProduit();
                 $ids = $id->getId();
-                // foreach ($prof as $pro) {
                 if ($request->isMethod('POST') && $request->request->get('price')) {
                     $price = $request->request->get('price');
                     if ($ids == $product_id) {
@@ -168,7 +149,6 @@ class DevisController extends AbstractController
                         $ligneDevis->setEtat(2);
                         $ligneRepo->save($ligneDevis, true);
                     }
-                    // }
                 }
                 if ($request->isMethod('POST') && $request->request->get('valid')) {
                     if ($ids == $product_id) {

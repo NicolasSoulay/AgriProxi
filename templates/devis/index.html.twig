@@ -11,135 +11,91 @@
 {% endblock %}
 
 {% block title %}AgriProxi | Mes devis{% endblock %}
-{# {% block body %}
-	{% if produits ?? false %}
-		{% for products in produits %}
-		<form action="{{ path('save_devis') }}" method="post">
-			{% for product in products %}
-				<div class="bloc_pouet">
-					<div class="container_produit">
-						<img class="img_produit" src={{product.imageURL}}>
-						<div class="desc_produit">
-							<a class="ent_name" href="{{ path('viewEntreprise', { id: product.entreprise.id }) }}">{{ product.entrepriseName }}</a> #}
-							{# {% for item in ligneDevis %}
-								{% if item.produit_id == product.id %}	
-									<input type="text" name="product_id" value="{{ item.produit_id }}" required>
-								{% endif %}
-							{% endfor %} #}
-							{# {% if product.inStock == 1 %}
-								<p class='green'>En stock</p>
-								{%else%}
-								<p class='red'>Indisponible</p>
-							{% endif %} #}
 
-
-
-
-							{# <h3>{{product.name|upper}}</h3>
-							<p>{{product.description}}</p> #}
-
-
-
-
-							{# <p>{{product.id}}</p> #}
-
-
-							{# {% if types.id == 2 and ligneDevis.etat == 0 %} #}
-							{# {% endif %} #}
-							{# set etat 1 #}
-							{# {% if types.id == 2 and ligneDevis.etat == 1 %}
-								<p>en attente du producteur</p>
-								<p>{{ligneDevis.quantity}}</p>
-							{% endif %}
-							{% if types.id == 1 and ligneDevis.etat == 1 %} 
-								<p>{{ligneDevis.quantity}}</p>
-								<input type="int" name="price" id="price" required>
-							{% endif %} #}
-							{# set etat 2 #}
-							{# {% if ligneDevis.etat == 2 %}
-								<p>{{ligneDevis.price}}</p>
-							{% endif %} #}
-						{# </div>
-					</div>
-				</div>
-			{% endfor %}
-			<input type="submit" value="Subscribe!">
-			</form>
-		{% endfor %}
-	{% else %} 
-		<div class="message">{{ message }}</div>
-	{% endif %} #}
-{# {% endblock %} #}
 {% block body %}
 	{% if ligneDevis ?? false %}
-	
-	{% for ligne in ligneDevis %}
-		<div class="bloc_pouet">
-			<form action="{{ path('save_devis') }}" method="post">
+	{# {% set ligneDevis = ligneDevis | sort_by(['devis.id']) %} #}
+		{% for ligne in ligneDevis %}
+			<div class="bloc_pouet">
+				<form action="{{ path('save_devis') }}" method="post">
+					<input type="hidden" name="product_id" value="{{ligne.produit.entreprise.id}}">
+					<input type="hidden" name="pro" value="{{ligne.produit.id}}">
 					<div class="container_produit">
 						<img class="img_produit" src={{ligne.produit.imageURL}}>
 						<div class="desc_produit">
-							<a class="ent_name" href="{{ path('viewEntreprise', { id: ligne.produit.entreprise.id }) }}">{{ ligne.produit.entrepriseName }}</a>
-							{% if ligne.produit.inStock == 1 %}
-								<p class='green'>En stock</p>
+							{% if type.id == 1 %} 
+									<p>Demande envoyée par : {{ligne.devis.entreprise.name}}</p>
 							{% else %}
-								<p class='red'>Indisponible</p>
+								<a class="ent_name" href="{{ path('viewEntreprise', { id: ligne.produit.entreprise.id }) }}">{{ ligne.produit.entrepriseName }}</a>
+								{% if ligne.produit.inStock == 1 %}
+									<p class='green'>En stock</p>
+								{% else %}
+									<p class='red'>Indisponible</p>
+								{% endif %}		
 							{% endif %}
 							<h3>{{ligne.produit.name|upper}}</h3>
-							<p>{{ligne.produit.description}}</p>
-								<input type="hidden" name="product_id" value="{{ligne.produit.entreprise.id}}">
-								<input type="hidden" name="pro" value="{{ligne.produit.id}}">
+							{% if type.id < 1 %} 
+								<p>{{ligne.produit.description}}</p>
+							{% endif %}							
 							{% if type.id == 2 and ligne.etat == 0 %}
 								<input type="text" name="quantity" id="quantity">
 								<input type="submit" value="Quantité">
 							{% endif %}
-							{# set etat 1 #}
+							{# SET ETAT 1 #}
 							{% if type.id == 2 and ligne.etat == 1 %}
-								<p>en attente du producteur</p>
-								<p>Quantité souhaité : {{ligne.quantity}}</p>
+								<p>En attente du producteur</p>
+								<p>Quantité demandée : {{ligne.quantity}}</p>
 							{% endif %}
 							{% if type.id == 1 and ligne.etat == 1 %} 
-								<p>Quantité demandé : {{ligne.quantity}}</p>
+								<p>Quantité demandée : {{ligne.quantity}}</p>
 								<input type="int" name="price" id="price" required>
 								<input type="submit" value="Prix">
 							{% endif %}
-							{# set etat 2 #}
-							{% if type.id == 1 and ligne.etat == 2 %} 
-								<p>prix souhaité : {{ligne.price}}</p>
-							{% endif %}
+							{# SET ETAT 2 #}
 							{% if type.id == 2 and ligne.etat == 2 %} 
-								<p>prix souhaité : {{ligne.price}}</p>
+								<p>Prix proposé : {{ligne.price}} €</p>
 								<input type="submit" name="accepte" id="accepte" value="accepte">
 								<input type="submit" name="reffuse" id="reffuse" value="reffuse">
 							{% endif %}
-							{# set etat 3 #}
-							{% if type.id == 1 and ligne.etat == 3 %} 
-								<p>Le prix proposé : {{ligne.price}} à était accepté par l'acheteur !</p>
-								<input type="submit" name="valid" id="valid" value="valid">
+							{% if type.id == 1 and ligne.etat == 2 %}
+								<p>Quantité demandée : {{ligne.quantity}}</p>
+								<p>Prix proposé : {{ligne.price}} €, veuillez attendre que l'acheteur valide la proposition</p>
 							{% endif %}
+							{# SET ETAT 3 #}
 							{% if type.id == 2 and ligne.etat == 3 %} 
-								<p>Vous avez validé le prix : {{ligne.price}} € , veuillez attendre que le producteur accepte le devis</p>
+								<p>Quantité demandée : {{ligne.quantity}}</p>
+								<p>Vous avez validé l'offre à {{ligne.price}} € veuillez attendre que le producteur accepte le devis</p>
 							{% endif %}
-							{# set etat 4 #}
-							{% if type.id == 1 and ligne.etat == 4 %} 
-								<p>Devis validé ! Genere le pdf incha'allah!</p>
+							{% if type.id == 1 and ligne.etat == 3 %} 
+								<p>Quantité demandée : {{ligne.quantity}}</p>
+								<p>Le prix proposé : {{ligne.price}} €, à était accepté par l'acheteur ! Validez le devis : </p>
+								<input type="submit" name="valid" id="valid" value="Validé!">
 							{% endif %}
+							{# SET ETAT 4 #}
 							{% if type.id == 2 and ligne.etat == 4 %} 
+								<p>Quantité : {{ligne.quantity}}</p>
+								<p>Prix : {{ligne.price}} €</p>
 								<p>Devis validé ! Voici le pdf </p>
 							{% endif %}
-							{# set etat 5 #}
-							{% if type.id == 1 and ligne.etat == 5 %} 
-								<p>Le prix proposé : {{ligne.price}} à était refusé par l'acheteur !</p>
+							{% if type.id == 1 and ligne.etat == 4 %} 
+								<p>Quantité : {{ligne.quantity}}</p>
+								<p>Prix : {{ligne.price}} €</p>
+								<p>Devis validé ! Genere le pdf incha'allah!</p>
 							{% endif %}
+							{# SET ETAT 5 #}
 							{% if type.id == 2 and ligne.etat == 5 %} 
+								<p>Prix : {{ligne.price}} €</p>
 								<p>Vous avez refusé le prix annoncé!</p>
+							{% endif %}
+							{% if type.id == 1 and ligne.etat == 5 %} 
+								<p>Le prix proposé : {{ligne.price}} € à était refusé par l'acheteur !</p>
 							{% endif %}
 						</div>
 					</div>
-			</form>
-		</div>
-	{% endfor %}
-		{% else %} 
+				</form>
+			</div>
+		{% endfor %}
+	{% else %} 
 		<div class="message">{{ message }}</div>
 	{% endif %}
 {% endblock %}
