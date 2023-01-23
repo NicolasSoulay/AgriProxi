@@ -22,17 +22,27 @@
     <h1>Mon adresse</h1>
 
     <form method='POST' id="createAdresse">
-        <label for="label">Adresse</label>
-        <input type="text" name="label" id="label" required>
-        <label for="complement">Complément</label>
-        <input type="textarea" name="complement" id="complement">
-        <label for="ville">Ville</label>
-        <input type="text" name="ville" id="ville" required>
-        <input type="hidden" name="villeId" id="villeId">
-        <div id="displayCities"></div>
-        <label for="zip_code">Code Postal</label>
-        <input type="text" name="zip_code" id="zip_code" required>
-        <input type="submit" value='Enregistrer' name="submitAdresse">
+        <div class="divForm">
+            <label for="label">Adresse</label>
+            <input type="text" name="label" id="label" required>
+        </div>
+        <div class="divForm">
+            <label for="complement">Complément</label>
+            <input type="textarea" name="complement" id="complement">
+        </div>
+        <div class="divForm">
+            <label for="zip_code">Code Postal</label>
+            <input type="text" name="zip_code" id="zip_code" required>
+        </div>
+        <div class="divForm">
+            <label for="ville">Ville</label>
+            <input type="text" name="ville" id="ville" required>
+            <input type="hidden" name="villeId" id="villeId">
+            <div id="displayCities"></div>
+        </div>
+        <div class="divForm">
+            <input type="submit" value='Enregistrer' name="submitAdresse">
+        </div>
         <input type="hidden" name="latitude" id="latitude" placeholder="latitude">
         <input type="hidden" name="longitude" id="longitude" placeholder="longitude">
     </form>

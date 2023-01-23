@@ -1,5 +1,14 @@
 @import './utility.scss';
 
+#createAdresse{
+    display: flex;
+    flex-direction: column;
+}
+
+.divForm{
+    margin: 10px 0;
+}
+
 .displayCity{
     cursor: pointer;
     border: 1px solid grey;
