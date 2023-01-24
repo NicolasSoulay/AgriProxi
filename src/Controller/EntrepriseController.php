@@ -12,6 +12,7 @@ use App\Repository\EntrepriseRepository;
 use App\Repository\UserRepository;
 use App\Repository\VilleRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -57,7 +58,7 @@ class EntrepriseController extends AbstractController
     //Page de création d'entreprise
     #[Route('/create_entreprise', name: 'createEntreprise')]
     public function createEntreprise(EntrepriseRepository $entrepriseRepo, UserRepository $userRepo, Request $request): Response
-    {   
+    {
         $userId = $userRepo->getLastId();
         $user = $userRepo->find($userId);
         $entreprise = new Entreprise();
@@ -95,7 +96,7 @@ class EntrepriseController extends AbstractController
     private function formAdresse(Adresse $adresse, AdresseRepository $adresseRepo, Request $request, Entreprise $entreprise, VilleRepository $villeRepo)
     {
         $message = '';
-        if(isset($_POST['submitAdresse'])){
+        if (isset($_POST['submitAdresse'])) {
             $adresse->setLabel($_POST['label']);
             $adresse->setComplement($_POST['complement']);
             $adresse->setZipCode($_POST['zip_code']);
@@ -104,7 +105,7 @@ class EntrepriseController extends AbstractController
             $adresse->setLongitude($_POST['longitude']);
             $adresse->setLatitude($_POST['latitude']);
             $adresse->setVille($ville);
-            $adresseRepo->save($adresse,true);
+            $adresseRepo->save($adresse, true);
             if ($request->get('id')) {
                 $message = 'L\'adresse a bien été modifiée';
                 return $this->redirectToRoute('app_user', [
@@ -112,19 +113,18 @@ class EntrepriseController extends AbstractController
                 ]);
             } else {
                 $message = 'L\'adresse a bien été créée';
-                if($this->getUser()){
+                if ($this->getUser()) {
                     return $this->redirectToRoute('app_user', [
                         'message' => '1'
                     ]);
-                }
-                else{
+                } else {
                     return $this->redirectToRoute('app_login');
                 }
             }
         }
         return $this->render('entreprise/create_adresse.html.twig', [
-                'message' => $message,
-            ]);
+            'message' => $message,
+        ]);
     }
 
     //Page de création d'adresse
@@ -149,8 +149,27 @@ class EntrepriseController extends AbstractController
     public function deleteAdresse(Adresse $adresse, AdresseRepository $adresseRepo): Response
     {
         $adresseRepo->remove($adresse, true);
-        return $this->redirectToRoute('app_user',[
+        return $this->redirectToRoute('app_user', [
             'message' => '3'
         ]);
+    }
+
+
+
+    #[Route('/entreprise/ajax/{name}', name: 'entrepriseAjax')]
+    public function ajaxEntrepriseByName(Request $request, EntrepriseRepository $entrepriseRepo): Response
+    {
+        $string = $request->get('name');
+        $entreprises = $entrepriseRepo->findNameLike($string);
+        $json = [];
+
+        foreach ($entreprises as $entreprise) {
+            $json[] = [
+                'id' => $entreprise->getId(),
+                'name' => $entreprise->getName(),
+            ];
+        }
+
+        return new JsonResponse($json, 200);
     }
 }

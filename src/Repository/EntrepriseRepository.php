@@ -39,7 +39,8 @@ class EntrepriseRepository extends ServiceEntityRepository
         }
     }
 
-    public function getLastId(){
+    public function getLastId()
+    {
         $connexion = $this->getEntityManager()->getConnection();
 
         $sql = 'SELECT max(e.id) FROM entreprise e';
@@ -47,6 +48,18 @@ class EntrepriseRepository extends ServiceEntityRepository
         $result = $connexion->prepare($sql)->executeQuery();
 
         return $result->fetchOne();
+    }
+
+    public function findNameLike(string $string)
+    {
+        $string = strtoupper($string);
+        return $this->createQueryBuilder('e')
+            ->where('e.name LIKE :val')
+            ->setParameter('val', $string . "%")
+            ->setMaxResults('6')
+            ->orderBy('e.name', 'ASC')
+            ->getQuery()
+            ->getResult();
     }
 
     //    /**

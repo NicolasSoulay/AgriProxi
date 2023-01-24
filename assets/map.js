@@ -10,6 +10,7 @@ const categorie = document.getElementById("categorie")
 const subCategorie = document.getElementById("subCategorie")
 const listeProduits = document.getElementById("search_result")
 const adresseUser = document.getElementById("adresse")
+const entrepriseSearch = document.getElementById("entreprise")
 const rayon = document.getElementById("rayon")
 
 const greenIcon = new L.Icon({
@@ -47,7 +48,6 @@ const map = L.map('map').setView([latitudeUser, longitudeUser], zoomLevel);
 
 /**ICI C'EST LE SCRIPT*/
 
-
 setMap();
 addYourMarker();
 
@@ -56,7 +56,7 @@ categorie.addEventListener("change", function() {
     produitRemove();
     markerRemove();
     if (categorie.value != "a") {
-        subCategorie.style.visibility = "visible";
+        //subCategorie.style.visibility = "visible";
         subCategorie.value = "a"
         fetchSubcategories(categorie.value);
         fetchProduits(categorie.value, subCategorie.value)
@@ -65,7 +65,7 @@ categorie.addEventListener("change", function() {
     if (categorie.value != "a") {
         subCategorie.value = "a"
     }
-    subCategorie.style.visibility = "hidden";
+    //subCategorie.style.visibility = "hidden";
     fetchProduits(categorie.value, subCategorie.value)
 });
 
@@ -84,7 +84,9 @@ adresseUser.addEventListener("change", function() {
     fetchProduits(categorie.value, subCategorie.value)
 });
 
-
+entrepriseSearch.addEventListener("input", function() {
+    fetchEntreprise(entrepriseSearch.value)
+})
 
 
 
@@ -114,6 +116,12 @@ function fetchAdresseUser(idAdresse) {
     return fetch('https://127.0.0.1:8000/produit/ajax/adresse/'+idAdresse)
         .then((response) => response.json())
         .then((json) => addMarkerAdresseUser(json));
+}
+
+function fetchEntreprise(nameEntreprise) {
+    return fetch('https://127.0.0.1:8000/entreprise/ajax/'+nameEntreprise)
+        .then((response) => response.json())
+        .then((json) => console.log(json));
 }
 
 //si notre selecteur à des options qu'on a crée, on les enleves, puis on recrée les nouvelles à partir de notre fetch

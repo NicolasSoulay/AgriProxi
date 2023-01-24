@@ -1,34 +1,43 @@
 @import './utility.scss';
 
-
+main{
+    margin-top: 70px;
+    width: 100%;
+}
 #products{
     display: flex;
-    #map {  
-        width: 1200px;
-        height: 820px;
-        border-radius: 20px;
-        border: solid 2px;
-        border-color: $blue;
-    }
-    #product_search {
-        width: 35%;
-        height: 820px;
-        margin-left: 20px;
-        margin-bottom: 40px;
-    }
 }
-
+#map {  
+    width: 1200px;
+    height: 820px;
+    border-radius: 20px;
+    border: solid 2px;
+    border-color: $blue;
+    margin: 0 10px 0 10px;
+}
+#product_search {
+    width: 35%;
+    height: 820px;
+    margin-left: 20px;
+}
+#slider{
+    visibility: hidden;
+    position: absolute;
+}
 .product_img {
     object-fit: cover;
     margin: 10px;
 }
 #search_filter {
     margin-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 #search_result {
     overflow: scroll;
-    height: 90%;
+    height: 85%;
     overflow-x: hidden;
 }
 
@@ -49,7 +58,75 @@
     align-items: center;
 }
 
-#subCategorie {
-    visibility: hidden;
+// #subCategorie {
+//     visibility: hidden;
+// }
+
+select {
+    border: none;
+    border-radius: 20px;
+    background-color: $green;
+    color: white;
+    width: 100%;
+    padding: 5px 10px 5px 10px;
 }
 
+.selectors {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    margin: 0 4px 0 4px;
+    
+    div{
+        width: 100%;
+        padding: 0 10px 0 10px;
+    }
+}
+
+.entreprise_search {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+#entreprise{
+    border-radius: 20px;
+    border: solid 2px;
+    border-color: $blue;
+    padding: 0 10px 0 10px;
+}
+#search_entreprise{
+    padding: 2px 8px 2px 8px;
+    justify-content: center; 
+    font-size: 16px;
+}
+
+@media (max-width: 1250px) {
+    .selectors{
+        flex-wrap: wrap;
+    }    
+    #map {
+    height: auto;
+    aspect-ratio: 2/1;
+    }
+    #product_search {
+        margin-right: 20px;
+    }
+}
+@media (max-width: 950px) {
+    #products{
+        flex-wrap: wrap;
+        justify-content: space-evenly;
+        overflow: auto;
+    }    
+    #product_search {
+        width: 100%;
+    }
+}
+@media (max-width: 450px) {
+    #entreprise {
+        width: 80%;
+    }
+}
