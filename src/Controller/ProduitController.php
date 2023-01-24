@@ -334,6 +334,9 @@ class ProduitController extends AbstractController
         $user = $this->getUser();
         $entreprise = $user->getEntreprise();
         if ($form->isSubmitted() && $form->isValid()) {
+            //En cas de modification vérifie si une image existe et la supprime
+            $this->deleteImage($produit, $photoDir);
+            //Gestion de l'image pour la créer dans un dossier
             if ($photo = $form['imageURL']->getData()) {
                 $filename = '/uploads/photos/' . bin2hex(random_bytes(6)) . '.' . $photo->guessExtension();
                 try {
@@ -345,6 +348,7 @@ class ProduitController extends AbstractController
             }
             $produit->setEntreprise($entreprise);
             $produitRepo->save($produit, true);
+            //Gestion des messages de validation
             if ($request->get('id')) {
                 $message = '1';
             } else {
@@ -376,7 +380,7 @@ class ProduitController extends AbstractController
     //Page de mise à jour de produit
     #[Route('/create_produit/{id}', name: 'updateProduit')]
     public function updateProduit(Produit $produit, ProduitRepository $produitRepo, Request $request, #[Autowire('%photo_dir%')] string $photoDir): Response
-    {
+    {   
         return $this->formProduit($produit, $produitRepo, $request, $photoDir);
     }
 
@@ -384,15 +388,23 @@ class ProduitController extends AbstractController
     #[Route('/delete_produit/{id}', name: 'deleteProduit')]
     public function deleteProduit(Produit $produit, ProduitRepository $produitRepo, #[Autowire('%photo_dir%')] string $photoDir): Response
     {   
+        //Check si l'image existe et la supprime
+        $this->deleteImage($produit, $photoDir);
+        $produitRepo->remove($produit, true);
+        return $this->redirectToRoute('maBoutique', [
+            'message' => '2',
+        ]);
+    }
+
+    /**
+     * Fonction qui vérifie si une image existe sur le produit et la supprime
+     */
+    private function deleteImage(Produit $produit, #[Autowire('%photo_dir%')] string $photoDir){
         $imageUrl = $produit->getImageURL();
         if($imageUrl !== null){
             $imageUrl = explode('/', $imageUrl);
             $image = $imageUrl[count($imageUrl)-1];
             unlink($photoDir.'/'.$image);
         }
-        $produitRepo->remove($produit, true);
-        return $this->redirectToRoute('maBoutique', [
-            'message' => '2',
-        ]);
     }
 }
