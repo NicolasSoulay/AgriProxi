@@ -79,13 +79,22 @@ p {
 
 ul,
 a,
-label {
+label{
     font-family: exo;
     font-size: 16px;
     color: black;
     list-style-type: none;
-    text-decoration: none;
     margin: 0;
+    text-decoration: none;
+}
+
+input {
+    font-family: poppins-l;
+    font-size: 16px;
+    color: black;
+    list-style-type: none;
+    margin: 0;
+    text-decoration: none;
 }
 
 a:hover {
