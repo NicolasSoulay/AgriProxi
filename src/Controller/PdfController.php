@@ -15,28 +15,29 @@ class PdfController extends AbstractController
     public function generatePdf($id, LigneDevisRepository $ligneRepo)
     {
         $data = $ligneRepo->find($id);
-        $produit = $data->getProduit();
+        //Donnée de l'acheteur
+        $usersA = $data->getUsers();
+        $entrepriseA = $usersA->getEntreprise();
+        $adresseA = $entrepriseA->getAdresses();
+
+        $userP = $data->getProduit();
+        $entrepriseP = $userP->getEntreprise();
+        $adresseP = $entrepriseP->getAdresses();
+
 
 
         $html = $this->renderView('pdf/template.html.twig', [
             'data' => $data,
-            'produit' => $produit
+            'adresseA' => $adresseA,
+            'adresseP' => $adresseP,
         ]);
 
-        // instantiation de dompdf
         $dompdf = new Dompdf();
-        // chargement de la vue
         $dompdf->loadHtml($html);
-
-        // (Optionnel) Mise en page du PDF
         $dompdf->setPaper('A4', 'portrait');
-
-        // Render the HTML as PDF
         $dompdf->render();
-
-        // Output the generated PDF to Browser (force download)
         $dompdf->stream("mypdf.pdf", [
-            "Attachment" => true
+            "Attachment" => false,
         ]);
 
         return new Response();
