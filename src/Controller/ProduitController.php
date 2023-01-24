@@ -32,18 +32,25 @@ class ProduitController extends AbstractController
     public function map(CategorieRepository $categorieRepo, Request $request): Response
     {
         $userAdresses = $this->getUser()->getEntreprise()->getAdresses();
-        $latitude = $userAdresses[0]->getLatitude();
-        $longitude = $userAdresses[0]->getLongitude();
-        $zoomLevel = $this->getRadius($request->get("rayon", ''));
-
-        return $this->render('produit/map.html.twig', [
-            'controller_name' => 'ProduitController',
-            'categories' => $categorieRepo->findAll(),
-            'adresses' => $userAdresses,
-            'latitude' => $latitude,
-            'longitude' => $longitude,
-            'zoomLevel' => $zoomLevel,
-        ]);
+        if(count($userAdresses) > 0){
+            $latitude = $userAdresses[0]->getLatitude();
+            $longitude = $userAdresses[0]->getLongitude();
+            $zoomLevel = $this->getRadius($request->get("rayon", ''));
+    
+            return $this->render('produit/map.html.twig', [
+                'controller_name' => 'ProduitController',
+                'categories' => $categorieRepo->findAll(),
+                'adresses' => $userAdresses,
+                'latitude' => $latitude,
+                'longitude' => $longitude,
+                'zoomLevel' => $zoomLevel,
+            ]);
+        }
+        else{
+            return $this->redirectToRoute('app_user', [
+                'message' => '5'
+            ]);
+        }
     }
 
 

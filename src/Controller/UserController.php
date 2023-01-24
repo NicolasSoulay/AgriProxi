@@ -39,6 +39,9 @@ class UserController extends AbstractController
                 case '4':
                     $message = 'L\'utilisateur a bien été modifiée';
                     break;
+                case '5':
+                    $message = 'Vous devez renseigner une adresse valide pour accéder à la carte des producteurs';
+                    break;
                 default:
                     $message = '';
             }
