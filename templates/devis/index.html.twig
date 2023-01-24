@@ -99,12 +99,12 @@
 					{% if type == 2 and ligne.etat == 4 %} 
 						<span class='statut_devis statut_title'>Statut :</span>
 						<p class='statut_devis'>Terminée</p>		
-						PDF
+						<a href="{{ path('pdf_generator', {'id': ligne.id}) }}">Télécharger le PDF</a>
 					{% endif %}
 					{% if type == 1 and ligne.etat == 4 %} 
 						<span class='statut_devis statut_title'>Statut :</span>
 						<p class='statut_devis'>Terminée</p>		
-						PDF
+						<a href="{{ path('pdf_generator', {'id': ligne.id}) }}">Télécharger le PDF</a>
 					{% endif %}
 
 					{# SET ETAT 5 #}
