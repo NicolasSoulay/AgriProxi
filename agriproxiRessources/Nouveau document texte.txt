@@ -1,0 +1,26 @@
+id entreprise = 1804
+16 rue des sablons
+id ville = 13224
+lat = 43.2830287
+long = 3.4495202
+
+
+id entreprise = 1804
+190 rue fra angelico
+id ville = 13362
+lat = 43.6074139
+long = 3.9008206
+
+
+
+//*********************TODO*********************//
+
+-input: recherche par entreprise
+-gerer les distances en php
+-revoir la generation de Json avec requetes SQL plus poussé
+
+-CSS des cartes
+-paginator pour telephone
+
+
+
