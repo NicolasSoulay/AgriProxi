@@ -43,6 +43,10 @@ class EntrepriseController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entrepriseRepo->save($entreprise, true);
             $user->setEntreprise($entreprise);
+            $user->setRoles(["ROLE_USER", "ROLE_CLIENT"]);
+            if ($entreprise->getTypeEntreprise()->getId() === 1) {
+                $user->setRoles(["ROLE_USER", "ROLE_PRODUCTEUR"]);
+            }
             $userRepo->save($user, true);
             return $this->redirectToRoute('app_login');
         } elseif ($form->isSubmitted()) {

@@ -38,9 +38,11 @@
 					<a aria-current="page" href="{{path('app_home')}}">Qui sommes nous ?</a>
 				</li>
 				{% if app.user %}
+				{% if is_granted("ROLE_CLIENT") %}
 				<li class="nav_item">
 					<a aria-current="page" href="{{path('app_produit')}}">Nos producteurs</a>
 				</li>
+				{% endif %}
 				{% endif %}
 				{# CONNEXION / DECONNEXION ACCEES ESPACE PERSO #}
 				{% if app.user %}
@@ -50,9 +52,11 @@
 							<li class="sub_item">
 								<a aria-current="page" href="{{path('app_user')}}">Mes informations</a>
 							</li>
+							{% if is_granted("ROLE_PRODUCTEUR") %}
 							<li class="sub_item">
 								<a aria-current="page" href="{{path('maBoutique')}}">Ma boutique</a>
 							</li>
+							{% endif %}
 							<li class="sub_item">
 								<a aria-current="page" href="{{path('app_devis')}}">Appel d'offre</a>
 							</li>

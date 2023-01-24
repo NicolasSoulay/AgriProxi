@@ -32,8 +32,12 @@ class ProduitController extends AbstractController
     public function map(CategorieRepository $categorieRepo): Response
     {
         $userAdresses = $this->getUser()->getEntreprise()->getAdresses();
-        $latitude = $userAdresses[0]->getLatitude();
-        $longitude = $userAdresses[0]->getLongitude();
+        $latitude = "46.2276";
+        $longitude = "2.2137";
+        if ($userAdresses[0]) {
+            $latitude = $userAdresses[0]->getLatitude();
+            $longitude = $userAdresses[0]->getLongitude();
+        }
 
         return $this->render('produit/map.html.twig', [
             'controller_name' => 'ProduitController',
@@ -352,14 +356,14 @@ class ProduitController extends AbstractController
     //Page de mise à jour de produit
     #[Route('/create_produit/{id}', name: 'updateProduit')]
     public function updateProduit(Produit $produit, ProduitRepository $produitRepo, Request $request, #[Autowire('%photo_dir%')] string $photoDir): Response
-    {   
+    {
         return $this->formProduit($produit, $produitRepo, $request, $photoDir);
     }
 
     //Suppression d'un produit
     #[Route('/delete_produit/{id}', name: 'deleteProduit')]
     public function deleteProduit(Produit $produit, ProduitRepository $produitRepo, #[Autowire('%photo_dir%')] string $photoDir): Response
-    {   
+    {
         //Check si l'image existe et la supprime
         $this->deleteImage($produit, $photoDir);
         $produitRepo->remove($produit, true);
@@ -371,12 +375,13 @@ class ProduitController extends AbstractController
     /**
      * Fonction qui vérifie si une image existe sur le produit et la supprime
      */
-    private function deleteImage(Produit $produit, #[Autowire('%photo_dir%')] string $photoDir){
+    private function deleteImage(Produit $produit, #[Autowire('%photo_dir%')] string $photoDir)
+    {
         $imageUrl = $produit->getImageURL();
-        if($imageUrl !== null){
+        if ($imageUrl !== null) {
             $imageUrl = explode('/', $imageUrl);
-            $image = $imageUrl[count($imageUrl)-1];
-            unlink($photoDir.'/'.$image);
+            $image = $imageUrl[count($imageUrl) - 1];
+            unlink($photoDir . '/' . $image);
         }
     }
 }
