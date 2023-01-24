@@ -55,6 +55,7 @@ class EntrepriseRepository extends ServiceEntityRepository
         $string = strtoupper($string);
         return $this->createQueryBuilder('e')
             ->where('e.name LIKE :val')
+            ->andWhere('e.typeEntreprise = 1')
             ->setParameter('val', $string . "%")
             ->setMaxResults('6')
             ->orderBy('e.name', 'ASC')
