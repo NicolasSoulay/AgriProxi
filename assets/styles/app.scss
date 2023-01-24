@@ -2,7 +2,6 @@
 
 //FORMULAIRE
 .form_width {
-    width: 60%;
     margin: auto;
 }
 
@@ -51,8 +50,7 @@
     font-size: 45px;
 }
 
-
-/* ------------------NAVBAR------------------ */
+/* ------------------ NAVBAR ------------------ */
 nav {
     width: 100%;
     height: 70px;
@@ -152,12 +150,12 @@ nav a:hover {
     background-color: RGBa(200, 200, 200, 0.1);
 }
 
-
 //SUB-MENU :: BLOCK
 nav>ul li:hover .sub-menu {
     display: block;
 }
 
+/* ------------------ SLIDER ------------------ */
 .slider {
     width: 100%;
     height: 400px;
@@ -176,8 +174,9 @@ nav>ul li:hover .sub-menu {
     top: 80%;
     left: 0;
     width: 100%;
-    font-size: 28px;
+    font-size: 53px;
     text-align: center;
+    font-family: sacramento;
 }
 
 .slide img {
@@ -185,27 +184,6 @@ nav>ul li:hover .sub-menu {
     height: 100%;
     object-fit: cover;
 }
-
-
-
-
-
-// #slider {
-//     width: 100%;
-//     height: 300px;
-//     margin: auto;
-//     display: flex;
-//     align-items: center;
-
-// }
-
-// .img_slide {
-//     width: 100%;
-//     height: 100%;
-//     object-fit: cover;
-//     backdrop-filter: blur(5px);
-//     box-shadow: 0px 14px 39px rgb(225 225 225 / 45%);
-// }
 
 // #precedent,
 // #suivant {
@@ -232,146 +210,7 @@ nav>ul li:hover .sub-menu {
 //     opacity: 1;
 // }
 
-/* ------------------RESPONSIVE NAVBAR------------------ */
-@media (max-width: 650px) {
-
-    //ICON BURGER MENU
-    .navburger {
-        display: block;
-        cursor: pointer;
-        border: none;
-        background-color: transparent;
-        position: absolute;
-        top: 8px;
-        right: 19px;
-    }
-
-    //BURGER LIST
-    .navlist {
-        visibility: hidden;
-        display: flex;
-        flex-direction: column;
-        position: absolute;
-        right: 0;
-        border: none;
-        padding: 0;
-        top: 70px;
-        background-color: white;
-    }
-
-    //TRANSITION OPEN/CLOSE
-    .transition_nav {
-        transition: all 0.3s ease-in-out;
-        visibility: visible;
-    }
-
-    //MENU DEROULANT
-    .sub-menu {
-        visibility: hidden;
-    }
-
-    //DECONEXION
-    .logout {
-        display: block;
-    }
-}
-
-/* ------------------ FOOTER ------------------ */
-footer {
-    color: #FFFFFF;
-    width: 100vw;
-    height: 225px;
-}
-
-.footer_block {
-    margin: 15px;
-    text-align: center;
-
-}
-
-.footer_p {
-    font-size: 11px;
-    color: #FFFFFF;
-}
-
-/* BLOC GAUCHE "CONTACT" */
-#footer_subtitle {
-    font-weight: bold;
-}
-
-/* BLOC CENTRAL : RESEAUX SOCIAUX */
-#footer_title {
-    font-size: 14px;
-    color: #FFFFFF;
-}
-
-.footer_icon {
-    display: flex;
-    justify-content: center;
-    margin: 10px;
-}
-
-/* FORMATAGE CERCLE/ICON */
-.icon {
-    margin: 0 10px;
-    padding: 3px 6px 0px 6px;
-    background-color: #ffffff;
-    border-radius: 50%;
-    font-size: 18px;
-    transition: ease-in-out 0.5s;
-}
-
-.icon:hover {
-    transform: rotate(180deg);
-}
-
-/* BLOC DROIT : MENTIONS LEGALES */
-#footer_link {
-    font-weight: bold;
-    text-decoration: underline;
-    text-transform: capitalize;
-}
-
-.footer_img {
-    position: absolute;
-    width: 100%;
-    height: 300px;
-    object-fit: cover;
-    z-index: -2;
-}
-
-
-/* ------------------ RESPONSIVE FOOTER ------------------ */
-@media (min-width: 650px) {
-    footer {
-        display: flex;
-        justify-content: space-around;
-        align-items: center;
-        object-fit: cover;
-        height: 225px;
-    }
-
-    footer>* {
-        width: 25%;
-    }
-
-    #footer_title {
-        font-size: 15px;
-    }
-
-    .footer_block--secondary {
-        padding: 0 50px;
-        border-left: solid 1px;
-        border-right: solid 1px;
-        border-color: #000000;
-        width: 50%;
-    }
-
-    .footer_img {
-        height: 225px;
-    }
-}
-
+/* ------------------ CARDS ------------------ */
 //CARDS
 .cards {
     display: flex;
@@ -501,9 +340,54 @@ footer {
     .cards_sec {
         padding: 30px;
     }
+
+
+    .banner_title {
+        font-size: 42px;
+    }
 }
 
 @media (max-width: 750px) {
+
+    //ICON BURGER MENU
+    .navburger {
+        display: block;
+        cursor: pointer;
+        border: none;
+        background-color: transparent;
+        position: absolute;
+        top: 8px;
+        right: 19px;
+    }
+
+    //BURGER LIST
+    .navlist {
+        visibility: hidden;
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        right: 0;
+        border: none;
+        padding: 0;
+        top: 70px;
+        background-color: white;
+    }
+
+    //TRANSITION OPEN/CLOSE
+    .transition_nav {
+        transition: all 0.3s ease-in-out;
+        visibility: visible;
+    }
+
+    //MENU DEROULANT
+    .sub-menu {
+        visibility: hidden;
+    }
+
+    //DECONEXION
+    .logout {
+        display: block;
+    }
 
     //CARD BLOC
     .card_contain {
@@ -531,5 +415,106 @@ footer {
     //TEXT BANIERE SECONDAIRE HOME PAGE
     .text_bbs {
         font-size: 20px;
+    }
+
+    //TITRE BANNER SLIDER
+    .banner_title {
+        font-size: 30px;
+    }
+}
+
+/* ------------------ FOOTER ------------------ */
+footer {
+    color: #FFFFFF;
+    width: 100vw;
+    height: 225px;
+}
+
+.footer_block {
+    margin: 15px;
+    text-align: center;
+
+}
+
+.footer_p {
+    font-size: 11px;
+    color: #FFFFFF;
+}
+
+/* BLOC GAUCHE "CONTACT" */
+#footer_subtitle {
+    font-weight: bold;
+}
+
+/* BLOC CENTRAL : RESEAUX SOCIAUX */
+#footer_title {
+    font-size: 14px;
+    color: #FFFFFF;
+}
+
+.footer_icon {
+    display: flex;
+    justify-content: center;
+    margin: 10px;
+}
+
+/* FORMATAGE CERCLE/ICON */
+.icon {
+    margin: 0 10px;
+    padding: 3px 6px 0px 6px;
+    background-color: #ffffff;
+    border-radius: 50%;
+    font-size: 18px;
+    transition: ease-in-out 0.5s;
+}
+
+.icon:hover {
+    transform: rotate(180deg);
+}
+
+/* BLOC DROIT : MENTIONS LEGALES */
+#footer_link {
+    font-weight: bold;
+    text-decoration: underline;
+    text-transform: capitalize;
+}
+
+.footer_img {
+    position: absolute;
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    z-index: -2;
+}
+
+
+/* ------------------ RESPONSIVE FOOTER ------------------ */
+@media (min-width: 650px) {
+    footer {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        object-fit: cover;
+        height: 225px;
+    }
+
+    footer>* {
+        width: 25%;
+    }
+
+    #footer_title {
+        font-size: 15px;
+    }
+
+    .footer_block--secondary {
+        padding: 0 50px;
+        border-left: solid 1px;
+        border-right: solid 1px;
+        border-color: #000000;
+        width: 50%;
+    }
+
+    .footer_img {
+        height: 225px;
     }
 }
