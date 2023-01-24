@@ -38,20 +38,9 @@
     align-items: center;
 }
 
-//ICON + TEXT
-.bloc_icon {
-    display: flex;
-    flex-direction: column-reverse;
-    align-items: center;
-    background-color: white;
-    border: 0;
-    padding: 20px;
-}
 
-//ICON
-.produit_icon {
-    font-size: 45px;
-}
+
+
 
 // --------  FICHE ENTREPRISE --------
 //BLOC ADRESSE
@@ -185,7 +174,11 @@
         width: 90%;
     }
 
-
+    //BLOC ADRESSE
+    .container_adress {
+        display: flex;
+        width: 75%;
+    }
 }
 
 /* ------------ MODAL DE CONFIRMATION SUPPRESSION ---------------- */

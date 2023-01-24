@@ -37,7 +37,10 @@
         <img src="{{ asset('build/images/vegetable.jpg') }}" class="img_banner_sec" alt="">
         <div class="black_banner_sec">
             <p class="text_bbs">Consultez la liste des producteurs,<br>les plus proche de chez vous !</p>
-            <button class="btn_link_green">PAR ICI !</button>
+            <form action="{{path('app_produit')}}">
+                <button class="btn_link_green">PAR ICI !</button>
+            </form>            
+
         </div>
     </div>
     <div class="cards_sec">

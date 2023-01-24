@@ -71,7 +71,7 @@
 				{% endif %}
 			</ul>
 		</nav>
-		<div id="slider">
+		{# <div id="slider">
 			<img src="{{ asset('build/images/s1.png') }}" alt="" id="slide" class="img_slide"/>
 			<div id="precedent">
 				<ion-icon name="chevron-back-outline"></ion-icon>
@@ -79,7 +79,29 @@
 			<div id="suivant">
 				<ion-icon name="chevron-forward-outline"></ion-icon>
 			</div>
-		</div>
+		</div> #}
+		<div class="slider">
+			<div class="slide">
+				<img src="{{ asset('build/images/a.png') }}" alt="Slide 1">
+				<p class="banner_title">Une livraison de produits frais et engagés :</p>
+			</div>
+			<div class="slide">
+				<img src="{{ asset('build/images/b.png') }}" alt="Slide 2">
+				<p class="banner_title">Un choix assumé pour les circuits-courts et nos producteurs,</p>
+			</div>
+			<div class="slide">
+				<img src="{{ asset('build/images/c.png') }}" alt="Slide 3">
+				<p class="banner_title">un approvisionnement local et personnalisé selon votre région,</p>
+			</div>
+			<div class="slide">
+				<img src="{{ asset('build/images/d.png') }}" alt="Slide 3">
+				<p class="banner_title">et des produits toujours de saison et cueillis à maturité !</p>
+			</div>
+		</div>		
+
+
+
+
 		<main>
 			{% block body %}{% endblock %}
 		</main>
