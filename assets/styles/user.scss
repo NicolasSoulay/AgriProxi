@@ -42,7 +42,7 @@
 
 /* ------------------ MODAL ------------------ */
 //MODAL LAYOUT
-.modal {
+.modal, .modal_user{
     display: none;
     position: fixed;
     z-index: 1;
@@ -78,4 +78,9 @@
 .close:focus {
     text-decoration: none;
     cursor: pointer;
+}
+
+#h3_user{
+    color: red;
+    font-weight: bold;
 }

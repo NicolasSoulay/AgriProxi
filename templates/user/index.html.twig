@@ -26,7 +26,9 @@
                     <h2>Espace utilisateur</h2>
                     <div class="bloc_icon_user">
                         <a href="{{path('updateUser',{ id: user.id })}}"><ion-icon name="settings-sharp" class='btn_icon'></ion-icon></a>
-                        <a href="{{path('deleteUser',{ id: user.id })}}"><ion-icon name="trash-sharp" class='btn_icon'></ion-icon></a>
+                        <button class="mybtn_user link" data-href="{{path('deleteUser',{ id: user.id })}}" href="">
+                                <ion-icon name="trash-sharp" class='btn_icon'></ion-icon>
+                        </button>
                     </div>
                 </div>
                 <div class="card_content">
@@ -78,12 +80,20 @@
             </div>
         </div>
     </div>
-    {# MODAL DELETE #}
+    {# MODAL DELETE ADRESSE #}
     <div class="modal">
         <div class="modal-content">
             <span class="close">&times;</span>
             <h3>Etes vous sur de vouloir supprimer cette adresse ?</h3>
             <a class="red bloc_icon" id="link_del" href="#"> Supprimer <ion-icon name="close-circle-sharp" class="produit_icon"></ion-icon></ion-icon></a>
+        </div>
+    </div>
+    {# MODAL DELETE USER #}
+    <div class="modal_user">
+        <div class="modal-content">
+            <span class="close close_user">&times;</span>
+            <h3 id="h3_user">Etes vous sur de vouloir supprimer cet utilisateur ? Tout ce qui est en lien avec ce dernier sera supprimé (Entreprise, adresses, produits, devis etc...)</h3>
+            <a class="red bloc_icon" id="link_del_user" href="#"> Supprimer <ion-icon name="close-circle-sharp" class="produit_icon"></ion-icon></ion-icon></a>
         </div>
     </div>
 {% endblock %}
