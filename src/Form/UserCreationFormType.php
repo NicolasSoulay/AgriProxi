@@ -18,13 +18,16 @@ class UserCreationFormType extends AbstractType
     {
         $builder
             ->add('lastName', TextType::class, [
-                'label' => 'Nom'
+                'label' => 'Nom',
+                'attr' => ['placeholder' => 'ex: Dupont']
             ])
             ->add('firstName', TextType::class, [
-                'label' => 'Prénom'
+                'label' => 'Prénom',
+                'attr' => ['placeholder' => 'ex: Mathieu']
             ])
             ->add('email', EmailType::class, [
-                'label' => 'Email'
+                'label' => 'Email',
+                'attr' => ['placeholder' => 'example@gmail.fr']
             ])
             ->add('password', RepeatedType::class, [
                 'type' => PasswordType::class,

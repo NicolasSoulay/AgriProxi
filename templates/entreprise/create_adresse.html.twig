@@ -21,18 +21,30 @@
 <div class="example-wrapper">
     <h1>Mon adresse</h1>
 
+
     <form method='POST' id="createAdresse">
-        <label for="label">Adresse</label>
-        <input type="text" name="label" id="label" required>
-        <label for="complement">Complément</label>
-        <input type="textarea" name="complement" id="complement">
-        <label for="ville">Ville</label>
-        <input type="text" name="ville" id="ville" required>
-        <input type="hidden" name="villeId" id="villeId">
-        <div id="displayCities"></div>
-        <label for="zip_code">Code Postal</label>
-        <input type="text" name="zip_code" id="zip_code" required>
-        <input type="submit" value='Enregistrer' name="submitAdresse">
+        <p>(<span>*</span>)Champs obligatoires</p>
+        <div class="form-group">
+            <label for="label">Adresse <span>*</span></label>
+            <input type="text" class="form-control" name="label" id="label" required placeholder="ex: 10 rue nomDeLaRue">
+        </div>
+        <div class="form-group">
+            <label for="complement">Complément</label>
+            <input type="textarea" class="form-control" name="complement" id="complement" placeholder="ex: Bâtiment B">
+        </div>
+        <div class="form-group">
+            <label for="zip_code">Code Postal <span>*</span></label>
+            <input type="text" class="form-control" name="zip_code" id="zip_code" required placeholder="ex: 34000" minlength="5" maxlength="5">
+        </div>
+        <div class="form-group">
+            <label for="ville">Ville <span>*</span></label>
+            <input type="text" class="form-control" name="ville" id="ville" required placeholder="ex: Nom-De-La-Ville">
+            <input type="hidden" name="villeId" id="villeId">
+            <div id="displayCities"></div>
+        </div>
+        <div class="form-group">
+            <input type="submit" class="btn btn-primary" value='Enregistrer' name="submitAdresse" id="submitAdresse">
+        </div>
         <input type="hidden" name="latitude" id="latitude" placeholder="latitude">
         <input type="hidden" name="longitude" id="longitude" placeholder="longitude">
     </form>

@@ -3,6 +3,9 @@ import './styles/adresse.scss';
 // Je déclare une constante correspondant à l'élément html de l'input label
 const inputLabel = document.getElementById('label');
 
+// Je déclare une constante correspondant à l'élément html de l'input code postal
+const inputZip = document.getElementById('zip_code');
+
 // Je déclare une constante correspondant à l'élément html de l'input ville
 const inputCity = document.getElementById('ville');
 
@@ -19,7 +22,7 @@ const divCities = document.getElementById('displayCities');
 // Je crée un écouteur afin que pour chaque input rentré dans le champs ville une requête est faite à la table ville de la BDD
 inputCity.addEventListener('input', (event)=>{
     let string = event.target.value;
-    fetch('https://localhost:8000/adresse/ajax/ville/'+string)
+    fetch('https://127.0.0.1:8000/adresse/ajax/ville/'+string)
     .then((response) => response.json())
     .then((json) => createDivCity(json))
 })
@@ -41,10 +44,12 @@ function createDivCity(json){
             inputCity.value = nameCity;
             inputId.value = idCity;
             let label = inputLabel.value;
+            let zipCode = inputZip.value;
             let ville = inputCity.value;
-            fetch('https://api-adresse.data.gouv.fr/search/?q='+label+ville+'&type=street&autocomplete=0')
+            fetch('https://api-adresse.data.gouv.fr/search/?q='+label+zipCode+ville+'&type=street&autocomplete=0')
             .then((response) => response.json())
             .then((json) => addLongAndLat(json));
+            console.log('https://api-adresse.data.gouv.fr/search/?q='+label+zipCode+ville+'&type=street&autocomplete=0')
         })
     }
 }

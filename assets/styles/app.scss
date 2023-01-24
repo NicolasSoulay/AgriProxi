@@ -1,92 +1,8 @@
 @import './utility.scss';
 
+//FORMULAIRE
 .form_width {
-    width: 60%;
     margin: auto;
-}
-
-body {
-    width: 100%;
-    height: 100%;
-    overflow-x: hidden;
-}
-
-main {
-    min-height: 100vh;
-    width: 80%;
-    margin: 40px auto;
-}
-
-h1 {
-    font-family: poppins-b;
-    font-size: 28px;
-    color: $green;
-    text-align: center;
-    margin-bottom: 60px;
-}
-
-h2 {
-    font-family: sansita;
-    font-size: 24px;
-    color: black;
-}
-
-h3 {
-    font-family: exo;
-    font-size: 18px;
-    color: black;
-}
-
-p {
-    font-family: poppins-l;
-    font-size: 16px;
-    color: black;
-}
-
-ul,
-a,
-label{
-    font-family: exo;
-    font-size: 16px;
-    color: black;
-    list-style-type: none;
-    margin: 0;
-    text-decoration: none;
-}
-
-input {
-    font-family: poppins-l;
-    font-size: 16px;
-    color: black;
-    list-style-type: none;
-    margin: 0;
-    text-decoration: none;
-}
-
-a:hover {
-    color: currentColor;
-}
-
-
-
-@media (max-width: 1250px) {
-    main {
-        width: 95%;
-    }
-
-    h1 {
-        margin-bottom: 40px;
-    }
-
-    ul,
-    a,
-    label {
-        font-size: 13px;
-    }
-
-    p {
-        font-size: 13px;
-    }
 }
 
 .btn_link {
@@ -119,19 +35,22 @@ a:hover {
     padding-right: 30px;
 }
 
-.btn_link_blue {
-    font-family: exo;
-    font-size: 20px;
-    color: white;
-    background-color: $blue;
-    border-style: none;
-    border-radius: 10px;
-    padding: 10px;
-    padding-left: 30px;
-    padding-right: 30px;
+//ICON + TEXT
+.bloc_icon {
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+    background-color: white;
+    border: 0;
+    padding: 20px;
 }
 
-/* ------------------NAVBAR------------------ */
+//ICON
+.produit_icon {
+    font-size: 45px;
+}
+
+/* ------------------ NAVBAR ------------------ */
 nav {
     width: 100%;
     height: 70px;
@@ -231,205 +150,75 @@ nav a:hover {
     background-color: RGBa(200, 200, 200, 0.1);
 }
 
-
 //SUB-MENU :: BLOCK
 nav>ul li:hover .sub-menu {
     display: block;
 }
 
-#slider {
+/* ------------------ SLIDER ------------------ */
+.slider {
     width: 100%;
-    height: 300px;
-    margin: auto;
-    display: flex;
-    align-items: center;
-
+    height: 400px;
+    overflow: hidden;
 }
 
-.img_slide {
+.slide {
+    width: 100%;
+    height: 100%;
+    display: none;
+    position: relative;
+}
+
+.banner_title {
+    position: absolute;
+    top: 75%;
+    left: 0;
+    width: 100%;
+    font-size: 53px;
+    text-align: center;
+    font-family: sacramento;
+}
+
+.slide img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    backdrop-filter: blur(5px);
-    box-shadow: 0px 14px 39px rgb(225 225 225 / 45%);
 }
 
-#precedent,
-#suivant {
-    cursor: pointer;
-    transition: opacity 0.3s ease;
-    opacity: 0;
-    position: absolute;
-    font-size: 50px;
-    color: #ffffff;
-    background-color: rgba(248, 249, 250, 0.368627451);
-    padding: 110px 0 110px 0;
-}
-
-#precedent {
-    left: 0;
-}
-
-#suivant {
-    right: 0;
-}
-
-#slider:hover #precedent,
-#slider:hover #suivant {
-    opacity: 1;
-}
-
-/* ------------------RESPONSIVE------------------ */
-@media (max-width: 650px) {
-
-    //ICON BURGER MENU
-    .navburger {
-        display: block;
-        cursor: pointer;
-        border: none;
-        background-color: transparent;
-        position: absolute;
-        top: 8px;
-        right: 19px;
-    }
-
-    //BURGER LIST
-    .navlist {
-        visibility: hidden;
-        display: flex;
-        flex-direction: column;
-        position: absolute;
-        right: 0;
-        border: none;
-        padding: 0;
-        top: 70px;
-        background-color: white;
-    }
-
-    //TRANSITION OPEN/CLOSE
-    .transition_nav {
-        transition: all 0.3s ease-in-out;
-        visibility: visible;
-    }
-
-    .sub-menu {
-        visibility: hidden;
-    }
-
-    .logout {
-        display: block;
-    }
-}
-
-// @media (max-width: 850px) {
-//     .card_content_user {
-//         display: block;
-//         padding: 20px 0 0 0;
-//     }
+// #precedent,
+// #suivant {
+//     cursor: pointer;
+//     transition: opacity 0.3s ease;
+//     opacity: 0;
+//     position: absolute;
+//     font-size: 50px;
+//     color: #ffffff;
+//     background-color: rgba(248, 249, 250, 0.368627451);
+//     padding: 110px 0 110px 0;
 // }
 
+// #precedent {
+//     left: 0;
+// }
 
+// #suivant {
+//     right: 0;
+// }
 
-/* ------------------ FOOTER ------------------ */
-footer {
-    // background-image: url('../images/footer.png');
-    // background-repeat: no-repeat;
-    color: #FFFFFF;
-    width: 100vw;
-    height: 225px;
-}
+// #slider:hover #precedent,
+// #slider:hover #suivant {
+//     opacity: 1;
+// }
 
-.footer_block {
-    margin: 15px;
-    text-align: center;
-
-}
-
-.footer_p {
-    font-size: 11px;
-    color: #FFFFFF;
-}
-
-/* BLOC GAUCHE "CONTACT" */
-#footer_subtitle {
-    font-weight: bold;
-}
-
-/* BLOC CENTRAL : RESEAUX SOCIAUX */
-#footer_title {
-    font-size: 14px;
-    color: #FFFFFF;
-}
-
-.footer_icon {
-    display: flex;
-    justify-content: center;
-    margin: 10px;
-}
-
-/* FORMATAGE CERCLE/ICON */
-.icon {
-    margin: 0 10px;
-    padding: 0 8px;
-    background-color: #ffffff;
-    border-radius: 50%;
-    font-size: 18px;
-    transition: ease-in-out 0.5s;
-}
-
-.icon:hover {
-    transform: rotate(180deg);
-}
-
-/* BLOC DROIT : MENTIONS LEGALES */
-#footer_link {
-    font-weight: bold;
-    text-decoration: underline;
-    text-transform: capitalize;
-}
-
-.footer_img {
-    position: absolute;
-    width: 100%;
-    height: 225px;
-    object-fit: cover;
-    z-index: -2;
-}
-
-
-/* ------------------RESPONSIVE------------------ */
-@media (min-width: 650px) {
-    footer {
-        display: flex;
-        justify-content: space-around;
-        align-items: center;
-        object-fit: cover;
-    }
-
-    footer>* {
-        width: 25%;
-    }
-
-    #footer_title {
-        font-size: 15px;
-    }
-
-    .footer_block--secondary {
-        padding: 0 50px;
-        border-left: solid 1px;
-        border-right: solid 1px;
-        border-color: #000000;
-        width: 50%;
-    }
-}
-
+/* ------------------ CARDS ------------------ */
+//CARDS
 .cards {
     display: flex;
     justify-content: center;
-    padding-top: 40px;
     padding-bottom: 40px;
 }
 
+//CARD CONTENU
 .card_contain {
     width: 55%;
     height: auto;
@@ -439,8 +228,10 @@ footer {
 }
 
 .card_contain_adress {
-    background-color: $blue;
+    background-color: #84c3db21;
     margin: auto;
+    width: auto;
+    margin: 0 20px;
 }
 
 .card_contain--Secondary {
@@ -526,5 +317,204 @@ footer {
         font-family: poppins-b;
         border-radius: 5px;
         width: 25%;
+    }
+}
+
+/* ------------------ REPONSIVE ------------------ */
+@media (max-width: 1250px) {
+
+    //CARDS
+    .cards {
+        flex-direction: column;
+        padding-bottom: 0;
+        margin-bottom: 15px;
+    }
+
+    //CARD CONTENU
+    .card_contain {
+        width: 80%;
+        margin: 10px auto;
+    }
+
+    //CARDS SECONDAIRE
+    .cards_sec {
+        padding: 30px;
+    }
+
+
+    .banner_title {
+        font-size: 42px;
+    }
+}
+
+@media (max-width: 750px) {
+
+    //ICON BURGER MENU
+    .navburger {
+        display: block;
+        cursor: pointer;
+        border: none;
+        background-color: transparent;
+        position: absolute;
+        top: 8px;
+        right: 19px;
+    }
+
+    //BURGER LIST
+    .navlist {
+        visibility: hidden;
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        right: 0;
+        border: none;
+        padding: 0;
+        top: 70px;
+        background-color: white;
+    }
+
+    //TRANSITION OPEN/CLOSE
+    .transition_nav {
+        transition: all 0.3s ease-in-out;
+        visibility: visible;
+    }
+
+    //MENU DEROULANT
+    .sub-menu {
+        visibility: hidden;
+    }
+
+    //DECONEXION
+    .logout {
+        display: block;
+    }
+
+    //CARD BLOC
+    .card_contain {
+        width: 90%;
+    }
+
+    //CARD CONTENU
+    .card_content {
+        flex-direction: column;
+        padding: 5px;
+    }
+
+    //ICON HOME PAGE
+    .def_icon {
+        display: none;
+    }
+
+    //CARDS SECONDAIRE
+    .cards_sec {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    //TEXT BANIERE SECONDAIRE HOME PAGE
+    .text_bbs {
+        font-size: 20px;
+    }
+
+    //TITRE BANNER SLIDER
+    .banner_title {
+        font-size: 30px;
+    }
+}
+
+/* ------------------ FOOTER ------------------ */
+footer {
+    color: #FFFFFF;
+    width: 100vw;
+    height: 225px;
+}
+
+.footer_block {
+    margin: 15px;
+    text-align: center;
+
+}
+
+.footer_p {
+    font-size: 11px;
+    color: #FFFFFF;
+}
+
+/* BLOC GAUCHE "CONTACT" */
+#footer_subtitle {
+    font-weight: bold;
+}
+
+/* BLOC CENTRAL : RESEAUX SOCIAUX */
+#footer_title {
+    font-size: 14px;
+    color: #FFFFFF;
+}
+
+.footer_icon {
+    display: flex;
+    justify-content: center;
+    margin: 10px;
+}
+
+/* FORMATAGE CERCLE/ICON */
+.icon {
+    margin: 0 10px;
+    padding: 3px 6px 0px 6px;
+    background-color: #ffffff;
+    border-radius: 50%;
+    font-size: 18px;
+    transition: ease-in-out 0.5s;
+}
+
+.icon:hover {
+    transform: rotate(180deg);
+}
+
+/* BLOC DROIT : MENTIONS LEGALES */
+#footer_link {
+    font-weight: bold;
+    text-decoration: underline;
+    text-transform: capitalize;
+}
+
+.footer_img {
+    position: absolute;
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    z-index: -2;
+}
+
+
+/* ------------------ RESPONSIVE FOOTER ------------------ */
+@media (min-width: 650px) {
+    footer {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        object-fit: cover;
+        height: 225px;
+    }
+
+    footer>* {
+        width: 25%;
+    }
+
+    #footer_title {
+        font-size: 15px;
+    }
+
+    .footer_block--secondary {
+        padding: 0 50px;
+        border-left: solid 1px;
+        border-right: solid 1px;
+        border-color: #000000;
+        width: 50%;
+    }
+
+    .footer_img {
+        height: 225px;
     }
 }

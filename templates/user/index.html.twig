@@ -10,7 +10,7 @@
     {{ encore_entry_script_tags('user') }}
 {% endblock %}
 
-{% block title %}Espace personnel{% endblock %}
+{% block title %}Agriproxi | Espace personnel{% endblock %}
 
 {% block body %}
     <div id="user_container">
@@ -24,7 +24,12 @@
             <div class="card_contain">
                 <div class="head_card"> 
                     <h2>Espace utilisateur</h2>
-                    <a href="{{path('updateUser',{ id: user.id })}}"><ion-icon name="settings-sharp" class='btn_icon'></ion-icon></a>
+                    <div class="bloc_icon_user">
+                        <a href="{{path('updateUser',{ id: user.id })}}"><ion-icon name="settings-sharp" class='btn_icon'></ion-icon></a>
+                        <button class="mybtn_user link" data-href="{{path('deleteUser',{ id: user.id })}}" href="">
+                                <ion-icon name="trash-sharp" class='btn_icon'></ion-icon>
+                        </button>
+                    </div>
                 </div>
                 <div class="card_content">
                     <ul>
@@ -36,50 +41,59 @@
             </div>
             <div class="card_contain card_contain--Secondary">
                 <div class="head_card">
-                    <h2>Espace entreprise</h2>
-                    <a class="" href="{{path('updateEntreprise',{ id: entreprise.id })}}"><ion-icon name="settings-sharp" class='btn_icon'></ion-icon></a>
+                    <h2>{{ (adresses|length == 1) ? 'Mon adresse' : "Mon carnet d'adresse" }}</h2>
+                    <a href="{{path('createAdresse')}}"><ion-icon name="add-circle-sharp" class='btn_icon'></ion-icon></a>
                 </div>
                 <div class="card_content card_content_user">
-                    <ul>
-                        <li><span class="bold">Nom:</span> {{ entreprise.name }}</li>
-                        <li><span class="bold">Type d'entreprise:</span> {{ typeEntreprise.name }}</li>
-                        <li><span class="bold">Descritpion:</span> {{ entreprise.description }}</li>
-                    </ul>
+                    {% for adresse in adresses %}
+                        <div class='adress'>
+                            <div class="adress_icon">
+                                <a class="link" href="{{path('updateAdresse',{ id: adresse.id })}}"><ion-icon name="settings-sharp"></ion-icon></a>
+                                <button class="mybtn link" data-href="{{path('deleteAdresse',{ id: adresse.id })}}" href="">
+                                    <ion-icon name="trash-sharp"></ion-icon>
+                                </button>
+                            </div>
+                            <ul>
+                                <li><span class="bold">Label:</span> {{ adresse.label }}</li>
+                                {% if adresse.complement %}
+                                    <li><span class="bold">Complément:</span> {{ adresse.complement }}</li>
+                                {% endif %}
+                                <li><span class="bold">Code Postal:</span> {{ adresse.zipCode }}</li>
+                                <li><span class="bold">Ville:</span> {{ adresse.ville }}</li>
+                            </ul>
+                        </div>
+                    {% endfor %}
                 </div>
             </div>
         </div>
         <div class="card_contain card_contain_adress">
             <div class="head_card">
-                <h2>{{ (adresses|length == 1) ? 'Mon adresse' : "Mon carnet d'adresse" }}</h2>
-                
-                <a href="{{path('createAdresse')}}"><ion-icon name="add-circle-sharp" class='btn_icon'></ion-icon></a>
+                <h2>Espace entreprise</h2>
+                <a class="" href="{{path('updateEntreprise',{ id: entreprise.id })}}"><ion-icon name="settings-sharp" class='btn_icon'></ion-icon></a>
             </div>
             <div class="card_content card_content_user">
-                {% for adresse in adresses %}
-                    <div class='adress'>
-                        <div class="adress_icon">
-                            <a class="link" href="{{path('updateAdresse',{ id: adresse.id })}}"><ion-icon name="settings-sharp"></ion-icon></a>
-                            <button class="mybtn link" data-href="{{path('deleteAdresse',{ id: adresse.id })}}" href="">
-                                <ion-icon name="trash-sharp"></ion-icon>
-                            </button>
-                        </div>
-                        <ul>
-                            <li><span class="bold">Label:</span> {{ adresse.label }}</li>
-                            <li><span class="bold">Complément:</span> {{ adresse.complement }}</li>
-                            <li><span class="bold">Code Postal:</span> {{ adresse.zipCode }}</li>
-                            <li><span class="bold">Ville:</span> {{ adresse.ville }}</li>
-                        </ul>
-                    </div>
-                {% endfor %}
+                <ul>
+                    <li><span class="bold">Nom:</span> {{ entreprise.name }}</li>
+                    <li><span class="bold">Type d'entreprise:</span> {{ typeEntreprise.name }}</li>
+                    <li><span class="bold">Descritpion:</span> {{ entreprise.description }}</li>
+                </ul>
             </div>
         </div>
     </div>
-    {# MODAL DELETE #}
+    {# MODAL DELETE ADRESSE #}
     <div class="modal">
         <div class="modal-content">
             <span class="close">&times;</span>
             <h3>Etes vous sur de vouloir supprimer cette adresse ?</h3>
-            <a class="red bloc_icon" id="link_del" href="">Supprimer<ion-icon name="close-circle-sharp" class="produit_icon"></ion-icon></a>
+            <a class="red bloc_icon" id="link_del" href="#"> Supprimer <ion-icon name="close-circle-sharp" class="produit_icon"></ion-icon></ion-icon></a>
+        </div>
+    </div>
+    {# MODAL DELETE USER #}
+    <div class="modal_user">
+        <div class="modal-content">
+            <span class="close close_user">&times;</span>
+            <h3 id="h3_user">Etes vous sur de vouloir supprimer cet utilisateur ? Tout ce qui est en lien avec ce dernier sera supprimé (Entreprise, adresses, produits, devis etc...)</h3>
+            <a class="red bloc_icon" id="link_del_user" href="#"> Supprimer <ion-icon name="close-circle-sharp" class="produit_icon"></ion-icon></ion-icon></a>
         </div>
     </div>
 {% endblock %}

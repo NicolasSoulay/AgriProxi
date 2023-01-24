@@ -1,9 +1,18 @@
 @import './utility.scss';
 
+span{
+    color: $red;
+}
+
 .displayCity{
     cursor: pointer;
-    border: 1px solid grey;
+    border: 1px solid rgba(128, 128, 128, 0.588);
+    border-radius: 5px;
     width: 50%;
     margin: 5px 0;
     padding: 3px;
+}
+
+#submitAdresse{
+    margin-top: 10px;
 }

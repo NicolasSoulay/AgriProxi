@@ -1,11 +1,5 @@
 @import './utility.scss';
 
-#card-adress {
-    background-color: $blue;
-    padding: 10px;
-    margin: 10px;
-}
-
 .bold {
     font-weight: bold;
     font-size: 15px;
@@ -16,6 +10,10 @@
     font-size: 20px;
     border: 0;
     background-color: transparent;
+}
+
+.bloc_icon_user {
+    display: flex;
 }
 
 .head_card {
@@ -33,8 +31,7 @@
     display: flex;
     border: solid 1px #ffffff8c;
     width: fit-content;
-    padding: 20px;
-    margin: 0 20px;
+    margin: 5px 20px;
 }
 
 .adress_icon {
@@ -45,7 +42,7 @@
 
 /* ------------------ MODAL ------------------ */
 //MODAL LAYOUT
-.modal {
+.modal, .modal_user{
     display: none;
     position: fixed;
     z-index: 1;
@@ -81,4 +78,9 @@
 .close:focus {
     text-decoration: none;
     cursor: pointer;
+}
+
+#h3_user{
+    color: red;
+    font-weight: bold;
 }

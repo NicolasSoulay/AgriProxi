@@ -5,15 +5,14 @@ import "./styles/app.scss";
 import "./bootstrap";
 
 //-------------- BURGER MENU --------------
-
 //BURGER ICON
 const burgerBouton = document.querySelector(".navburger");
 
 //BURGER LIST
 const burgerMenu = document.querySelector(".navlist");
 
-// const main = document.querySelector("main");
-// const footer = document.querySelector("footer");
+const main = document.querySelector("main");
+const footer = document.querySelector("footer");
 
 //AFFICHAGE MENU AU CLICK
 burgerBouton.addEventListener("click", () => {
@@ -25,42 +24,31 @@ burgerBouton.addEventListener("click", () => {
 });
 
 //On crée un évènement pour pouvoir fermer le menu en cliquant n'importe où sur l'écran
-// main.addEventListener("click", () => {
-//   burgerMenu.classList.remove("transition_nav");
-// });
+main.addEventListener("click", () => {
+  burgerMenu.classList.remove("transition_nav");
+});
 
-// footer.addEventListener("click", () => {
-//   burgerMenu.classList.remove("transition_nav");
-// });
+footer.addEventListener("click", () => {
+  burgerMenu.classList.remove("transition_nav");
+});
 
-//---- SLIDER ----
-const slide = ["s1.png", "s2.png", "s3.png", "s4.png"];
-let numero = 0;
 
-function ChangeSlide(sens) {
-  numero = numero + sens;
-  if (numero > slide.length - 1) {
-    numero = 0;
+//-------------- SLIDER --------------
+let slideIndex = 0;
+showSlides();
+
+function showSlides() {
+  let i;
+  let slides = document.getElementsByClassName("slide");
+  let title = document.getElementsByClassName("banner_title");
+  for (i = 0; i < slides.length; i++) {
+    slides[i].style.display = "none";
+    title[i].style.display = "none";
   }
-  if (numero < 0) {
-    numero = slide.length - 1;
-  }
-  document.getElementById("slide").src = "build/images/" + slide[numero];
+  slideIndex++;
+  if (slideIndex > slides.length) {slideIndex = 1}
+  slides[slideIndex-1].style.display = "block";
+  title[slideIndex-1].style.display = "block";
+  setTimeout(showSlides, 4000);
 }
-
-// setInterval(ChangeSlide(1), 4000);
-
-const precedent = document.querySelector("#precedent");
-const suivant = document.querySelector("#suivant");
-
-precedent.addEventListener("click", () => {
-  ChangeSlide(-1);
-});
-
-suivant.addEventListener("click", () => {
-  ChangeSlide(1);
-});
-
-setInterval(ChangeSlide, 6500, 1);
-
 

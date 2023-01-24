@@ -24,32 +24,56 @@ class DevisController extends AbstractController
         $type = $entreprise->getTypeEntreprise(); //type d'entreprise
         $typeid = $type->getId(); //id du type
 
-        if ($typeid == 2) { //si restaurateur
+        if ($typeid == 2) { //si user = restaurateur
             $devis = $entreprise->getDevis();
-            foreach ($devis as $key) {
-                $ligneDevis = $key->getLigneDevis();
-                foreach ($ligneDevis as $lignedevis) {
-                    $lignedevis = $user->getLigneDevis();
-                    $lignedevis =  $lignedevis;
+            foreach ($devis as $ligneDevis) {
+                $ligneDevis = $ligneDevis->getLigneDevis();
+                foreach ($ligneDevis as $produit) {
+                    $produit->ligneDevis = $ligneDevis; //ajout de la propriété ligneDevis produit : la variable / $ligneDevis contient une ligne d'un devis
+                    $produits[] = $produit;
                 }
             }
-        } else {
-            $lignedevis = $ligneRepo->findBy(['entrepriseId' =>  $id_entreprise]);
+            if ($produits ?? false) {
+                //Array-Reduce(param : tableau/function callback) : ici il permet de grouper les produits qui ont le même entreprise ID 
+                //il parcours tout les éléments du tableau pour les trier
+                //Carry : valeurs accumulée retournée par l'itération de la fonction de rappel
+                //Item : l'élément actuel du tableau
+                $grouped_produits = array_reduce($produits, function ($carry, $item) {
+                    $carry[$item->getEntrepriseId()][] = $item;
+                    return $carry;
+                }, []);
+            }
+        } else { //si producteur
+            //devis_externe : les lignes devis qui ont en produit->entrepriseID, l'entrepriseID de l'user connecté
+            $devis_externe = $ligneRepo->findBy(['entrepriseId' =>  $id_entreprise, 'etat' => [1, 2, 3, 4, 5]]);
+            //ici array reduce me permet de grouper ces lignes devis par même idUsers externe
+            $grouped_produits = array_reduce($devis_externe, function ($carry, $item) {
+                $carry[$item->getUsers()->getId()][] = $item;
+                return $carry;
+            }, []);
         }
-        if (empty($lignedevis)) { //si on à encore rien mis dans notre panier
-            return $this->render('devis/index.html.twig', [
-                "message" => "Vous n'avez pas encore ajouté de produit à votre liste de devis !"
-            ]);
+        if (empty($grouped_produits)) { //si on à encore rien mis dans notre panier
+            if ($typeid == 1) {
+                return $this->render('devis/index.html.twig', [
+                    "message" => "Vous n'avez pas encore de demande de devis!",
+                    "type" => $typeid, //type d'entreprise de l'user connecté
+                ]);
+            } else {
+                return $this->render('devis/index.html.twig', [
+                    "message" => "Vous n'avez pas encore ajouté de produit à votre liste!",
+                    "type" => $typeid, //type d'entreprise de l'user connecté
+                ]);
+            }
         } else {
             return $this->render('devis/index.html.twig', [
-                "type" => $type, //type d'entreprise de l'user
-                "ligneDevis" =>  $lignedevis, //les lignes de demande de devis
-
+                "user" => $entreprise,
+                "type" => $typeid, //type d'entreprise de l'user
+                "grouped_produits" =>  $grouped_produits, //les lignes de demande de devis
             ]);
         };
     }
 
-    //Restaurateur : ajouter un produit d'un producteur a la liste devis
+    //Restaurateur : ajouter un produit d'un producteur à sa liste de commande
     #[Route('/devis/add/{id}', name: 'add_devis')]
     public function addProductDevis($id, ProduitRepository $produitRepo, DevisRepository $devisRepo, LigneDevisRepository $ligneRepo)
     {
@@ -66,6 +90,7 @@ class DevisController extends AbstractController
         $line->setUsers($user);
         $line->setEtat(0);
         $line->setEntrepriseId($entreprise_id); //Produit->entreprise->id
+
         // Vérifie si une ligne de devis existe déjà pour le user en cours avec un même produit->entreprise->id
         $existingLine = $ligneRepo->findOneBy(['users' => $user, 'entrepriseId' => $entreprise_id]);
 
@@ -79,12 +104,14 @@ class DevisController extends AbstractController
             $devisRepo->save($devis, true);
         }
 
-        //je lie ligne devis à devis
+        //Liaison de ligne devis à devis
         $line->setDevis($devis);
         $ligneRepo->save($line, true);
         return $this->redirectToRoute('app_devis');
     }
 
+
+    //Action sur état de la commande
     #[Route('/savedevis', name: 'save_devis')]
     public function saveDevis(HttpFoundationRequest $request, LigneDevisRepository $ligneRepo)
     { {
@@ -110,11 +137,9 @@ class DevisController extends AbstractController
                 foreach ($produits as $pro) {
                     if ($request->isMethod('POST') && $request->request->get('quantity')) {
                         $quantity = $request->request->get('quantity');
-                        // $price = $request->request->get('price');
                         if ($pro->getId() == $product_id) {
                             $ligneDevis = $ligneRepo->findOneBy(['produit' => $product_id]);
                             $ligneDevis->setQuantity($quantity);
-                            // $ligneDevis->setPrice($price);
                             $ligneDevis->setEtat(1);
                             $ligneRepo->save($ligneDevis, true);
                         }
@@ -156,7 +181,6 @@ class DevisController extends AbstractController
                         $ligneDevis->setEtat(4);
                         $ligneRepo->save($ligneDevis, true);
                     }
-                    // }
                 }
             }
             return $this->redirectToRoute('app_devis');
