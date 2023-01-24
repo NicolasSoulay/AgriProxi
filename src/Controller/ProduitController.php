@@ -29,12 +29,11 @@ class ProduitController extends AbstractController
      * @return Response
      */
     #[Route('/produit', name: 'app_produit')]
-    public function map(CategorieRepository $categorieRepo, Request $request): Response
+    public function map(CategorieRepository $categorieRepo): Response
     {
         $userAdresses = $this->getUser()->getEntreprise()->getAdresses();
         $latitude = $userAdresses[0]->getLatitude();
         $longitude = $userAdresses[0]->getLongitude();
-        $zoomLevel = $this->getRadius($request->get("rayon", ''));
 
         return $this->render('produit/map.html.twig', [
             'controller_name' => 'ProduitController',
@@ -42,7 +41,6 @@ class ProduitController extends AbstractController
             'adresses' => $userAdresses,
             'latitude' => $latitude,
             'longitude' => $longitude,
-            'zoomLevel' => $zoomLevel,
         ]);
     }
 
@@ -251,32 +249,6 @@ class ProduitController extends AbstractController
             }
         }
         return $entreprises;
-    }
-
-    /**
-     * retourne la valeur de zoom en décimale pour leaflet a partir du choix de rayon de recherche
-     * 
-     * @param string
-     * @return int 
-     */
-    public function getRadius(string $rayon)
-    {
-        switch ($rayon) {
-            case '10':
-                return 12;
-                break;
-            case '25':
-                return 11;
-                break;
-            case '50':
-                return 10;
-                break;
-            case '100':
-                return 9;
-                break;
-            default:
-                return 7;
-        }
     }
 
     /**

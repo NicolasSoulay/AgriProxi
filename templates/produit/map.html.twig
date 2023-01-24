@@ -18,10 +18,10 @@
 
 <input type="hidden" id="latitude" value = "{{latitude}}"/>
 <input type="hidden" id="longitude" value = "{{longitude}}"/>
-<input type="hidden" id="zoomLevel" value = "{{zoomLevel}}"/>
 <div class="entreprise_search">
     <label for="entreprise">Recherchez une entreprise:</label>
     <input type="text" id="entreprise" name="entreprise">
+    <div id="displayEntreprises"></div>
 </div>
 <div id='products'>
     <div id="map"></div>
@@ -51,16 +51,6 @@
                         {% for adresse in adresses %}
                             <option value=' {{adresse.id}} '> {{adresse.label}} </option>
                         {% endfor %}
-                    </select>
-                </div>
-                <div>
-                    <label for="rayon">Distance:</label>
-                    <select name="rayon" id="rayon">
-                        <option value="0" selected="selected"> Toute la région </option>
-                        <option value="10"> 10km </option>
-                        <option value="25"> 25km </option>
-                        <option value="50"> 50km </option>
-                        <option value="100"> 100km </option>
                     </select>
                 </div>
             </div>

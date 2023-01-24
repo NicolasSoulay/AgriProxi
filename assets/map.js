@@ -4,14 +4,12 @@ import './styles/map.scss';
 
 let latitudeUser = document.getElementById('latitude').value;
 let longitudeUser = document.getElementById('longitude').value;
-const zoomLevel = document.getElementById('zoomLevel').value;
-
 const categorie = document.getElementById("categorie")
 const subCategorie = document.getElementById("subCategorie")
 const listeProduits = document.getElementById("search_result")
 const adresseUser = document.getElementById("adresse")
 const entrepriseSearch = document.getElementById("entreprise")
-const rayon = document.getElementById("rayon")
+const divEntreprises = document.getElementById('displayEntreprises');
 
 const greenIcon = new L.Icon({
     iconUrl: 'build/images/marker-icon-2x-green.png',
@@ -40,7 +38,7 @@ const redIcon = new L.Icon({
     shadowSize: [41, 41]
 });
 
-const map = L.map('map').setView([latitudeUser, longitudeUser], zoomLevel); 
+const map = L.map('map').setView([latitudeUser, longitudeUser], 8); 
 
 
 
@@ -121,7 +119,7 @@ function fetchAdresseUser(idAdresse) {
 function fetchEntreprise(nameEntreprise) {
     return fetch('https://127.0.0.1:8000/entreprise/ajax/'+nameEntreprise)
         .then((response) => response.json())
-        .then((json) => console.log(json));
+        .then((json) => createDivEntreprise(json));
 }
 
 //si notre selecteur à des options qu'on a crée, on les enleves, puis on recrée les nouvelles à partir de notre fetch
@@ -154,6 +152,22 @@ function afficheProduits(produits) {
 
     }
 }
+
+function createDivEntreprise(json){
+    divEntreprises.innerHTML = '';
+    for(let i=0; i <json.length; i++){
+        let nameEntreprise = json[i].name;
+        let idEntreprise = json[i].id
+        const entreprise= document.createElement('a');
+        entreprise.classList.add('linkEntreprise');
+        entreprise.setAttribute('id', idEntreprise);
+        entreprise.setAttribute('href', "/entreprise/"+idEntreprise);
+        entreprise.textContent = nameEntreprise;
+        divEntreprises.appendChild(entreprise);
+    }
+}
+
+
 
 
 /**MAP*/
