@@ -7,12 +7,32 @@
     {% endblock %}
 
 {% block body %}
-pouet
+{# {{data.devis.entreprise.name}} #}
+
+{% for adresse in adresseA %}
+        <span class="bold">Label:</span> {{ adresse.label }}
+        {% if adresse.complement %}
+            <span class="bold">Complément:</span> {{ adresse.complement }}
+        {% endif %}
+        <span class="bold">Code Postal:</span> {{ adresse.zipCode }}
+        <span class="bold">Ville:</span> {{ adresse.ville }}
+{% endfor %}
+
+{% for adresse in adresseP %}
+    <span class="bold">Label:</span> {{ adresse.label }}
+    {% if adresse.complement %}
+        <span class="bold">Complément:</span> {{ adresse.complement }}
+    {% endif %}
+    <span class="bold">Code Postal:</span> {{ adresse.zipCode }}
+    <span class="bold">Ville:</span> {{ adresse.ville }}
+{% endfor %}
+
+
+
         {# {% for ligne in data %} #}
            
         {# {% endfor %} #}
         {# {% for produit in data %} #}
 
- {{dump(data)}}
 	{# {% endfor %} #}
 {% endblock %}
