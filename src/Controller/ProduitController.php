@@ -386,7 +386,9 @@ class ProduitController extends AbstractController
     {   
         $imageUrl = $produit->getImageURL();
         if($imageUrl !== null){
-            unlink($this->getParameter($photoDir.$imageUrl));
+            $imageUrl = explode('/', $imageUrl);
+            $image = $imageUrl[count($imageUrl)-1];
+            unlink($photoDir.'/'.$image);
         }
         $produitRepo->remove($produit, true);
         return $this->redirectToRoute('maBoutique', [
