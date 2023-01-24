@@ -26,11 +26,15 @@
 	{% for produit in produits %}
 		<div class="container_produit">
 			<div class="bloc_produit">
-				<img class="img_produit" src={{produit.imageURL}}>
+				{% if produit.imageURL is null %}
+					<img class="img_produit" src="{{ asset('build/images/placeholder_612x612.jpg') }}">
+				{% else %}
+					<img class="img_produit" src="{{ produit.imageURL }}">
+				{% endif %}
 				<div class="desc_produit">
 					{% if produit.inStock == 1 %}
 						<p class='green'>En stock</p>
-						{%else%}
+					{% else %}
 						<p class='red'>Indisponible</p>
 					{% endif %}
 					<h3>{{produit.name|upper}}</h3>
