@@ -29,7 +29,11 @@
 			<input type="hidden" name="pro" value="{{ligne.produit.id}}">
 			<div class="container_produit container_produit--Secondary">
 				<div class="bloc_produit">
-					<img class="img_produit" src={{ligne.produit.imageURL}}>
+					{% if ligne.produit.imageURL is null %}
+						<img class="img_produit" src="{{ asset('build/images/placeholder_612x612.jpg') }}">
+					{% else %}
+						<img class="img_produit" src="{{ ligne.produit.imageURL }}">
+					{% endif %}
 					<div class="desc_produit">
 						{% if ligne.produit.inStock == 1 %}
 							<p class='green'>En stock</p>

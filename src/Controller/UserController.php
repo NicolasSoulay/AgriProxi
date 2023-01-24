@@ -96,9 +96,9 @@ class UserController extends AbstractController
 
     //Suppression du User
     #[Route('/delete_user/{id}', name: 'deleteUser')]
-    public function deleteUser(User $user, UserRepository $userRepo, EntrepriseRepository $entrepriseRepo)
+    public function deleteUser(string $id, User $user, UserRepository $userRepo, EntrepriseRepository $entrepriseRepo)
     {
-        $user = $this->getUser();
+        $user = $userRepo->find($id);
         $entreprise = $user->getEntreprise();
 
         //Suppression des lignes devis
