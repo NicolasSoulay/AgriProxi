@@ -41,9 +41,12 @@ class SousCategorieRepository extends ServiceEntityRepository
 
 
     /**
-     * @return SousCategorie[] Returns an array of SousCategorie objects
+     * Returns un tableau d'entité SousCategorie à partir d'un id de categorie
+     * 
+     * @param string $idCategorie
+     * @return SousCategorie[] 
      */
-    public function findByCategorie($idCategorie): array
+    public function findByCategorie(string $idCategorie): array
     {
         return $this->createQueryBuilder('s')
             ->andWhere('s.categorie = :val')

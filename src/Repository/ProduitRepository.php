@@ -43,28 +43,34 @@ class ProduitRepository extends ServiceEntityRepository
 
 
     /**
-     * @return Produit[] Returns an array of Produit objects
+     * retourne au tableau d'entitées Produit a partir d'un id de sous-categorie
+     * 
+     * @param string $subCategorieId
+     * @return Produit[] 
      */
-    public function findBySubCategorie($subCategorie): array
+    public function findBySubCategorie(string $subCategorieId): array
     {
         return $this->createQueryBuilder('p')
             ->andWhere('p.subCategorie = :val')
-            ->setParameter('val', $subCategorie)
+            ->setParameter('val', $subCategorieId)
             ->orderBy('p.name', 'ASC')
             ->getQuery()
             ->getResult();
     }
 
     /**
+     * retourne au tableau d'entitées Produit a partir d'un id de categorie
+     * 
+     * @param string $categorieId
      * @return Produit[] Returns an array of Produit objects
      */
-    public function findByCategorie($categorie): array
+    public function findByCategorie(string $categorieId): array
     {
         return $this->createQueryBuilder('p')
             ->join('p.subCategorie', 'sc')
             ->join('sc.categorie', 'c')
             ->andWhere('c.id = :val')
-            ->setParameter('val', $categorie)
+            ->setParameter('val', $categorieId)
             ->orderBy('p.name', 'ASC')
             ->getQuery()
             ->getResult();

@@ -20,7 +20,7 @@ class ProduitController extends AbstractController
 {
 
     /**
-     * retourne la vue de la page de recherche de produits avec la carte
+     * retourne la vue de la page de recherche de produits avec la carte, et donne les coordonnée de la premiere adresse de l'utilisateur. si il n'a pas d'adresse, on donne les coordonnées de la france.
      *
      * @param ProduitRepository $produitRepo
      * @param SousCategorieRepository $subCategorieRepo
@@ -50,14 +50,14 @@ class ProduitController extends AbstractController
 
 
     /**
-     * Renvoie un tableau:  
-     * idCategorie => [[idSubCat1, nomSubCat1],[..],..] 
+     * Renvoie un json contenant les infos d'une adresse à partir d'un id d'adresse. 
      * 
      * @param Request $request
-     * @return JsonResponse
+     * @param AdresseRepository $adresseRepo
+     * @return JsonResponse 
      */
     #[Route('/produit/ajax/adresse/{idAdresse}', name: 'ajax_adresse')]
-    public function ajaxAdresse(Request $request, AdresseRepository $adresseRepo)
+    public function ajaxAdresse(Request $request, AdresseRepository $adresseRepo): JsonResponse
     {
         if (isset($request->request)) {
             $idAdresse = $request->get('idAdresse');
@@ -85,11 +85,11 @@ class ProduitController extends AbstractController
     }
 
     /**
-     * Renvoie un tableau:  
-     * idCategorie => [[idSubCat1, nomSubCat1],[..],..] 
+     * Renvoie un json contenant l'id et le nom de sous-categories correspondant à un id de categorie 
      * 
      * @param Request $request
-     * @return JsonResponse
+     * @param SousCategorieRepository $subCatRepo
+     * @return JsonResponse 
      */
     #[Route('/produit/ajax/subcat/{idCat}', name: 'ajax_subcat')]
     public function ajaxSubCat(Request $request, SousCategorieRepository $subCatRepo)
@@ -118,15 +118,14 @@ class ProduitController extends AbstractController
     }
 
     /**
-     * Renvoie un tableau:  
-     * idCategorie |idSousCategorie => [[idProduit1, nomProduit1, descriptionProduit1, inStockProduit1, imageProduit1, idEntrepriseProduit1, nomEntrepriseProduit1, idAdresseEntrepriseProduit1, labelAdresseEntrepriseProduit1, codePostalAdresseEntrepriseProduit1, latitudeEntrepriseProduit1, longitudeEntrepriseProduit1, IdVilleAdresseEntrepriseProduit1, nomVilleAdresseEntrepriseProduit1, idDepartementVilleAdresseEntrepriseProduit1, codeDepartementVilleAdresseEntrepriseProduit1, codeDepartementVilleAdresseEntrepriseProduit1],[..],..]
-     * idCategorie |idSousCategorie => [[idProduit1, nomProduit1, descriptionProduit1, inStockProduit1, imageProduit1, idEntrepriseProduit1, nomEntrepriseProduit1, idAdresseEntrepriseProduit1, labelAdresseEntrepriseProduit1, codePostalAdresseEntrepriseProduit1, latitudeEntrepriseProduit1, longitudeEntrepriseProduit1, IdVilleAdresseEntrepriseProduit1, nomVilleAdresseEntrepriseProduit1, idDepartementVilleAdresseEntrepriseProduit1, codeDepartementVilleAdresseEntrepriseProduit1, codeDepartementVilleAdresseEntrepriseProduit1],[..],..]
+     * Renvoie un json contenant toute les informations accessible dans la base de donnée sur des produit correspondant soit a un id de categorie, soit a un id de sous-categorie.
      * 
+     * @param ProduitRepository $produitRepo
      * @param Request $request
-     * @return ?
+     * @return JsonResponse 
      */
     #[Route('/produit/ajax/produitcat/{idCat}/produitsubcat/{idSubCat}', name: 'ajax_produit')]
-    public function ajaxProduit(Request $request, ProduitRepository $produitRepo)
+    public function ajaxProduit(Request $request, ProduitRepository $produitRepo): JsonResponse
     {
         if (isset($request->request)) {
             $idCat = $request->get('idCat');
@@ -159,7 +158,14 @@ class ProduitController extends AbstractController
         );
     }
 
-    public function templateJsonProduit($produits)
+
+    /**
+     * renvoi un tableau associatif a partir d'une collection de produits
+     *
+     * @param Produit[] $produits
+     * @return array
+     */
+    public function templateJsonProduit(array $produits): array
     {
         $json = [];
         foreach ($produits as $produit) {
@@ -203,12 +209,12 @@ class ProduitController extends AbstractController
 
 
     /**
-     * Retourne un tableau contenant les coordonée, le nom, l'adresse et l'Id d'une entreprise, filtrés par produits
+     * Retourne un tableau contenant les coordonée, le nom, l'adresse et l'Id d'une entreprise, sans doublon d'entreprise, a partir d'une collection de produits
      * 
      * @param Produit[] $produits
      * @return array[] 
      */
-    public function getCoordinatesEntreprises(array $produits)
+    public function getCoordinatesEntreprises(array $produits): array
     {
         $entreprises = [];
         foreach ($produits as $produit) {
@@ -262,7 +268,7 @@ class ProduitController extends AbstractController
      * @param ProduitRepository $produitRepo
      * @return Produit[] 
      */
-    public function searchByCategorieOrSubCategorie(string $subCatId, string $catId, ProduitRepository $produitRepo)
+    public function searchByCategorieOrSubCategorie(string $subCatId, string $catId, ProduitRepository $produitRepo): array
     {
         if (!isset($_GET['subCategorie']) || $_GET['subCategorie'] === '') {
             return $produitRepo->findByCategorie($catId);
