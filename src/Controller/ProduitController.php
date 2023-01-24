@@ -382,8 +382,12 @@ class ProduitController extends AbstractController
 
     //Suppression d'un produit
     #[Route('/delete_produit/{id}', name: 'deleteProduit')]
-    public function deleteProduit(Produit $produit, ProduitRepository $produitRepo): Response
-    {
+    public function deleteProduit(Produit $produit, ProduitRepository $produitRepo, #[Autowire('%photo_dir%')] string $photoDir): Response
+    {   
+        $imageUrl = $produit->getImageURL();
+        if($imageUrl !== null){
+            unlink($this->getParameter($photoDir.$imageUrl));
+        }
         $produitRepo->remove($produit, true);
         return $this->redirectToRoute('maBoutique', [
             'message' => '2',
