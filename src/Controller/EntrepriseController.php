@@ -159,9 +159,15 @@ class EntrepriseController extends AbstractController
     }
 
 
-
+    /**
+     * renvoie un fichier Json contenant l'id et le nom d'entreprise ayant un nom similaire à une string
+     * 
+     * @param EntrepriseRepository $entrepriseRepo
+     * @param Request $request
+     * @return JsonResponse $json
+     */
     #[Route('/entreprise/ajax/{name}', name: 'entrepriseAjax')]
-    public function ajaxEntrepriseByName(Request $request, EntrepriseRepository $entrepriseRepo): Response
+    public function ajaxEntrepriseByName(Request $request, EntrepriseRepository $entrepriseRepo): JsonResponse
     {
         $string = $request->get('name');
         $entreprises = $entrepriseRepo->findNameLike($string);
