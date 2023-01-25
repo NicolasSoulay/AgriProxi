@@ -36,7 +36,6 @@ Encore
   .addEntry("user", "./assets/user.js")
   .addEntry("boutique", "./assets/boutique.js")
   .addEntry("adresse", "./assets/adresse.js")
-  .addEntry("pdf", "./assets/pdf.js")
   .copyFiles({
     from: "./assets/images",
 
