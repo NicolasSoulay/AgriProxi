@@ -21,6 +21,7 @@ const divCities = document.getElementById('displayCities');
 
 // Je crée un écouteur afin que pour chaque input rentré dans le champs ville une requête est faite à la table ville de la BDD
 inputCity.addEventListener('input', (event)=>{
+    divCities.style.display = "block";
     let string = event.target.value;
     fetch('https://127.0.0.1:8000/adresse/ajax/ville/'+string)
     .then((response) => response.json())
@@ -28,7 +29,6 @@ inputCity.addEventListener('input', (event)=>{
 })
 
 // Fonction qui crée des div avec la ville et le code département depuis un json et qui ajoute un évènement au click afin que ça effectue une autocomplétion
-// Lorsque l'on clique sur la ville, l'appel à l'API s'effectue pour alimenter les champs longitude et latitude
 function createDivCity(json){
     divCities.innerHTML = '';
     for(let i=0; i <json.length; i++){
@@ -40,6 +40,7 @@ function createDivCity(json){
         city.setAttribute('id', json[i].id);
         city.textContent = nameCity+' - '+departementCity;
         divCities.appendChild(city);
+        // Lorsque l'on clique sur la ville, l'appel à l'API s'effectue pour alimenter les champs longitude et latitude
         city.addEventListener('click', ()=> {
             inputCity.value = nameCity;
             inputId.value = idCity;
@@ -49,7 +50,7 @@ function createDivCity(json){
             fetch('https://api-adresse.data.gouv.fr/search/?q='+label+zipCode+ville+'&type=street&autocomplete=0')
             .then((response) => response.json())
             .then((json) => addLongAndLat(json));
-            console.log('https://api-adresse.data.gouv.fr/search/?q='+label+zipCode+ville+'&type=street&autocomplete=0')
+            divCities.style.display = "none";
         })
     }
 }
