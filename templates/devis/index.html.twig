@@ -128,8 +128,10 @@
     {% endfor %}
 {% else %}
     <div class="message">{{ message }}</div>
-	{% if type != 1  %} 
-	<a aria-current="page" class="btn_link_green" href="{{path('app_produit')}}">Découvrez les producteur autour de vous!</a>
-	{% endif %}
+	<div class="center">
+		{% if type != 1  %} 
+			<a aria-current="page" class="btn_link_green" href="{{path('app_produit')}}">Découvrez les producteur autour de vous!</a>
+		{% endif %}
+	</div>
 {% endif %}
 {% endblock %}
