@@ -149,7 +149,7 @@ function afficheProduits(produits) {
         
         let image = produits[i].imageURL;
         if(image === null){
-            image = 'https://127.0.0.1:8000/build/images/placeholder_612x612.jpg';
+            image = 'uploads/photos/defaultImage.jpg';
         }
 
         listeProduits.innerHTML+= 
