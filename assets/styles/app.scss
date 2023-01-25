@@ -185,30 +185,13 @@ nav>ul li:hover .sub-menu {
     object-fit: cover;
 }
 
-// #precedent,
-// #suivant {
-//     cursor: pointer;
-//     transition: opacity 0.3s ease;
-//     opacity: 0;
-//     position: absolute;
-//     font-size: 50px;
-//     color: #ffffff;
-//     background-color: rgba(248, 249, 250, 0.368627451);
-//     padding: 110px 0 110px 0;
-// }
+.card_img_1 {
+    width: 30%;
+}
 
-// #precedent {
-//     left: 0;
-// }
-
-// #suivant {
-//     right: 0;
-// }
-
-// #slider:hover #precedent,
-// #slider:hover #suivant {
-//     opacity: 1;
-// }
+.img_c1 {
+    padding-bottom: 38px;
+}
 
 /* ------------------ CARDS ------------------ */
 //CARDS
@@ -369,6 +352,15 @@ nav>ul li:hover .sub-menu {
 
     .banner_title {
         font-size: 42px;
+    }
+
+    .card_img_1 {
+        width: 70%;
+        padding-bottom: 30px;
+    }
+
+    .img_c1 {
+        padding-bottom: 10px;
     }
 }
 
