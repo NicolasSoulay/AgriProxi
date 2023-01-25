@@ -15,16 +15,16 @@ class PdfController extends AbstractController
     public function generatePdf($id, LigneDevisRepository $ligneRepo)
     {
         $data = $ligneRepo->find($id);
-        //Donnée de l'acheteur
+
+        //Données de l'acheteur
         $usersA = $data->getUsers();
         $entrepriseA = $usersA->getEntreprise();
         $adresseA = $entrepriseA->getAdresses();
 
+        //Données du producteur 
         $userP = $data->getProduit();
         $entrepriseP = $userP->getEntreprise();
         $adresseP = $entrepriseP->getAdresses();
-
-
 
         $html = $this->renderView('pdf/template.html.twig', [
             'data' => $data,
@@ -34,11 +34,9 @@ class PdfController extends AbstractController
 
         $dompdf = new Dompdf();
         $dompdf->loadHtml($html);
-        // $dompdf->setPaper('A4', 'portrait');
         $dompdf->render();
         $dompdf->stream("Devis", [
             "Attachment" => true,
-            "isRemoteEnable" => true,
         ]);
 
         return new Response();

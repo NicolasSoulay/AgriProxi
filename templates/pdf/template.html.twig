@@ -1,78 +1,106 @@
-    {% block stylesheets %}
-        {{ encore_entry_link_tags('pdf') }}
-    {% endblock %}
+{% block stylesheets %}
+    {{ encore_entry_link_tags('pdf') }}
+{% endblock %}
 
-    {% block javascripts %}
-        {{ encore_entry_script_tags('pdf') }}
-    {% endblock %}
+{% block javascripts %}
+    {{ encore_entry_script_tags('pdf') }}
+{% endblock %}
 
-{% block body %}
 <style>
     h1 {
         font-size: 18px;
-    }
-
-    h2 {
-        font-size: 15px;
-    }
-
-    h3 {
         text-align: center;
+        color: blue;
+    }
+    h2 {
+        font-size: 14px;
         font-weight: bold;
     }
-    ul li {
-        text-decoration:none;
+
+    p {
+        font-size : 13px;
+    }
+
+    table {
+        border: solid 1px black;
+        width: 100%;
+        text-align: center;
+        margin-bottom: 80px;
+    }
+
+    th{
+        border: solid 1px black;
+    }
+
+    td{
+        border: solid 1px black;
+    }
+
+    .destC {
+        text-align: right;
+        padding-bottom: 80px;
+    }
+
+    .date {
+        text-align: right;
+        padding-right: 30px;
     }
 </style>
-    <div class="pdf">
-        <h1>Devis</h1>
-        <h2>Commande n°{{data.id}}<h3>
-        <div class="dest_coordonees">
-            <div class="dest">
-                <h3>Producteur<h3>
-                <p>{{data.devis.entreprise.name|upper}}</p>
-                {% for adresse in adresseA %}
-                    <ul class="dest_adress">
-                        <li class="dest_li">{{ adresse.label }}</li>
-                        {% if adresse.complement %}
-                            <li class="dest_li">{{ adresse.complement }}</li>
-                        {% endif %}
-                        <li class="dest_li">{{ adresse.zipCode }}</li>
-                        <li class="dest_li">{{ adresse.ville }}</li>
-                    </ul>
-                {% endfor %}
-            </div>
-            <div class="dest">
-                <h3>Client<h3>
-                <p>{{data.produit.entreprise.name}}</p>
-                {% for adresse in adresseP %}
-                    <ul>
-                        <li class="dest_li">{{ adresse.label }}</li>
-                        {% if adresse.complement %}
-                            <li class="dest_li">{{ adresse.complement }}</li>
-                        {% endif %}
-                        <li class="dest_li">{{ adresse.zipCode }}</li>
-                        <li class="dest_li">{{ adresse.ville }}</li>
-                    </ul>
-                {% endfor %}
-            </div>
-        </div>
-        <div class="devis">
-            <table>
-            <thead>
-                <tr>
-                    <th>Produit</th>
-                    <th>Quantité</th>
-                    <th>Prix</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>{{data.produit.name}}</td>
-                    <td>{{data.quantity}}</td>
-                    <td>{{data.price}}</td>
-                </tr>
-            </tbody>
-        </table>
+
+{% block body %}
+    {# Producteur #}
+    <div class="destP">
+        <h2>Producteur<h2>
+        <p>{{data.devis.entreprise.name|upper}}</p>
+        {% for adresse in adresseP %}
+            <p>{{ adresse.label }}</p>
+            {% if adresse.complement %}
+                <p>{{ adresse.complement }}</p>
+            {% endif %}
+            <p>{{ adresse.zipCode }}</p>
+            <p>{{ adresse.ville }}</p>
+        {% endfor %}
+    </div>
+
+    {# Acheteur #}
+    <div class="destC">
+        <h2>Client<h2>
+        <p>{{data.produit.entreprise.name}}</p>
+        {% for adresse in adresseA %}
+            <p>{{ adresse.label }}</p>
+            {% if adresse.complement %}
+                <p>{{ adresse.complement }}</p>
+            {% endif %}
+            <p>{{ adresse.zipCode }}</p>
+            <p>{{ adresse.ville }}</p>
+        {% endfor %}
+    </div>
+
+    <h1>Devis | Commande n°{{data.id}}</h1>
+
+    {# Produit #}
+    <table>
+        <thead>
+            <tr>
+                <th>Produit</th>
+                <th>Quantité</th>
+                <th>Prix</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>{{data.produit.name}}</td>
+                <td>{{data.quantity}}</td>
+                <td>{{data.price}} €</td>
+            </tr>
+        </tbody>
+    </table>
+
+    {# Signature #}
+    <div class="date">
+        {% for adresse in adresseP %}
+            <p>Le 25/01/2023 à {{ adresse.ville }}</p>
+            <p>Signature :</p>
+        {% endfor %}
     </div>
 {% endblock %}
