@@ -39,6 +39,9 @@ class UserController extends AbstractController
                 case '4':
                     $message = 'L\'utilisateur a bien été modifiée';
                     break;
+                case '5':
+                    $message = 'Vous devez renseigner une adresse valide pour accéder à la carte des producteurs';
+                    break;
                 default:
                     $message = '';
             }
@@ -96,9 +99,9 @@ class UserController extends AbstractController
 
     //Suppression du User
     #[Route('/delete_user/{id}', name: 'deleteUser')]
-    public function deleteUser(User $user, UserRepository $userRepo, EntrepriseRepository $entrepriseRepo)
+    public function deleteUser(string $id, User $user, UserRepository $userRepo, EntrepriseRepository $entrepriseRepo)
     {
-        $user = $this->getUser();
+        $user = $userRepo->find($id);
         $entreprise = $user->getEntreprise();
 
         //Suppression des lignes devis
