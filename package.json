@@ -23,5 +23,9 @@
         "dev": "encore dev",
         "watch": "encore dev --watch",
         "build": "encore production --progress"
+    },
+    "dependencies": {
+        "imagemin": "^8.0.1",
+        "imagemin-pngquant": "^9.0.2"
     }
 }

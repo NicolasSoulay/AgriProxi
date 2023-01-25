@@ -35,7 +35,6 @@ class ProduitController extends AbstractController
         if(count($userAdresses) > 0){
             $latitude = $userAdresses[0]->getLatitude();
             $longitude = $userAdresses[0]->getLongitude();
-            $zoomLevel = $this->getRadius($request->get("rayon", ''));
     
             return $this->render('produit/map.html.twig', [
                 'controller_name' => 'ProduitController',
@@ -43,7 +42,6 @@ class ProduitController extends AbstractController
                 'adresses' => $userAdresses,
                 'latitude' => $latitude,
                 'longitude' => $longitude,
-                'zoomLevel' => $zoomLevel,
             ]);
         }
         else{
