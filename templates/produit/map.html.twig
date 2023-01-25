@@ -18,11 +18,18 @@
 
 <input type="hidden" id="latitude" value = "{{latitude}}"/>
 <input type="hidden" id="longitude" value = "{{longitude}}"/>
-<div class="entreprise_search">
-    <label for="entreprise"><h1>Recherchez une entreprise:</h1></label>
-    <input type="text" id="entreprise" placeholder="nom de l'entreprise" name="entreprise">
-    <div id="displayEntreprises"></div>
+<h1>Ici, vous pouvez rechercher les producteurs les plus proches de chez vous!</h1>
+<div class="banner_sec banner_sec--Secondary">
+    <img src="{{ asset('build/images/vegetable.jpg') }}" class="img_banner_sec img_banner_sec--Secondary" alt="">
+    <div class="black_banner_sec black_banner_sec--Secondary">
+        <div class="entreprise_search">
+            <label for="entreprise"><h2 class="text_bbs text_bbs--Secondary">Par son nom :</h2></label>
+            <input type="text" id="entreprise" placeholder="Nom de l'entreprise" name="entreprise">
+            <div id="displayEntreprises"></div>          
+        </div>
+    </div>
 </div>
+<h2 class="text_bbs text_bbs--Secondary">Où grâce à notre carte interactive !</h2>
 <div id='products'>
     <div id="map"></div>
     <div id="product_search">
@@ -55,6 +62,7 @@
                 </div>
             </div>
         </form>
+        <h3 id='start'>Commencez votre recherche !</h3>
         <div id="search_result">
         
         </div>

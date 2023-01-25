@@ -25,7 +25,7 @@
 
 .btn_link_green {
     font-family: exo;
-    font-size: 20px;
+    font-size: 17px;
     color: white;
     background-color: $green;
     border-style: none;
@@ -133,7 +133,7 @@ nav a:hover {
     padding: 0 9px;
     position: absolute;
     right: 10px;
-    width: 140px;
+    width: 168px;
     z-index: 1000;
 }
 
@@ -275,11 +275,32 @@ nav>ul li:hover .sub-menu {
     text-align: center;
 }
 
+
 .text_bbs {
     color: white;
     font-size: 26px;
     text-align: center;
     font-weight: bold;
+}
+
+.banner_sec--Secondary {
+    height: 115px;
+    margin: 45px 0px;
+    width: 55%;
+    margin: 35px auto;
+}
+
+.img_banner_sec--Secondary {
+    height: 115px;
+}
+
+.black_banner_sec--Secondary {
+    height: 75%;
+    background-color: rgb(255 240 240 / 72%);
+}
+
+.text_bbs--Secondary {
+    color: black;
 }
 
 .card_present {
@@ -318,6 +339,10 @@ nav>ul li:hover .sub-menu {
         border-radius: 5px;
         width: 25%;
     }
+}
+
+.mobil_deco {
+    display: none;
 }
 
 /* ------------------ REPONSIVE ------------------ */
@@ -421,6 +446,11 @@ nav>ul li:hover .sub-menu {
     .banner_title {
         font-size: 30px;
     }
+
+    .mobil_deco {
+        display: block;
+        font-size: 20px;
+    }
 }
 
 /* ------------------ FOOTER ------------------ */
@@ -517,4 +547,11 @@ footer {
     .footer_img {
         height: 225px;
     }
+}
+
+.center {
+    margin: auto;
+    width: 100%;
+    display: flex;
+    justify-content: center;
 }
