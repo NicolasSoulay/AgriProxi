@@ -408,7 +408,7 @@ class ProduitController extends AbstractController
      */
     private function deleteImage(Produit $produit, #[Autowire('%photo_dir%')] string $photoDir){
         $imageUrl = $produit->getImageURL();
-        if($imageUrl !== null){
+        if($imageUrl !== null || $imageUrl === ''){
             $imageUrl = explode('/', $imageUrl);
             $image = $imageUrl[count($imageUrl)-1];
             unlink($photoDir.'/'.$image);
