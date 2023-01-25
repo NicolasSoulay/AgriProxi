@@ -319,7 +319,9 @@ class ProduitController extends AbstractController
         $entreprise = $user->getEntreprise();
         if ($form->isSubmitted() && $form->isValid()) {
             //En cas de modification vérifie si une image existe et la supprime
-            $this->deleteImage($produit, $photoDir);
+            if(isset($_POST['produit_creation_form[imageURL]']) && $_POST['produit_creation_form[imageURL]'] !== ''){
+                $this->deleteImage($produit, $photoDir);
+            }
             //Gestion de l'image pour la créer dans un dossier
             if ($photo = $form['imageURL']->getData()) {
                 $filename = '/uploads/photos/' . bin2hex(random_bytes(6)) . '.' . $photo->guessExtension();
