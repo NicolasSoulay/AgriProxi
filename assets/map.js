@@ -187,7 +187,7 @@ function afficheProduits(produits) {
         }
 
         listeProduits.innerHTML+= 
-            '<div class="product_card" id="'+produits[i].name+produits[i].id+'"><div class="product_desc"><div class="card_image"><img class="product_img" src="'+image+'" alt="product_image" width="200" height="200"></div><div class="card_text"><h3>'+produits[i].name+'</h3><a href="https://127.0.0.1:8000/entreprise/'+produits[i].entreprise.id+'">'+produits[i].entreprise.name+'</a><p>'+produits[i].desc+'</p><h3 classe="'+produits[i].entreprise.id+'distance"></h3></div></div><div class="btn_link" id="panTo'+produits[i].id+'">Voir sur la map</div><div class="card_btn"><a href="https://127.0.0.1:8000/devis/add/'+produits[i].id+'"><button class="btn_link_green">Ajouter à votre liste de commande</button><a></div></div>'
+            '<div class="product_card" id="'+produits[i].name+produits[i].id+'"><div class="product_desc"><div class="card_image"><img class="product_img" src="'+image+'" alt="product_image" width="200" height="200"></div><div class="card_text"><h3>'+produits[i].name+'</h3><a href="https://127.0.0.1:8000/entreprise/'+produits[i].entreprise.id+'">'+produits[i].entreprise.name+'</a><p>'+produits[i].desc+'</p><h3 classe="'+produits[i].entreprise.id+'distance"></h3></div></div><div class="card_btn"><a href="https://127.0.0.1:8000/devis/add/'+produits[i].id+'"><button class="btn_link_green">Ajouter à votre liste de commande</button><a></div></div>'
         ;
 
     }
