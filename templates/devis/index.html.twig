@@ -29,7 +29,7 @@
 			<div class="container_produit container_produit--Secondary">
 				<div class="bloc_produit">
 					{% if ligne.produit.imageURL is null %}
-						<img class="img_produit" src="{{ asset('build/images/placeholder_612x612.jpg') }}">
+						<img class="img_produit" src="uploads/photos/defaultImage.jpg">
 					{% else %}
 						<img class="img_produit" src="{{ ligne.produit.imageURL }}">
 					{% endif %}
