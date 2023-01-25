@@ -54,15 +54,12 @@ addYourMarker();
 categorie.addEventListener("change", function() { 
     produitRemove();
     markerRemove();
+    subCatRemove()
+    subCategorie.value = "a"
     if (categorie.value != "a") {
-        //subCategorie.style.visibility = "visible";
-        subCategorie.value = "a"
         fetchSubcategories(categorie.value);
         fetchProduits(categorie.value, subCategorie.value)
         return;
-    }
-    if (categorie.value != "a") {
-        subCategorie.value = "a"
     }
     //subCategorie.style.visibility = "hidden";
     fetchProduits(categorie.value, subCategorie.value)
@@ -155,11 +152,6 @@ function fetchEntreprise(nameEntreprise) {
  *  
  */
 function afficheSubcategories(subCategories) {
-    let options = document.getElementsByClassName("dynamicSubCat");
-    let nbrOptionToRemove = options.length // on definie la longueur en dehors de la boucle, sinon on reduit l'iteration à chaque fois qu'on enleve un element
-    for (let i=0; i < nbrOptionToRemove; i++) {
-        options[0].remove(); //idem, on enleve que l'index 0, car js apparament réindexe les elements apres un remove
-    }
     for (let i=0; i < subCategories.length; i++) {
         subCategorie.innerHTML+= '<option class="dynamicSubCat" value="'+subCategories[i].id+'">'+subCategories[i].name+'</option>'
         
@@ -220,7 +212,27 @@ function createDivEntreprise(json){
     }
 }
 
+/**
+ * On supprime les cartes de produits générées en HTML
+ */
+function produitRemove(){
+    let cartesProduits = document.getElementsByClassName("product_card");
+    let nbrProduitsToRemove = cartesProduits.length // on definie la longueur en dehors de la boucle, sinon on reduit l'iteration à chaque fois qu'on enleve un element
+    for (let i=0; i < nbrProduitsToRemove; i++) {
+        cartesProduits[0].remove(); //idem, on enleve que l'index 0, car js apparament réindexe les elements apres un remove
+    }
+}
 
+/**
+ * On supprime les sous categories
+ */
+function subCatRemove(){
+    let options = document.getElementsByClassName("dynamicSubCat");
+    let nbrOptionToRemove = options.length // on definie la longueur en dehors de la boucle, sinon on reduit l'iteration à chaque fois qu'on enleve un element
+    for (let i=0; i < nbrOptionToRemove; i++) {
+        options[0].remove(); //idem, on enleve que l'index 0, car js apparament réindexe les elements apres un remove
+    }
+}
 
 
 /**MAP*/
@@ -281,18 +293,6 @@ function addProductMarker(entreprises) {
         if (co2>20000){
             L.marker([lat, long], {icon: redIcon,title:nomEntreprise}).addTo(map).bindPopup("<a href='/entreprise/"+idEntreprise+"'>"+nomEntreprise+"</a><p>"+adresseEntreprise.label+"</p><p>"+adresseEntreprise.zipCode+" "+adresseEntreprise.ville.name+"</p><p>Distance: "+distance+"km</p><p>Emission: "+co2+"g</p>");
         }
-    }
-}
-
-
-/**
- * On supprime les cartes de produits générées en HTML
- */
-function produitRemove(){
-    let cartesProduits = document.getElementsByClassName("product_card");
-    let nbrProduitsToRemove = cartesProduits.length // on definie la longueur en dehors de la boucle, sinon on reduit l'iteration à chaque fois qu'on enleve un element
-    for (let i=0; i < nbrProduitsToRemove; i++) {
-        cartesProduits[0].remove(); //idem, on enleve que l'index 0, car js apparament réindexe les elements apres un remove
     }
 }
 
