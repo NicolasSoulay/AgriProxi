@@ -34,10 +34,11 @@ class PdfController extends AbstractController
 
         $dompdf = new Dompdf();
         $dompdf->loadHtml($html);
-        $dompdf->setPaper('A4', 'portrait');
+        // $dompdf->setPaper('A4', 'portrait');
         $dompdf->render();
-        $dompdf->stream("mypdf.pdf", [
-            "Attachment" => false,
+        $dompdf->stream("Devis", [
+            "Attachment" => true,
+            "isRemoteEnable" => true,
         ]);
 
         return new Response();

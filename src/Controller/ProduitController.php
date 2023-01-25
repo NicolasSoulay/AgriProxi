@@ -32,20 +32,25 @@ class ProduitController extends AbstractController
     public function map(CategorieRepository $categorieRepo): Response
     {
         $userAdresses = $this->getUser()->getEntreprise()->getAdresses();
-        $latitude = "46.2276";
-        $longitude = "2.2137";
-        if ($userAdresses[0]) {
+        if(count($userAdresses) > 0){
             $latitude = $userAdresses[0]->getLatitude();
             $longitude = $userAdresses[0]->getLongitude();
+            $zoomLevel = $this->getRadius($request->get("rayon", ''));
+    
+            return $this->render('produit/map.html.twig', [
+                'controller_name' => 'ProduitController',
+                'categories' => $categorieRepo->findAll(),
+                'adresses' => $userAdresses,
+                'latitude' => $latitude,
+                'longitude' => $longitude,
+                'zoomLevel' => $zoomLevel,
+            ]);
         }
-
-        return $this->render('produit/map.html.twig', [
-            'controller_name' => 'ProduitController',
-            'categories' => $categorieRepo->findAll(),
-            'adresses' => $userAdresses,
-            'latitude' => $latitude,
-            'longitude' => $longitude,
-        ]);
+        else{
+            return $this->redirectToRoute('app_user', [
+                'message' => '5'
+            ]);
+        }
     }
 
 
@@ -384,7 +389,7 @@ class ProduitController extends AbstractController
     private function deleteImage(Produit $produit, #[Autowire('%photo_dir%')] string $photoDir)
     {
         $imageUrl = $produit->getImageURL();
-        if ($imageUrl !== null) {
+        if($imageUrl !== null || $imageUrl === ''){
             $imageUrl = explode('/', $imageUrl);
             $image = $imageUrl[count($imageUrl) - 1];
             unlink($photoDir . '/' . $image);
