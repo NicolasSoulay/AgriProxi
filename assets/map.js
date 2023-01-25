@@ -46,6 +46,7 @@ const map = L.map('map').setView([latitudeUser, longitudeUser], 8);
 
 /**ICI C'EST LE SCRIPT*/
 
+//On met la map, puis on place le marqueur pour l'utilisateur. Comme ça il est pas perdu, il sais où il est.
 setMap();
 addYourMarker();
 
@@ -74,6 +75,8 @@ subCategorie.addEventListener("change", function() {
     fetchProduits(categorie.value, subCategorie.value)
 });
 
+
+//Recharge les marqueurs et les produits lorsque l'utilisateur change son adresse
 adresseUser.addEventListener("change", function() {
     produitRemove();
     markerRemove();
@@ -82,6 +85,7 @@ adresseUser.addEventListener("change", function() {
     fetchProduits(categorie.value, subCategorie.value)
 });
 
+//on fais de l'autocompletion sur la recherche d'entreprise
 entrepriseSearch.addEventListener("input", function() {
     fetchEntreprise(entrepriseSearch.value)
 })
@@ -94,7 +98,12 @@ entrepriseSearch.addEventListener("input", function() {
 
 /** RECHERCHE DE PRODUITS & AJAX*/ 
 
-//on va fetch des sous-categories correspondante à la categorie selectionné
+/**
+ * on va fetch des sous-categories correspondante à la categorie selectionné
+ * 
+ * @param {string} id 
+ * @returns {Response}
+ */
 function fetchSubcategories(id) {
     return fetch('https://127.0.0.1:8000/produit/ajax/subcat/'+id)
         .then((response) => response.json())
@@ -102,27 +111,49 @@ function fetchSubcategories(id) {
 }
 
 
-//on va fetch des produits correspondante à la categorie ou sous-categorie selectionné
+/**
+ * on va fetch des produits correspondante à la categorie ou sous-categorie selectionné
+ * 
+ * @param {string} idCat
+ * @param {string} idSubCat
+ * @returns {Response}
+ */
 function fetchProduits(idCat, idSubCat) {
     return fetch('https://127.0.0.1:8000/produit/ajax/produitcat/'+idCat+'/produitsubcat/'+idSubCat)
         .then((response) => response.json())
         .then((json) => afficheProduitsAndMarkers(json));
 }
 
-//on va fetch des produits correspondante à la categorie ou sous-categorie selectionné
+/**
+ * on va fetch l'adresse de l'utilisateur à partir de l'id
+ * 
+ * @param {string} idAdresse
+ * @returns {Response}
+ */
 function fetchAdresseUser(idAdresse) {
     return fetch('https://127.0.0.1:8000/produit/ajax/adresse/'+idAdresse)
         .then((response) => response.json())
         .then((json) => addMarkerAdresseUser(json));
 }
 
+/**
+ * on va fetch des entreprises à partir d'une string
+ * 
+ * @param {string} nameEntreprise
+ * @returns {Response}
+ */
 function fetchEntreprise(nameEntreprise) {
     return fetch('https://127.0.0.1:8000/entreprise/ajax/'+nameEntreprise)
         .then((response) => response.json())
         .then((json) => createDivEntreprise(json));
 }
 
-//si notre selecteur à des options qu'on a crée, on les enleves, puis on recrée les nouvelles à partir de notre fetch
+
+/**
+ * si notre selecteur à des options qu'on a crée, on les enleves, puis on recrée les nouvelles à partir de notre fetch
+ * @param {Object[]} subCategories
+ *  
+ */
 function afficheSubcategories(subCategories) {
     let options = document.getElementsByClassName("dynamicSubCat");
     let nbrOptionToRemove = options.length // on definie la longueur en dehors de la boucle, sinon on reduit l'iteration à chaque fois qu'on enleve un element
@@ -135,6 +166,12 @@ function afficheSubcategories(subCategories) {
     }
 }
 
+/**
+ * selon le contenu du Json, on vois soit s'arreter la, soit partir sur les fonction d'affichage de produit et de marqueurs
+ * 
+ * @param {Object[]} json 
+ * @returns 
+ */
 function afficheProduitsAndMarkers(json){
     if (json[0] === "salut ya rien"){
         return
@@ -144,6 +181,11 @@ function afficheProduitsAndMarkers(json){
     console.log(json)
 }
 
+/**
+ * On crée les cartes de produits en html à partir du fichier Json
+ * 
+ * @param {Object[]} produits 
+ */
 function afficheProduits(produits) {
     for (let i=0; i < produits.length; i++) {
         listeProduits.innerHTML+= 
@@ -153,6 +195,11 @@ function afficheProduits(produits) {
     }
 }
 
+/**
+ * on crée les "options" avec des noms d'entreprise et des liens vers leurs pages, à partir du Json
+ * 
+ * @param {Object[]} json 
+ */
 function createDivEntreprise(json){
     divEntreprises.innerHTML = '';
     for(let i=0; i <json.length; i++){
@@ -172,6 +219,9 @@ function createDivEntreprise(json){
 
 /**MAP*/
 
+/**
+ * on set la map
+ */
 function setMap(){
     L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 19,
@@ -179,16 +229,31 @@ function setMap(){
     }).addTo(map);
 }
 
+/**
+ * on crée le marqueur de la premiere adresse de l'utilisateur lorsque l'on arrive sur la page
+ */
 function addYourMarker(){
     L.marker([latitudeUser, longitudeUser], {title: "you"}).addTo(map)
 }
 
+/**
+ * on place le marqueur correspondant à l'adresse donnée
+ * 
+ * @param {Object[]} adresse 
+ */
 function addMarkerAdresseUser(adresse){
     document.getElementById('latitude').value = adresse[0].latitude;
     document.getElementById('longitude').value = adresse[0].longitude;
     L.marker([adresse[0].latitude, adresse[0].longitude], {title: "you"}).addTo(map);
     map.panTo(new L.LatLng(adresse[0].latitude, adresse[0].longitude));
 }
+
+
+/**
+ * On crée les marqueurs pour chaque entreprise
+ * 
+ * @param {Object[]} entreprises 
+ */
 function addProductMarker(entreprises) {
     
     for (let i=0; i < entreprises.length; i++){
@@ -213,6 +278,10 @@ function addProductMarker(entreprises) {
     }
 }
 
+
+/**
+ * On supprime les cartes de produits générées en HTML
+ */
 function produitRemove(){
     let cartesProduits = document.getElementsByClassName("product_card");
     let nbrProduitsToRemove = cartesProduits.length // on definie la longueur en dehors de la boucle, sinon on reduit l'iteration à chaque fois qu'on enleve un element
@@ -221,6 +290,10 @@ function produitRemove(){
     }
 }
 
+
+/**
+ * On supprime les marqueur de la map, sauf celui de l'utilisatuer
+ */
 function markerRemove() {
     let marker_pane = document.getElementsByClassName("leaflet-pane leaflet-marker-pane");
     let shadow_pane = document.getElementsByClassName("leaflet-pane leaflet-shadow-pane");
@@ -231,6 +304,10 @@ function markerRemove() {
     }
 }
 
+
+/**
+ * on supprime le marqueur que l'on a placé à partir de l'adresse de l'utilisateur
+ */
 function markerAdresseUserRemove(){
     let marker_pane = document.getElementsByClassName("leaflet-pane leaflet-marker-pane");
     let shadow_pane = document.getElementsByClassName("leaflet-pane leaflet-shadow-pane");
