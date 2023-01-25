@@ -40,9 +40,11 @@
     align-items: center;
 }
 
+
 /* ------------------ MODAL ------------------ */
 //MODAL LAYOUT
-.modal, .modal_user{
+.modal,
+.modal_user {
     display: none;
     position: fixed;
     z-index: 1;
@@ -80,7 +82,7 @@
     cursor: pointer;
 }
 
-#h3_user{
+#h3_user {
     color: red;
     font-weight: bold;
 }

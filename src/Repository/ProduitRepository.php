@@ -92,52 +92,52 @@ class ProduitRepository extends ServiceEntityRepository
 
         //ici on gere les critere de selection
         if ($idSubCat) {
-            $sql += "WHERE p.sub_categorie_id = $idSubCat ";
+            $sql .= "WHERE p.sub_categorie_id = $idSubCat ";
         }
         if ($idCat) {
-            $sql += "JOIN subCategorie sc ON p.sub_categorie_id = sc.id
+            $sql .= "JOIN subCategorie sc ON p.sub_categorie_id = sc.id
                 JOIN categorie c ON sc.categorie_id = c.id
                 WHERE c.id = $idCat ";
         }
 
         //ici on fais les jointures necessaires
-        $sql += "JOIN entreprise e ON p.entreprise_id = e.id
+        $sql .= "JOIN entreprise e ON p.entreprise_id = e.id
             JOIN adresse a ON e.adresse_id = a.id
             JOIN ville v ON a.ville_id = v.id ";
 
         //ici on gere la distance
         if ($latitudeMax) {
-            $sql += "WHERE a.latitude < $latitudeMax AND a.longitude < $longitudeMax ";
+            $sql .= "WHERE a.latitude < $latitudeMax AND a.longitude < $longitudeMax ";
         }
 
         //ici on gere le tri
         if ($filtreName) {
             switch ($filtreName) {
                 case 1:
-                    $sql += "ORDER BY p.name ASC ";
+                    $sql .= "ORDER BY p.name ASC ";
                     break;
                 default:
-                    $sql += "ORDER BY p.name DSC ";
+                    $sql .= "ORDER BY p.name DSC ";
             }
         }
 
         if ($filtreEntreprise) {
             switch ($filtreEntreprise) {
                 case 1:
-                    $sql += "ORDER BY e.name ASC ";
+                    $sql .= "ORDER BY e.name ASC ";
                     break;
                 default:
-                    $sql += "ORDER BY e.name DSC ";
+                    $sql .= "ORDER BY e.name DSC ";
             }
         }
 
         if ($filtreDistance) {
             switch ($filtreDistance) {
                 case 1:
-                    $sql += "la formule magique pour trier les produits du plus proche au plus loin ";
+                    $sql .= "la formule magique pour trier les produits du plus proche au plus loin ";
                     break;
                 default:
-                    $sql += "la formule magique pour trier les produits du plus loin au plus proche ";
+                    $sql .= "la formule magique pour trier les produits du plus loin au plus proche ";
             }
         }
         $sql += ";";
